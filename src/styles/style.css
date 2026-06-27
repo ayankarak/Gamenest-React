@@ -128,25 +128,7 @@ max-width:1100px;
 margin:auto;
 }
 
-/*Search bar */
-
-.search-container {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0;
-}
-
-.search-container input {
-    width: 350px;
-    max-width: 90%;
-    padding: 12px 18px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-/* category */
+/* Controls */
 
 .controls {
     display: flex;
@@ -157,29 +139,68 @@ margin:auto;
     flex-wrap: wrap;
 }
 
+/* Search */
+
+.search-container {
+    position: relative;
+}
+
 .search-container input {
     width: 320px;
-    padding: 12px 16px;
-    border-radius: 8px;
+    max-width: 90vw;
+    padding: 12px 40px 12px 16px;
     border: none;
     outline: none;
+    border-radius: 8px;
     font-size: 16px;
 }
 
+/* Clear Button */
+
+.clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #777;
+}
+
+.clear-btn:hover {
+    color: red;
+}
+
+/* Filter */
+
 .filter-container select {
     padding: 12px 16px;
-    border-radius: 8px;
     border: none;
     outline: none;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 16px;
+    cursor: pointer;
 }
+
+/* Counter */
+
+.games-count {
+    text-align: center;
+    color: #049bff;
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+/* No Games */
 
 .no-games {
     width: 100%;
     text-align: center;
     color: white;
-    margin: 40px 0;
+    margin: 50px 0;
+    font-size: 1.5rem;
 }
 
 /* GAME CARD */
