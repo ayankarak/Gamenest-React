@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./component/Navbar";
-import Hero from "./component/Hero";
-import GameCard from "./component/GameCard";
 import Footer from "./component/Footer";
+
+import Home from "./pages/Home";
+import GameDetails from "./pages/GameDetails";
+import NotFound from "./pages/NotFound";
 
 import games from "./data/Games";
 
@@ -11,17 +13,11 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Hero />
-       <section className="games-container" id="games">
-
-        {games.map((game) => (
-          <GameCard
-            key={game.id}
-            game={game}
-          />
-        ))}
-
-      </section>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/games/:gameName" element={<GameDetails />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </BrowserRouter>
   );
