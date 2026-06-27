@@ -4,8 +4,8 @@ import GameCard from "../component/GameCard";
 import games from "../data/Games";
 
 function Home() {
-    const [search,setSearch] = useState("");
-    const [category, setCategory] = useState("All");
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
 
   // Dynamic Categories
   const categories = ["All", ...new Set(games.map((game) => game.category))];
@@ -22,13 +22,13 @@ function Home() {
     return matchesSearch && matchesCategory;
   });
 
-    return (
+  return (
         <>
             <Hero />
 
             {/* Search & Filter */}
             <div className="controls">
-
+                {/* Search */}
                 <div className="search-container">
                 <input
                     type="text"
@@ -36,8 +36,18 @@ function Home() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
+
+                {search && (
+                    <button
+                    className="clear-btn"
+                    onClick={() => setSearch("")}
+                    >
+                    ✕
+                    </button>
+                )}
                 </div>
 
+                {/* Category */}
                 <div className="filter-container">
                 <select
                     value={category}
@@ -50,8 +60,14 @@ function Home() {
                     ))}
                 </select>
                 </div>
-
             </div>
+
+            {/* Counter */}
+            <p className="games-count">
+                {filteredGames.length === games.length
+                ? `Showing all ${games.length} games`
+                : `Showing ${filteredGames.length} of ${games.length} games`}
+            </p>
 
             {/* Game Cards */}
             <section className="games-container" id="games">
@@ -69,7 +85,7 @@ function Home() {
                 )}
             </section>
         </>
-  );
+    );
 }
 
 export default Home;
