@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import games from "../data/Games";
 
 function GameDetails() {
@@ -12,21 +12,36 @@ function GameDetails() {
     return <h1>Game Not Found</h1>;
   }
 
-  return (
-    <div className="game-details">
-      <img
-        src={game.image}
-        alt={game.title}
-      />
+ return (
+        <div className="game-details">
 
-      <h1>{game.title}</h1>
+        <Link to="/" className="back-btn">
+            ← Back to Home
+        </Link>
 
-      <p>{game.description}</p>
+        <div className="game-banner">
+            <img src={game.image} alt={game.title} />
+        </div>
 
-      <p>
-        Slug: {game.slug}
-      </p>
-    </div>
+        <div className="game-info">
+
+            <h1>{game.title}</h1>
+
+            <p>{game.description}</p>
+
+            <h3>Category</h3>
+            <p>{game.category}</p>
+
+            <h3>Difficulty</h3>
+            <p>{game.difficulty}</p>
+
+            <button className="play-btn">
+            ▶ Play Game
+            </button>
+
+        </div>
+
+        </div>
   );
 }
 
