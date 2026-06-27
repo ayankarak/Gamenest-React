@@ -5,10 +5,16 @@ import games from "../data/Games";
 
 function Home() {
     const [search,setSearch] = useState("");
+    const [category, setCategory] = useState("All");
 
-    const filteredGames = games.filter((game) =>
-    game.title.toLowerCase().includes(search.toLowerCase())
-  );
+    const filteredGames = games.filter((game) => {
+        const matchesSearch = game.title.toLowerCase().includes(search.toLowerCase());
+
+        const matchesCategory =
+        category === "All" || game.category === category;
+
+        return matchesSearch && matchesCategory;
+    });
 
    return (
         <>
@@ -22,6 +28,19 @@ function Home() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 />
+            </div>
+            <div className="filter-container">
+                <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                >
+                <option>All</option>
+                <option>Arcade</option>
+                <option>Puzzle</option>
+                <option>Strategy</option>
+                <option>Memory</option>
+                <option>Racing</option>
+                </select>
             </div>
 
             {/* Game Cards */}
