@@ -14,6 +14,8 @@ const games = [
     id: 1,
     title: "Rock Paper Scissors",
     slug: "rock-paper-scissors",
+    category: "Arcade",
+    difficulty: "Easy",
     image: rock,
     description: "Interactive game with dynamic result logic.",
     link: "https://ayankarak.github.io/ROCK-PAPER-SCISSORS/"
@@ -22,6 +24,8 @@ const games = [
     id: 2,
     title: "Tic Tac Toe",
     slug: "tic-tac-toe",
+    category: "Puzzle",
+    difficulty: "Medium",
     image: tic,
     description: "Dynamic winner detection with clean UI logic.",
     link: "https://ayankarak.github.io/TIC-TAC_TOE/"
@@ -30,6 +34,8 @@ const games = [
     id: 3,
     title: "Snake Game",
     slug: "snake-game",
+    category: "Arcade",
+    difficulty: "Medium",
     image: snake,
     description: "Classic snake game with smooth controls.",
     link: "https://ayankarak.github.io/MY-SNAKE-GAME/"
@@ -38,6 +44,8 @@ const games = [
     id: 4,
     title: "Flappy Bird",
     slug: "flappy-bird",
+    category: "Arcade",
+    difficulty: "Hard",
     image: flappy,
     description: "Challenging bird-flapping game with simple controls.",
     link: "https://ayankarak.github.io/FLAPPY-BIRD/"
@@ -46,6 +54,8 @@ const games = [
     id: 5,
     title: "Pong",
     slug: "pong",
+    category: "Arcade",
+    difficulty: "Medium",
     image: pong,
     description: "Classic arcade game with simple controls.",
     link: "https://ayankarak.github.io/PONG/"
@@ -54,6 +64,8 @@ const games = [
         id: 6,
         title: "Tetris",
         slug: "tetris",
+        category: "Puzzle",
+        difficulty: "Medium",
         image: tetris,
         description: "Classic puzzle game with smooth controls.",
         link: "https://ayankarak.github.io/Tetris/"
@@ -62,6 +74,8 @@ const games = [
         id: 7,
         title: "Car Racing",
         slug: "car-racing",
+        category: "Arcade",
+        difficulty: "Hard",
         image: car,
         description: "Exciting car racing game with realistic physics.",
         link: "https://ayankarak.github.io/MY-CAR-GAMES/"
@@ -71,6 +85,8 @@ const games = [
         id: 8,
         title: "Memory Match",
         slug: "memory-match",
+        category: "Puzzle",
+        difficulty: "Medium",
         image: match,
         description: "Challenging memory matching game with simple controls.",
         link: "https://ayankarak.github.io/MATCH-THE-IMAGES//"
@@ -79,6 +95,8 @@ const games = [
         id: 9,
         title: "Cross Sum",
         slug: "cross-sum",
+        category: "Puzzle",
+        difficulty: "Hard",
         image: cross,
         description: "Grid-based puzzle where row and column sums must match the target numbers.",
         link: "https://ayankarak.github.io/CROSS-SUM/"
@@ -87,6 +105,8 @@ const games = [
         id: 10,
         title: "Water Sorting",
         slug: "water-sorting",
+        category: "Puzzle",
+        difficulty: "Hard",
         image: water,
         description: "Challenging water sorting game with simple controls.",
         link: "https://ayankarak.github.io/WATER-SORTING/"
