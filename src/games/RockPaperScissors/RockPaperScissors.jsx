@@ -28,6 +28,14 @@ function RockPaperScissors() {
         paper: "rock",
         scissors: "paper",
     };
+    function getWinningMove(userChoice) {
+        const counterMoves = {
+            rock: "paper",
+            paper: "scissors",
+            scissors: "rock",
+        };
+        return counterMoves[userChoice];
+    }
     function getRandomMove() {
         const options = ["rock", "paper", "scissors"];
 
@@ -38,6 +46,27 @@ function RockPaperScissors() {
         return options[randomIndex];
     }
     function computerChoice(userChoice) {
+        // EASY
+        if (difficulty === "easy") {
+            return getRandomMove();
+        }
+
+        // MEDIUM
+        if (difficulty === "medium") {
+            const random = Math.random();
+
+            if (random < 0.5) {
+            return getRandomMove();
+            }
+
+            return getWinningMove(userChoice);
+        }
+
+        // HARD
+        if (difficulty === "hard") {
+            return getWinningMove(userChoice);
+        }
+
         return getRandomMove();
     }
     useEffect(() => {
