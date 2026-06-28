@@ -6,17 +6,36 @@ import Footer from "./component/Footer";
 import Home from "./pages/Home";
 import GameDetails from "./pages/GameDetails";
 import NotFound from "./pages/NotFound";
+import GamePlay from "./pages/GamePlay";
 
 import games from "./data/Games";
+import RockPaperScissors from "./games/RockPaperScissors/RockPaperScissors";
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/games/:gameName" element={<GameDetails />} />
-        <Route path="*" element={<NotFound />} />
+          {/* Home */}
+          <Route path="/" element={<Home />} />
+
+          {/* Game Details */}
+          <Route
+            path="/games/:gameName"
+            element={<GameDetails />}
+          />
+
+          {/* Play Game */}
+          <Route
+            path="/games/:gameName/play"
+            element={<GamePlay />}
+          />
+
+          {/* 404 */}
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
       </Routes>
       <Footer />
     </BrowserRouter>

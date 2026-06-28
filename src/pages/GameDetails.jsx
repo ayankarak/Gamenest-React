@@ -35,9 +35,12 @@ function GameDetails() {
             <h3>Difficulty</h3>
             <p>{game.difficulty}</p>
 
-            <button className="play-btn">
-            ▶ Play Game
-            </button>
+            <Link
+                to={`/games/${game.slug}/play`}
+                className="play-btn"
+                >
+                 ▶ Play Game
+            </Link>
 
         </div>
 
