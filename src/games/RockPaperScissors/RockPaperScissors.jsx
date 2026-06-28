@@ -1,107 +1,201 @@
 import "./RockPaperScissors.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function RockPaperScissors() {
 
-  const [difficulty, setDifficulty] = useState("easy");
+    const [difficulty, setDifficulty] = useState("easy");
 
-  const [userScore, setUserScore] = useState(0);
+    const [userScore, setUserScore] = useState(0);
 
-  const [compScore, setCompScore] = useState(0);
+    const [compScore, setCompScore] = useState(0);
 
-  const [playerMove, setPlayerMove] = useState("❔");
+    const [playerMove, setPlayerMove] = useState("❔");
 
-  const [computerMove, setComputerMove] = useState("❔");
+    const [computerMove, setComputerMove] = useState("❔");
 
-  const [result, setResult] = useState("Choose your move");
+    const [result, setResult] = useState("Choose your move");
 
-  const [gameOver, setGameOver] = useState(false);
-  return (
-    <div className="rps-container">
+    const [gameOver, setGameOver] = useState(false);
 
-      <h1>Rock Paper Scissors</h1>
+    const WINNING_SCORE = 5;
 
-      {/* Difficulty */}
+    const moves = {
+        rock: "✊",
+        paper: "📄",
+        scissors: "✂️",
+    };
+    const winningMoves = {
+        rock: "scissors",
+        paper: "rock",
+        scissors: "paper",
+    };
+    function getRandomMove() {
+        const options = ["rock", "paper", "scissors"];
 
-      <div className="difficulty">
+        const randomIndex = Math.floor(
+            Math.random() * options.length
+        );
 
-        <label>Difficulty</label>
+        return options[randomIndex];
+    }
+    function computerChoice(userChoice) {
+        return getRandomMove();
+    }
+    useEffect(() => {
+        if (userScore >= WINNING_SCORE) {
+            setResult("🏆 Congratulations! You won the match!");
+            setGameOver(true);
+        }
 
-        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+        if (compScore >= WINNING_SCORE) {
+            setResult("💀 Computer won the match!");
+            setGameOver(true);
+        }
+    }, [userScore, compScore]);
+    function playGame(userChoice) {
+        // Stop if game is already over
+        if (gameOver) return;
 
-          <option value="easy">Easy</option>
+        // Computer Move
+        const compChoice = computerChoice(userChoice);
 
-          <option value="medium">Medium</option>
+        // Update Moves
+        setPlayerMove(moves[userChoice]);
+        setComputerMove(moves[compChoice]);
 
-          <option value="hard">Hard</option>
+        // Draw
+        if (userChoice === compChoice) {
+            setResult("🤝 It's a Draw!");
+            return;
+        }
 
-        </select>
+        // User Wins
+        if (winningMoves[userChoice] === compChoice) {
+            setResult("🎉 You Win!");
+            setUserScore((prev) => prev + 1);
+        }
 
-      </div>
+        // Computer Wins
+        else {
+            setResult("💻 Computer Wins!");
+            setCompScore((prev) => prev + 1);
+        }
+    }
+    function resetGame() {
+        setUserScore(0);
+        setCompScore(0);
 
-      {/* Score */}
+        setPlayerMove("❔");
+        setComputerMove("❔");
 
-      <div className="scoreboard">
+        setResult("Choose your move");
 
-        <div>
+        setGameOver(false);
 
-          <h3>You</h3>
+        setDifficulty("easy");
+    }
+    return (
+        <div className="rps-container">
 
-          <p>{userScore}</p>
+            <h1>Rock Paper Scissors</h1>
+
+            {/* Difficulty */}
+
+            <div className="difficulty">
+
+                <label>Difficulty</label>
+
+                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+
+                    <option value="easy">Easy</option>
+
+                    <option value="medium">Medium</option>
+
+                    <option value="hard">Hard</option>
+
+                </select>
+
+            </div>
+
+            {/* Score */}
+
+            <div className="scoreboard">
+
+                <div>
+
+                    <h3>You</h3>
+
+                    <p>{userScore}</p>
+
+                </div>
+
+                <div>
+
+                    <h3>Computer</h3>
+
+                    <p>{compScore}</p>
+
+                </div>
+
+            </div>
+
+            {/* Moves */}
+
+            <div className="moves">
+
+                <div>
+
+                    <h2>Player</h2>
+
+                    <div className="move">{playerMove}</div>
+
+                </div>
+
+                <div>
+
+                    <h2>Computer</h2>
+
+                    <div className="move">{computerMove}</div>
+
+                </div>
+
+            </div>
+
+            {/* Result */}
+
+            <h2 className="result">
+                {result}
+            </h2>
+
+            {/* Buttons */}
+
+            <div className="choices">
+
+                <button disabled={gameOver} onClick={() => playGame("rock")}>
+                    ✊
+                </button>
+
+                <button disabled={gameOver} onClick={() => playGame("paper")}>
+                    📄
+                </button>
+
+                <button disabled={gameOver} onClick={() => playGame("scissors")}>
+                    ✂️
+                </button>
+
+            </div>
+            {gameOver && (
+                <div className="reset-container">
+                    <button
+                        className="reset-btn"
+                        onClick={resetGame}
+                    >
+                        🔄 Play Again
+                    </button>
+                </div>
+            )}
 
         </div>
-
-        <div>
-
-          <h3>Computer</h3>
-
-          <p>{compScore}</p>
-
-        </div>
-
-      </div>
-
-      {/* Moves */}
-
-      <div className="moves">
-
-        <div>
-
-          <h2>Player</h2>
-
-          <div className="move">{playerMove}</div>
-
-        </div>
-
-        <div>
-
-          <h2>Computer</h2>
-
-          <div className="move">{computerMove}</div>
-
-        </div>
-
-      </div>
-
-      {/* Result */}
-
-      <h2 className="result">
-        {result}
-      </h2>
-
-      {/* Buttons */}
-
-      <div className="choices">
-
-        <button>✊</button>
-
-        <button>📄</button>
-
-        <button>✂️</button>
-
-      </div>
-
-    </div>
-  );
+    );
 }
 
 export default RockPaperScissors;
