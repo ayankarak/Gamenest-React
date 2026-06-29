@@ -165,203 +165,257 @@ function Snake() {
     // Keyboard Controls
     // -----------------------------
 
-useEffect(() => {
-    const handleKeyDown = (e) => {
-        if (
-            e.key === "ArrowUp" ||
-            e.key === "ArrowDown" ||
-            e.key === "ArrowLeft" ||
-            e.key === "ArrowRight"
-        ) {
-            e.preventDefault();
-        }
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (
+                e.key === "ArrowUp" ||
+                e.key === "ArrowDown" ||
+                e.key === "ArrowLeft" ||
+                e.key === "ArrowRight"
+            ) {
+                e.preventDefault();
+            }
 
             // Space = Start / Pause / Resume
-    if (e.code === "Space") {
+            if (e.code === "Space") {
 
-        // Start Game
-        if (!gameStarted && !gameOver) {
-            setGameStarted(true);
-            setPaused(false);
-            return;
-        }
+                // Start Game
+                if (!gameStarted && !gameOver) {
+                    setGameStarted(true);
+                    setPaused(false);
+                    return;
+                }
 
-        // Pause / Resume
-        if (gameStarted && !gameOver) {
-            setPaused((prev) => !prev);
-            return;
-        }
-        // Don't allow movement before game starts
-    if (!gameStarted || paused || gameOver) return;
-    }
+                // Pause / Resume
+                if (gameStarted && !gameOver) {
+                    setPaused((prev) => !prev);
+                    return;
+                }
+                // Don't allow movement before game starts
+                if (!gameStarted || paused || gameOver) return;
+            }
 
-        switch (e.key) {
-            case "ArrowUp":
-                if (direction !== "DOWN") setDirection("UP");
-                break;
+            switch (e.key) {
+                case "ArrowUp":
+                    if (direction !== "DOWN") setDirection("UP");
+                    break;
 
-            case "ArrowDown":
-                if (direction !== "UP") setDirection("DOWN");
-                break;
+                case "ArrowDown":
+                    if (direction !== "UP") setDirection("DOWN");
+                    break;
 
-            case "ArrowLeft":
-                if (direction !== "RIGHT") setDirection("LEFT");
-                break;
+                case "ArrowLeft":
+                    if (direction !== "RIGHT") setDirection("LEFT");
+                    break;
 
-            case "ArrowRight":
-                if (direction !== "LEFT") setDirection("RIGHT");
-                break;
+                case "ArrowRight":
+                    if (direction !== "LEFT") setDirection("RIGHT");
+                    break;
 
-            default:
-                break;
-        }
-    };
+                default:
+                    break;
+            }
+        };
 
-    window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener("keydown", handleKeyDown);
 
-    return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-    };
-}, [direction, gameStarted, paused, gameOver]);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [direction, gameStarted, paused, gameOver]);
 
-useEffect(() => {
-  if (!gameStarted || gameOver || paused) return;
+    useEffect(() => {
+        if (!gameStarted || gameOver || paused) return;
 
-  intervalRef.current = setInterval(() => {
-    moveSnake();
-  }, getSpeed());
+        intervalRef.current = setInterval(() => {
+            moveSnake();
+        }, getSpeed());
 
-  return () => {
-    clearInterval(intervalRef.current);
-  };
-}, [gameStarted, direction, paused, gameOver, difficulty]);
+        return () => {
+            clearInterval(intervalRef.current);
+        };
+    }, [gameStarted, direction, paused, gameOver, difficulty]);
 
 
-return (
-  <div className="snake-container">
+    return (
+        <div className="snake-container">
 
-    {/* Title */}
-    <h1>🐍 Snake Game</h1>
+            {/* Title */}
+            <h1>🐍 Snake Game</h1>
 
-    {/* Difficulty */}
-    <div className="difficulty">
-      <label>Difficulty : </label>
+            {/* Difficulty */}
+            <div className="difficulty">
+                <label>Difficulty : </label>
 
-      <select
-        value={difficulty}
-        onChange={(e) => setDifficulty(e.target.value)}
-      >
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </div>
+                <select
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value)}
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
 
-    {/* Status */}
-    <div className="status">
-      {gameOver
-        ? "💀 Game Over"
-        : paused
-        ? "⏸ Paused"
-        : gameStarted
-        ? "🎮 Playing"
-        : "▶ Ready"}
-    </div>
+            {/* Status */}
+            <div className="status">
+                {gameOver
+                    ? "💀 Game Over"
+                    : paused
+                        ? "⏸ Paused"
+                        : gameStarted
+                            ? "🎮 Playing"
+                            : "▶ Ready"}
+            </div>
 
-    {/* Game Layout */}
-    <div className="game-layout">
+            {/* Game Layout */}
+            <div className="game-layout">
 
-      {/* Left Panel */}
-      <div className="left-panel">
+                {/* Left Panel */}
+                <div className="left-panel">
 
-        <div className="score-card">
-          <h3>Score</h3>
-          <p>{score}</p>
+                    <div className="score-card">
+                        <h3>Score</h3>
+                        <p>{score}</p>
+                    </div>
+
+                    <div className="score-card">
+                        <h3>High Score</h3>
+                        <p>{highScore}</p>
+                    </div>
+
+                </div>
+
+                {/* Game Board */}
+                <div className="board">
+                    {Array.from({ length: BOARD_SIZE }).map((_, row) =>
+                        Array.from({ length: BOARD_SIZE }).map((_, col) => {
+
+                            const isSnake = isSnakeCell(col, row);
+
+                            const isHead =
+                                snake[0].x === col &&
+                                snake[0].y === row;
+
+                            return (
+                                <div
+                                    key={`${row}-${col}`}
+                                    className={`
+            cell
+            ${isSnake ? "snake" : ""}
+            ${isHead ? "snake-head" : ""}
+            ${isFoodCell(col, row) ? "food" : ""}
+          `}
+                                ></div>
+                            );
+
+                        })
+                    )}
+                </div>
+
+            </div>
+
+            {/* Buttons */}
+            <div className="buttons">
+                <button
+                    className="restart-btn"
+                    onClick={() => {
+                        clearInterval(intervalRef.current);
+
+                        setSnake(INITIAL_SNAKE);
+                        setFood(generateFood(INITIAL_SNAKE));
+                        setDirection("RIGHT");
+
+                        setScore(0);
+                        setGameOver(false);
+                        setPaused(false);
+                        setGameStarted(false);
+                    }}
+                >
+                    🔄 Restart
+                </button>
+            </div>
+
+            {/* Game Over */}
+            {gameOver && (
+                <div className="game-over-overlay">
+
+                    <div className="game-over-card">
+
+                        <h2>💀 Game Over</h2>
+
+                        <p>Score : {score}</p>
+
+                        <p>High Score : {highScore}</p>
+
+                        <button
+                            className="play-again-btn"
+                            onClick={() => {
+                                clearInterval(intervalRef.current);
+
+                                setSnake(INITIAL_SNAKE);
+                                setFood(generateFood(INITIAL_SNAKE));
+                                setDirection("RIGHT");
+
+                                setScore(0);
+                                setPaused(false);
+                                setGameOver(false);
+                                setGameStarted(true);
+                            }}
+                        >
+                            🔄 Play Again
+                        </button>
+
+                    </div>
+
+                </div>
+            )}
+            <div className="mobile-controls">
+
+                <button
+                    onClick={() => {
+                        if (direction !== "DOWN")
+                            setDirection("UP");
+                    }}
+                >
+                    ⬆
+                </button>
+
+                <div>
+
+                    <button
+                        onClick={() => {
+                            if (direction !== "RIGHT")
+                                setDirection("LEFT");
+                        }}
+                    >
+                        ⬅
+                    </button>
+
+                    <button
+                        onClick={() => {
+                            if (direction !== "LEFT")
+                                setDirection("RIGHT");
+                        }}
+                    >
+                        ➡
+                    </button>
+
+                </div>
+
+                <button
+                    onClick={() => {
+                        if (direction !== "UP")
+                            setDirection("DOWN");
+                    }}
+                >
+                    ⬇
+                </button>
+
+            </div>
+
         </div>
-
-        <div className="score-card">
-          <h3>High Score</h3>
-          <p>{highScore}</p>
-        </div>
-
-      </div>
-
-      {/* Game Board */}
-      <div className="board">
-        {Array.from({ length: BOARD_SIZE }).map((_, row) =>
-          Array.from({ length: BOARD_SIZE }).map((_, col) => (
-            <div
-              key={`${row}-${col}`}
-              className={`cell ${
-                isSnakeCell(col, row) ? "snake" : ""
-              } ${
-                isFoodCell(col, row) ? "food" : ""
-              }`}
-            ></div>
-          ))
-        )}
-      </div>
-
-    </div>
-
-    {/* Buttons */}
-<div className="buttons">
-  <button
-    className="restart-btn"
-    onClick={() => {
-      clearInterval(intervalRef.current);
-
-      setSnake(INITIAL_SNAKE);
-      setFood(generateFood(INITIAL_SNAKE));
-      setDirection("RIGHT");
-
-      setScore(0);
-      setGameOver(false);
-      setPaused(false);
-      setGameStarted(false);
-    }}
-  >
-    🔄 Restart
-  </button>
-</div>
-
-    {/* Game Over */}
-    {gameOver && (
-      <div className="game-over-overlay">
-
-        <div className="game-over-card">
-
-          <h2>💀 Game Over</h2>
-
-          <p>Score : {score}</p>
-
-          <p>High Score : {highScore}</p>
-
-          <button
-            className="play-again-btn"
-            onClick={() => {
-              clearInterval(intervalRef.current);
-
-              setSnake(INITIAL_SNAKE);
-              setFood(generateFood(INITIAL_SNAKE));
-              setDirection("RIGHT");
-
-              setScore(0);
-              setPaused(false);
-              setGameOver(false);
-              setGameStarted(true);
-            }}
-          >
-            🔄 Play Again
-          </button>
-
-        </div>
-
-      </div>
-    )}
-
-  </div>
-);
+    );
 }
 
 export default Snake;
