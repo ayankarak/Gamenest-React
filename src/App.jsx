@@ -10,6 +10,7 @@ import GamePlay from "./pages/GamePlay";
 
 import games from "./data/Games";
 import RockPaperScissors from "./games/RockPaperScissors/RockPaperScissors";
+import Snake from "./games/Snake/Snake";
 
 function App() {
   return (

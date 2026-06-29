@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import RockPaperScissors from "../games/RockPaperScissors/RockPaperScissors";
+import Snake from "../games/Snake/Snake";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -7,6 +8,8 @@ function GamePlay() {
   switch (gameName) {
     case "rock-paper-scissors":
       return <RockPaperScissors />;
+    case "snake-game":
+      return <Snake />;
 
     default:
       return (
