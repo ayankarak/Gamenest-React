@@ -1,11 +1,88 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./TicTacToe.css";
+import { getWinner } from "./winner";
+import { computerMove } from "./ai";
 
 function TicTacToe() {
 
     const [mode, setMode] = useState("");
     const [board, setBoard] = useState(Array(9).fill(""));
     const [currentPlayer, setCurrentPlayer] = useState("X");
+    const [winner, setWinner] = useState(null);
+    const [winningCells, setWinningCells] = useState([]);
+    const [difficulty, setDifficulty] = useState("easy");
+    const [isThinking, setIsThinking] = useState(false);
+
+
+    const handleClick = (index) => {
+
+    if (
+        board[index] !== "" ||
+        winner ||
+        isThinking
+    ) {
+        return;
+    }
+
+    if (
+        mode === "computer" &&
+        currentPlayer !== "X"
+    ) {
+        return;
+    }
+
+    const newBoard = [...board];
+
+    newBoard[index] = currentPlayer;
+
+    setBoard(newBoard);
+
+    const result = getWinner(newBoard);
+
+    if (result.winner) {
+
+        setWinner(result.winner);
+        setWinningCells(result.winningCells);
+
+        return;
+    }
+
+    if (mode === "player") {
+
+        setCurrentPlayer(
+            currentPlayer === "X" ? "O" : "X"
+        );
+
+    } else {
+
+        setCurrentPlayer("O");
+
+    }
+
+};
+
+    useEffect(() => {
+
+        if (
+            mode !== "computer" ||
+            currentPlayer !== "O" ||
+            winner ||
+            isThinking
+        ) {
+            return;
+        }
+
+        computerMove({
+            board,
+            difficulty,
+            setBoard,
+            setCurrentPlayer,
+            setWinner,
+            setWinningCells,
+            setIsThinking
+        });
+
+    }, [board, currentPlayer, winner, isThinking, mode, difficulty]);
 
     return (
 
@@ -49,11 +126,36 @@ function TicTacToe() {
 
                         <div className="turn">
 
-                            Turn : {currentPlayer}
+                            {
+                                isThinking
+                                    ?
+
+                                    "🤖 Computer Thinking..."
+
+                                    :
+
+                                    `Turn : ${currentPlayer}`
+                            }
 
                         </div>
 
                     </div>
+                    {mode === "computer" && (
+                        <div className="difficulty">
+
+                            <label>Difficulty : </label>
+
+                            <select
+                                value={difficulty}
+                                onChange={(e) => setDifficulty(e.target.value)}
+                            >
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+
+                        </div>
+                    )}
 
                     <div className="board">
 
@@ -61,7 +163,11 @@ function TicTacToe() {
 
                             <div
                                 key={index}
-                                className="cell"
+                                className={`cell ${winningCells.includes(index)
+                                    ? "winner-cell"
+                                    : ""
+                                    }`}
+                                onClick={() => handleClick(index)}
                             >
                                 {cell}
                             </div>
@@ -69,10 +175,31 @@ function TicTacToe() {
                         ))}
 
                     </div>
+                    {winner && (
+
+                        <div className="winner-box">
+                            {winner === "Draw"
+                                ?
+                                "🤝 Match Draw"
+                                :
+                                `🏆 Player ${winner} Wins!`
+                            }
+                        </div>
+
+                    )}
 
                     <div className="buttons">
 
-                        <button className="restart-btn">
+                        <button
+                            className="restart-btn"
+                            onClick={() => {
+                                setBoard(Array(9).fill(""));
+                                setCurrentPlayer("X");
+                                setWinner(null);
+                                setWinningCells([]);
+                                setIsThinking(false);
+                            }}
+                        >
 
                             🔄 Restart
 
@@ -80,7 +207,21 @@ function TicTacToe() {
 
                         <button
                             className="back-btn"
-                            onClick={() => setMode("")}
+                            onClick={() => {
+
+                                setMode("");
+
+                                setBoard(Array(9).fill(""));
+
+                                setCurrentPlayer("X");
+
+                                setWinner(null);
+
+                                setWinningCells([]);
+
+                                setIsThinking(false);
+
+                            }}
                         >
 
                             ⬅ Change Mode
