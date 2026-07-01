@@ -11,6 +11,7 @@ import GamePlay from "./pages/GamePlay";
 import games from "./data/Games";
 import RockPaperScissors from "./games/RockPaperScissors/RockPaperScissors";
 import Snake from "./games/Snake/Snake";
+import TicTacToe from "./games/TicTacToe/TicTacToe";
 
 function App() {
   return (
