@@ -16,50 +16,50 @@ function TicTacToe() {
 
     const handleClick = (index) => {
 
-    if (
-        board[index] !== "" ||
-        winner ||
-        isThinking
-    ) {
-        return;
-    }
+        if (
+            board[index] !== "" ||
+            winner ||
+            isThinking
+        ) {
+            return;
+        }
 
-    if (
-        mode === "computer" &&
-        currentPlayer !== "X"
-    ) {
-        return;
-    }
+        if (
+            mode === "computer" &&
+            currentPlayer !== "X"
+        ) {
+            return;
+        }
 
-    const newBoard = [...board];
+        const newBoard = [...board];
 
-    newBoard[index] = currentPlayer;
+        newBoard[index] = currentPlayer;
 
-    setBoard(newBoard);
+        setBoard(newBoard);
 
-    const result = getWinner(newBoard);
+        const result = getWinner(newBoard);
 
-    if (result.winner) {
+        if (result.winner) {
 
-        setWinner(result.winner);
-        setWinningCells(result.winningCells);
+            setWinner(result.winner);
+            setWinningCells(result.winningCells);
 
-        return;
-    }
+            return;
+        }
 
-    if (mode === "player") {
+        if (mode === "player") {
 
-        setCurrentPlayer(
-            currentPlayer === "X" ? "O" : "X"
-        );
+            setCurrentPlayer(
+                currentPlayer === "X" ? "O" : "X"
+            );
 
-    } else {
+        } else {
 
-        setCurrentPlayer("O");
+            setCurrentPlayer("O");
 
-    }
+        }
 
-};
+    };
 
     useEffect(() => {
 
@@ -156,77 +156,80 @@ function TicTacToe() {
 
                         </div>
                     )}
+                        {winner && (
 
-                    <div className="board">
-
-                        {board.map((cell, index) => (
-
-                            <div
-                                key={index}
-                                className={`cell ${winningCells.includes(index)
-                                    ? "winner-cell"
-                                    : ""
-                                    }`}
-                                onClick={() => handleClick(index)}
-                            >
-                                {cell}
+                            <div className="winner-box">
+                                {winner === "Draw"
+                                    ?
+                                    "🤝 Match Draw"
+                                    :
+                                    `🏆 Player ${winner} Wins!`
+                                }
                             </div>
 
-                        ))}
+                        )}
+                    <div className="game-layout">
 
-                    </div>
-                    {winner && (
+                        <div className="board">
 
-                        <div className="winner-box">
-                            {winner === "Draw"
-                                ?
-                                "🤝 Match Draw"
-                                :
-                                `🏆 Player ${winner} Wins!`
-                            }
+                            {board.map((cell, index) => (
+
+                                <div
+                                    key={index}
+                                    className={`cell ${winningCells.includes(index)
+                                        ? "winner-cell"
+                                        : ""
+                                        }`}
+                                    onClick={() => handleClick(index)}
+                                >
+                                    {cell}
+                                </div>
+
+                            ))}
+
+                        </div>
+                        <div className="buttons">
+
+                            <button
+                                className="restart-btn"
+                                onClick={() => {
+                                    setBoard(Array(9).fill(""));
+                                    setCurrentPlayer("X");
+                                    setWinner(null);
+                                    setWinningCells([]);
+                                    setIsThinking(false);
+                                }}
+                            >
+
+                                🔄 Restart
+
+                            </button>
+
+                            <button
+                                className="back-btn"
+                                onClick={() => {
+
+                                    setMode("");
+
+                                    setBoard(Array(9).fill(""));
+
+                                    setCurrentPlayer("X");
+
+                                    setWinner(null);
+
+                                    setWinningCells([]);
+
+                                    setIsThinking(false);
+
+                                }}
+                            >
+
+                                ⬅ Change Mode
+
+                            </button>
                         </div>
 
-                    )}
 
-                    <div className="buttons">
-
-                        <button
-                            className="restart-btn"
-                            onClick={() => {
-                                setBoard(Array(9).fill(""));
-                                setCurrentPlayer("X");
-                                setWinner(null);
-                                setWinningCells([]);
-                                setIsThinking(false);
-                            }}
-                        >
-
-                            🔄 Restart
-
-                        </button>
-
-                        <button
-                            className="back-btn"
-                            onClick={() => {
-
-                                setMode("");
-
-                                setBoard(Array(9).fill(""));
-
-                                setCurrentPlayer("X");
-
-                                setWinner(null);
-
-                                setWinningCells([]);
-
-                                setIsThinking(false);
-
-                            }}
-                        >
-
-                            ⬅ Change Mode
-
-                        </button>
 
                     </div>
 
