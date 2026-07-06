@@ -1,7 +1,5 @@
-/* ===========================
-   Snake Container
-=========================== */
 
+   /* Snake Container */
 .snake-container {
     max-width: 1000px;
     margin: 10px auto;
@@ -15,9 +13,7 @@
     font-size: 2.2rem;
 }
 
-/* ===========================
-   Difficulty
-=========================== */
+   /* Difficulty */
 
 .difficulty {
     margin-bottom: 10px;
