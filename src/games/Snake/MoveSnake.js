@@ -1,9 +1,7 @@
 import { checkCollision } from "./checkCollision";
-
 // ==============================
 // Board Size
 // ==============================
-
 const BOARD_SIZE = 20;
 
 // ==============================
@@ -11,23 +9,16 @@ const BOARD_SIZE = 20;
 // ==============================
 
 export const getSpeed = (difficulty) => {
-
     switch (difficulty) {
-
         case "easy":
             return 200;
-
         case "medium":
             return 130;
-
         case "hard":
             return 80;
-
         default:
             return 200;
-
     }
-
 };
 
 // ==============================
@@ -35,34 +26,20 @@ export const getSpeed = (difficulty) => {
 // ==============================
 
 export const generateFood = (snake) => {
-
     let food;
-
     do {
-
         food = {
-
             x: Math.floor(Math.random() * BOARD_SIZE),
-
             y: Math.floor(Math.random() * BOARD_SIZE),
-
         };
-
     } while (
-
         snake.some(
-
             (cell) =>
-
                 cell.x === food.x &&
                 cell.y === food.y
-
         )
-
     );
-
     return food;
-
 };
 
 // ==============================
@@ -70,72 +47,45 @@ export const generateFood = (snake) => {
 // ==============================
 
 export const moveSnake = ({
-
     snake,
-
     setSnake,
-
     food,
-
     setFood,
-
     direction,
-
     score,
-
     setScore,
-
     highScore,
-
     setHighScore,
-
     setGameOver,
-
     setGameStarted,
-
 }) => {
-
     const head = {
-
         ...snake[0]
-
     };
-
     switch (direction) {
-
         case "UP":
             head.y--;
             break;
-
         case "DOWN":
             head.y++;
             break;
-
         case "LEFT":
             head.x--;
             break;
-
         case "RIGHT":
             head.x++;
             break;
-
         default:
             break;
-
     }
-
     // ==========================
     // Collision
     // ==========================
 
     if (checkCollision(head, snake)) {
-
         setGameOver(true);
-
         setGameStarted(false);
-
         return;
-
     }
 
     // ==========================
@@ -143,11 +93,8 @@ export const moveSnake = ({
     // ==========================
 
     const newSnake = [
-
         head,
-
         ...snake,
-
     ];
 
     // ==========================
@@ -155,46 +102,26 @@ export const moveSnake = ({
     // ==========================
 
     if (
-
         head.x === food.x &&
         head.y === food.y
-
     ) {
-
         const newScore = score + 10;
-
         setScore(newScore);
-
         if (newScore > highScore) {
-
             setHighScore(newScore);
-
             localStorage.setItem(
-
                 "snakeHighScore",
-
                 newScore
-
             );
-
         }
-
         setFood(
-
             generateFood(newSnake)
-
         );
-
     }
-
     else {
-
         newSnake.pop();
-
     }
-
     // ==========================
-
     setSnake(newSnake);
 
 };
