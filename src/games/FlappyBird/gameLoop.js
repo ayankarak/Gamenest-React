@@ -29,7 +29,13 @@ export function gameLoop({
 
     // Pipe Movement
    
-    updatePipes(pipes);
+    updatePipes(
+
+    pipes,
+
+    gameState.pipeSpeed
+
+);
 
     // Remove Old Pipes
 
@@ -53,23 +59,75 @@ export function gameLoop({
 
     // Score
 
-    pipes.forEach(pipe => {
+pipes.forEach(pipe=>{
 
-        if (
+    if(
 
-            !pipe.passed &&
+        !pipe.passed &&
 
-            pipe.x + PIPE_WIDTH< bird.x
+        pipe.x + PIPE_WIDTH < bird.x
 
-        ) {
+    ){
 
-            pipe.passed = true;
+        pipe.passed=true;
 
-            setScore(prev => prev + 10);
+        setScore(prev=>{
 
-        }
+            const newScore=prev+10;
 
-    });
+            // Difficulty Based Speed
+
+            if(newScore % 5===0){
+
+                switch(gameState.difficulty){
+
+                    case "easy":
+
+                        gameState.pipeSpeed=Math.min(
+
+                            gameState.pipeSpeed+0.5,
+
+                            5
+
+                        );
+
+                        break;
+
+                    case "medium":
+
+                        gameState.pipeSpeed=Math.min(
+
+                            gameState.pipeSpeed+1,
+
+                            8
+
+                        );
+
+                        break;
+
+                    case "hard":
+
+                        gameState.pipeSpeed=Math.min(
+
+                            gameState.pipeSpeed+2,
+
+                            12
+
+                        );
+
+                        break;
+
+                }
+
+            }
+
+            return newScore;
+
+        });
+
+    }
+
+});
 
     // Collision
 

@@ -14,3 +14,6 @@ export const PIPE_SPEED = 3;
 export const PIPE_INTERVAL = 1800;
 
 export const GROUND_HEIGHT = 0;
+export const INITIAL_PIPE_SPEED = 3;
+
+export const MAX_PIPE_SPEED = 12;

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import RockPaperScissors from "../games/RockPaperScissors/RockPaperScissors";
 import Snake from "../games/Snake/Snake";
 import TicTacToe from "../games/TicTacToe/TicTacToe";
+import FlappyBird from "../games/FlappyBird/FlappyBird";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -13,6 +14,8 @@ function GamePlay() {
       return <Snake />;
     case "tic-tac-toe":
       return <TicTacToe />;
+    case "flappy-bird":
+      return <FlappyBird />;
 
     default:
       return (

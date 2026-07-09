@@ -34,11 +34,17 @@ export function createPipe() {
 
 }
 
-export function updatePipes(pipes) {
+export function updatePipes(
 
-    pipes.forEach(pipe => {
+    pipes,
 
-        pipe.x -= PIPE_SPEED;
+    speed
+
+){
+
+    pipes.forEach(pipe=>{
+
+        pipe.x -= speed;
 
     });
 

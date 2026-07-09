@@ -12,6 +12,7 @@ import games from "./data/Games";
 import RockPaperScissors from "./games/RockPaperScissors/RockPaperScissors";
 import Snake from "./games/Snake/Snake";
 import TicTacToe from "./games/TicTacToe/TicTacToe";
+import FlappyBird from "./games/FlappyBird/FlappyBird";
 
 function App() {
   return (
