@@ -3,6 +3,7 @@ import "./FlappyBird.css";
 
 import bgImage from "../../assets/flappy/flappy_back.png";
 import pipeImage from "../../assets/flappy/pipe.png";
+import birdImg from "../../assets/flappy/bird.png";
 
 //import { CANVAS_WIDTH, CANVAS_HEIGHT } from "./constants";
 
@@ -28,6 +29,8 @@ function FlappyBird() {
     const animationRef = useRef(null);
 
     const birdRef = useRef(createBird());
+    const birdImage = useRef(new Image());
+    const scoreRef = useRef(0);
 
     const pipesRef = useRef([]);
 
@@ -65,20 +68,21 @@ function FlappyBird() {
         bgRef.current.src = bgImage;
 
         pipeRef.current.src = pipeImage;
+        birdImage.current.src = birdImg;
 
     }, []);
 
-const gameState = useRef({
+    const gameState = useRef({
 
-    lastPipeTime: Date.now(),
+        lastPipeTime: Date.now(),
 
-    pipeInterval: 1800,
+        pipeInterval: 1800,
 
-    pipeSpeed: INITIAL_PIPE_SPEED,
+        pipeSpeed: INITIAL_PIPE_SPEED,
 
-    difficulty: "easy"
+        difficulty: "easy"
 
-});
+    });
 
     // --------------------
     // Draw
@@ -149,29 +153,34 @@ const gameState = useRef({
 
         ctx.beginPath();
         ctx.save();
+
         ctx.translate(
+
             bird.x,
+
             bird.y
+
         );
 
         ctx.rotate(
+
             bird.rotation * Math.PI / 180
-        );
-
-        ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            bird.radius,
-            0,
-            Math.PI * 2
 
         );
 
-        ctx.fillStyle = "#FFD93D";
+        ctx.drawImage(
 
-        ctx.fill();
+            birdImage.current,
+
+            -25,
+
+            -25,
+
+            50,
+
+            50
+
+        );
 
         ctx.restore();
 
@@ -200,7 +209,8 @@ const gameState = useRef({
     // --------------------
 
     const restartGame = () => {
-gameState.current.pipeSpeed=INITIAL_PIPE_SPEED;
+        scoreRef.current = 0;
+        gameState.current.pipeSpeed = INITIAL_PIPE_SPEED;
         birdRef.current = createBird();
 
         pipesRef.current = [];
@@ -253,187 +263,202 @@ gameState.current.pipeSpeed=INITIAL_PIPE_SPEED;
 
     }, [gameStarted, gameOver]);
 
+    useEffect(() => {
+
+        localStorage.setItem(
+            "flappyHighScore",
+            highScore
+        );
+
+    }, [highScore]);
+
     // --------------------
     // Game Loop
     // --------------------
 
-// --------------------
-// Game Loop
-// --------------------
+    useEffect(() => {
 
-useEffect(() => {
+        if (!gameStarted || gameOver) return;
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
 
-    if (!gameStarted || gameOver) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+        // Update game state
+        gameState.current.difficulty = difficulty;
 
-    // Update game state
-    gameState.current.difficulty = difficulty;
+        const animate = () => {
 
-    const animate = () => {
+            gameLoop({
 
-        gameLoop({
+                bird: birdRef.current,
+                pipes: pipesRef.current,
+                gameState: gameState.current,
 
-            bird: birdRef.current,
-            pipes: pipesRef.current,
-            gameState: gameState.current,
+                scoreRef,
 
-            setScore,
+                setScore,
 
-            onGameOver: () => {
-                setGameOver(true);
-                setGameStarted(false);
-                cancelAnimationFrame(animationRef.current);
+                onGameOver: () => {
+                    setGameOver(true);
+                    setGameStarted(false);
+                    cancelAnimationFrame(animationRef.current);
+                    const finalScore = scoreRef.current;
+                    if (finalScore > highScore) {
+                        setHighScore(finalScore);
+                        localStorage.setItem(
+                            "flappyHighScore",
+                            finalScore
+                        );
 
-            }
+                    }
 
-        });
+                }
 
-        draw(ctx);
+            });
+            draw(ctx);
+            animationRef.current = requestAnimationFrame(animate);
+
+        };
+
         animationRef.current = requestAnimationFrame(animate);
 
-    };
+        return () => {
+            cancelAnimationFrame(animationRef.current);
+        };
 
-    animationRef.current = requestAnimationFrame(animate);
+    }, [
 
-    return () => {
-        cancelAnimationFrame(animationRef.current);
-    };
+        gameStarted,
+        gameOver,
+        difficulty,
 
-}, [
-
-    gameStarted,
-    gameOver,
-    difficulty
-
-]);
+    ]);
 
     // RETURN HERE
 
-return (
+    return (
 
-    <div className="flappy-container">
+        <div className="flappy-container">
 
-        <h1>🐦 Flappy Bird</h1>
+            <h1>🐦 Flappy Bird</h1>
 
-        {/* Scoreboard */}
+            {/* Scoreboard */}
 
-        <div className="scoreboard">
+            <div className="scoreboard">
 
-            <div className="score-card">
+                <div className="score-card">
 
-                <h3>Score</h3>
+                    <h3>Score</h3>
 
-                <p>{score}</p>
-
-            </div>
-
-            <div className="score-card">
-
-                <h3>High Score</h3>
-
-                <p>{highScore}</p>
-
-            </div>
-
-        </div>
-        <div className="difficulty">
-
-    <label>Difficulty : </label>
-
-    <select
-        value={difficulty}
-        onChange={(e) => setDifficulty(e.target.value)}
-    >
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-    </select>
-
-</div>
-
-        {/* Game Area */}
-
-        <div className="game-area">
-
-            <canvas
-
-                ref={canvasRef}
-
-                width={CANVAS_WIDTH}
-
-                height={CANVAS_HEIGHT}
-
-                onClick={startGame}
-
-                onTouchStart={startGame}
-
-            />
-
-            {/* Start Screen */}
-
-            {!gameStarted && !gameOver && (
-
-                <div className="start-overlay">
-
-                    <h2>🐦 Flappy Bird</h2>
-
-                    <p>Press <b>SPACE</b> or Click to Start</p>
+                    <p>{score}</p>
 
                 </div>
 
-            )}
+                <div className="score-card">
 
-            {/* Game Over */}
+                    <h3>High Score</h3>
 
-            {gameOver && (
+                    <p>{highScore}</p>
 
-                <div className="game-over-overlay">
+                </div>
 
-                    <div className="game-over-card">
+            </div>
+            <div className="difficulty">
 
-                        <h2>💀 Game Over</h2>
+                <label>Difficulty : </label>
 
-                        <p>Score : {score}</p>
+                <select
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value)}
+                >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
 
-                        <p>High Score : {highScore}</p>
+            </div>
 
-                        <button
+            {/* Game Area */}
 
-                            className="restart-btn"
+            <div className="game-area">
 
-                            onClick={restartGame}
+                <canvas
 
-                        >
+                    ref={canvasRef}
 
-                            🔄 Play Again
+                    width={CANVAS_WIDTH}
 
-                        </button>
+                    height={CANVAS_HEIGHT}
+
+                    onClick={startGame}
+
+                    onTouchStart={startGame}
+
+                />
+
+                {/* Start Screen */}
+
+                {!gameStarted && !gameOver && (
+
+                    <div className="start-overlay">
+
+                        <h2>🐦 Flappy Bird</h2>
+
+                        <p>Press <b>SPACE</b> or Click to Start</p>
 
                     </div>
 
-                </div>
+                )}
 
-            )}
+                {/* Game Over */}
+
+                {gameOver && (
+
+                    <div className="game-over-overlay">
+
+                        <div className="game-over-card">
+
+                            <h2>💀 Game Over</h2>
+
+                            <p>Score : {score}</p>
+
+                            <p>High Score : {highScore}</p>
+
+                            <button
+
+                                className="restart-btn"
+
+                                onClick={restartGame}
+
+                            >
+
+                                🔄 Play Again
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                )}
+
+            </div>
+
+            {/* Controls */}
+
+            <div className="controls">
+
+                <p>
+
+                    ⌨️ <b>SPACE</b> or <b>Mouse Click</b> to Fly
+
+                </p>
+
+            </div>
 
         </div>
 
-        {/* Controls */}
-
-        <div className="controls">
-
-            <p>
-
-                ⌨️ <b>SPACE</b> or <b>Mouse Click</b> to Fly
-
-            </p>
-
-        </div>
-
-    </div>
-
-);
+    );
 }
 
 export default FlappyBird;
