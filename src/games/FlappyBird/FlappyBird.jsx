@@ -53,35 +53,25 @@ function FlappyBird() {
         Number(localStorage.getItem("flappyHighScore")) || 0
 
     );
-
     const [gameStarted, setGameStarted] = useState(false);
 
     const [gameOver, setGameOver] = useState(false);
     const [difficulty, setDifficulty] = useState("easy");
-
     // --------------------
     // Load Images
     // --------------------
 
     useEffect(() => {
-
         bgRef.current.src = bgImage;
-
         pipeRef.current.src = pipeImage;
         birdImage.current.src = birdImg;
-
     }, []);
 
     const gameState = useRef({
-
         lastPipeTime: Date.now(),
-
         pipeInterval: 1800,
-
         pipeSpeed: INITIAL_PIPE_SPEED,
-
         difficulty: "easy"
-
     });
 
     // --------------------
@@ -91,11 +81,8 @@ function FlappyBird() {
 
 
     const draw = (ctx) => {
-
         const bg = bgRef.current;
-
         const pipe = pipeRef.current;
-
         ctx.clearRect(
             0,
             0,
@@ -118,13 +105,9 @@ function FlappyBird() {
         pipesRef.current.forEach((p) => {
 
             // Top Pipe
-
             ctx.save();
-
             ctx.translate(p.x + 35, p.topHeight);
-
             ctx.scale(1, -1);
-
             ctx.drawImage(
                 pipe,
                 -35,
@@ -132,7 +115,6 @@ function FlappyBird() {
                 70,
                 p.topHeight
             );
-
             ctx.restore();
 
             // Bottom Pipe
@@ -144,46 +126,29 @@ function FlappyBird() {
                 70,
                 CANVAS_HEIGHT - p.bottomY
             );
-
         });
 
         // Bird
 
         const bird = birdRef.current;
-
         ctx.beginPath();
         ctx.save();
-
         ctx.translate(
-
             bird.x,
-
             bird.y
-
         );
 
         ctx.rotate(
-
             bird.rotation * Math.PI / 180
-
         );
-
         ctx.drawImage(
-
             birdImage.current,
-
             -25,
-
             -25,
-
             50,
-
             50
-
         );
-
         ctx.restore();
-
     };
 
     // --------------------
@@ -191,17 +156,11 @@ function FlappyBird() {
     // --------------------
 
     const startGame = () => {
-
         if (gameOver) return;
-
         if (!gameStarted) {
-
             setGameStarted(true);
-
         }
-
         jumpBird(birdRef.current);
-
     };
 
     // --------------------
@@ -212,17 +171,11 @@ function FlappyBird() {
         scoreRef.current = 0;
         gameState.current.pipeSpeed = INITIAL_PIPE_SPEED;
         birdRef.current = createBird();
-
         pipesRef.current = [];
-
         gameState.current.lastPipeTime = Date.now();
-
         setScore(0);
-
         setGameStarted(false);
-
         setGameOver(false);
-
     };
 
     // --------------------
@@ -230,37 +183,21 @@ function FlappyBird() {
     // --------------------
 
     useEffect(() => {
-
         const handleKeyDown = (e) => {
-
             if (e.code === "Space") {
-
                 e.preventDefault();
-
                 startGame();
-
             }
-
         };
-
         window.addEventListener(
-
             "keydown",
-
             handleKeyDown
-
         );
-
         return () =>
-
             window.removeEventListener(
-
                 "keydown",
-
                 handleKeyDown
-
             );
-
     }, [gameStarted, gameOver]);
 
     useEffect(() => {
