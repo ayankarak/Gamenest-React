@@ -4,6 +4,7 @@ import "./FlappyBird.css";
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
+import GameContainer from "../../component/PlayPage/GameContainer";
 
 import bgImage from "../../assets/flappy/flappy_back.png";
 import pipeImage from "../../assets/flappy/pipe.png";
@@ -25,6 +26,7 @@ import {
 } from "./constants";
 
 import { gameLoop } from "./gameLoop";
+import GameContainer from "../../component/PlayPage/GameContainer";
 
 function FlappyBird() {
 
@@ -297,70 +299,72 @@ function FlappyBird() {
             />
 
             {/* Game Area */}
+            <GameContainer width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
 
-            <div className="game-area">
+                <div className="game-area">
 
-                <canvas
+                    <canvas
 
-                    ref={canvasRef}
+                        ref={canvasRef}
 
-                    width={CANVAS_WIDTH}
+                        width={CANVAS_WIDTH}
 
-                    height={CANVAS_HEIGHT}
+                        height={CANVAS_HEIGHT}
 
-                    onClick={startGame}
+                        onClick={startGame}
 
-                    onTouchStart={startGame}
+                        onTouchStart={startGame}
 
-                />
+                    />
 
-                {/* Start Screen */}
+                    {/* Start Screen */}
 
-                {!gameStarted && !gameOver && (
+                    {!gameStarted && !gameOver && (
 
-                    <div className="start-overlay">
+                        <div className="start-overlay">
 
-                        <h2>🐦 Flappy Bird</h2>
+                            <h2>🐦 Flappy Bird</h2>
 
-                        <p>Press <b>SPACE</b> or Click to Start</p>
-
-                    </div>
-
-                )}
-
-                {/* Game Over */}
-
-                {gameOver && (
-
-                    <div className="game-over-overlay">
-
-                        <div className="game-over-card">
-
-                            <h2>💀 Game Over</h2>
-
-                            <p>Score : {score}</p>
-
-                            <p>High Score : {highScore}</p>
-
-                            <button
-
-                                className="restart-btn"
-
-                                onClick={restartGame}
-
-                            >
-
-                                🔄 Play Again
-
-                            </button>
+                            <p>Press <b>SPACE</b> or Click to Start</p>
 
                         </div>
 
-                    </div>
+                    )}
 
-                )}
+                    {/* Game Over */}
 
-            </div>
+                    {gameOver && (
+
+                        <div className="game-over-overlay">
+
+                            <div className="game-over-card">
+
+                                <h2>💀 Game Over</h2>
+
+                                <p>Score : {score}</p>
+
+                                <p>High Score : {highScore}</p>
+
+                                <button
+
+                                    className="restart-btn"
+
+                                    onClick={restartGame}
+
+                                >
+
+                                    🔄 Play Again
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    )}
+
+                </div>
+            </GameContainer>
 
             {/* Controls */}
 

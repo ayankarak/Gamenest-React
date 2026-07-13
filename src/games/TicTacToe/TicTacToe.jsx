@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import "./TicTacToe.css";
 import { getWinner } from "./winner";
 import { computerMove } from "./ai";
+
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
+import GameContainer from "../../component/PlayPage/GameContainer";
 
 function TicTacToe() {
 
@@ -167,70 +169,61 @@ function TicTacToe() {
                             </div>
 
                         )}
-                    <div className="game-layout">
+                        <GameContainer width={650}>
+                            <div className="game-layout">
 
-                        <div className="board">
+                                <div className="board">
 
-                            {board.map((cell, index) => (
+                                    {board.map((cell, index) => (
 
-                                <div
-                                    key={index}
-                                    className={`cell ${winningCells.includes(index)
-                                        ? "winner-cell"
-                                        : ""
-                                        }`}
-                                    onClick={() => handleClick(index)}
-                                >
-                                    {cell}
+                                        <div
+                                            key={index}
+                                            className={`cell ${winningCells.includes(index)
+                                                ? "winner-cell"
+                                                : ""
+                                                }`}
+                                            onClick={() => handleClick(index)}
+                                        >
+                                            {cell}
+                                        </div>
+
+                                    ))}
+
+                                </div>
+                                <div className="buttons">
+
+                                    <button
+                                        className="restart-btn"
+                                        onClick={() => {
+                                            setBoard(Array(9).fill(""));
+                                            setCurrentPlayer("X");
+                                            setWinner(null);
+                                            setWinningCells([]);
+                                            setIsThinking(false);
+                                        }}
+                                    >
+                                        🔄 Restart
+                                    </button>
+
+                                    <button
+                                        className="back-btn"
+                                        onClick={() => {
+                                            setMode("");
+                                            setBoard(Array(9).fill(""));
+                                            setCurrentPlayer("X");
+                                            setWinner(null);
+                                            setWinningCells([]);
+                                            setIsThinking(false);
+                                        }}
+                                    >
+                                        ⬅ Change Mode
+                                    </button>
                                 </div>
 
-                            ))}
-
-                        </div>
-                        <div className="buttons">
-
-                            <button
-                                className="restart-btn"
-                                onClick={() => {
-                                    setBoard(Array(9).fill(""));
-                                    setCurrentPlayer("X");
-                                    setWinner(null);
-                                    setWinningCells([]);
-                                    setIsThinking(false);
-                                }}
-                            >
-
-                                🔄 Restart
-
-                            </button>
-
-                            <button
-                                className="back-btn"
-                                onClick={() => {
-
-                                    setMode("");
-
-                                    setBoard(Array(9).fill(""));
-
-                                    setCurrentPlayer("X");
-
-                                    setWinner(null);
-
-                                    setWinningCells([]);
-
-                                    setIsThinking(false);
-
-                                }}
-                            >
-
-                                ⬅ Change Mode
-
-                            </button>
-                        </div>
 
 
-
-                    </div>
+                            </div>
+                    </GameContainer>
 
                 </>
 

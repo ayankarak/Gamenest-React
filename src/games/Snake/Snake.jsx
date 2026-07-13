@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import "./Snake.css";
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import GameContainer from "../../component/PlayPage/GameContainer";
 
 const BOARD_SIZE = 20;
 
@@ -255,7 +256,7 @@ function Snake() {
                 />
 
             {/* Difficulty */}
-            
+
             <DifficultySelector
                 value={difficulty}
                 onChange={setDifficulty}
@@ -272,40 +273,38 @@ function Snake() {
                             : "▶ Ready"}
             </div>
 
-            {/* Game Layout */}
-            <div className="game-layout">
+            <GameContainer width={900} height={900}>
+                {/* Game Layout */}
+                <div className="game-layout">
+                    {/* Game Board */}
+                    <div className="board">
+                        {Array.from({ length: BOARD_SIZE }).map((_, row) =>
+                            Array.from({ length: BOARD_SIZE }).map((_, col) => {
 
-                {/* Left Panel */}
-                
+                                const isSnake = isSnakeCell(col, row);
 
-                {/* Game Board */}
-                <div className="board">
-                    {Array.from({ length: BOARD_SIZE }).map((_, row) =>
-                        Array.from({ length: BOARD_SIZE }).map((_, col) => {
+                                const isHead =
+                                    snake[0].x === col &&
+                                    snake[0].y === row;
 
-                            const isSnake = isSnakeCell(col, row);
+                                return (
+                                    <div
+                                        key={`${row}-${col}`}
+                                        className={`
+                                            cell
+                                            ${isSnake ? "snake" : ""}
+                                            ${isHead ? "snake-head" : ""}
+                                            ${isFoodCell(col, row) ? "food" : ""}
+                                        `}
+                                    ></div>
+                                );
 
-                            const isHead =
-                                snake[0].x === col &&
-                                snake[0].y === row;
+                            })
+                        )}
+                    </div>
 
-                            return (
-                                <div
-                                    key={`${row}-${col}`}
-                                    className={`
-            cell
-            ${isSnake ? "snake" : ""}
-            ${isHead ? "snake-head" : ""}
-            ${isFoodCell(col, row) ? "food" : ""}
-          `}
-                                ></div>
-                            );
-
-                        })
-                    )}
                 </div>
-
-            </div>
+            </GameContainer>
 
             {/* Buttons */}
             <div className="buttons">
