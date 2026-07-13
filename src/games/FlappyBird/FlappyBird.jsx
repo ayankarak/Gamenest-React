@@ -3,6 +3,7 @@ import "./FlappyBird.css";
 
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 
 import bgImage from "../../assets/flappy/flappy_back.png";
 import pipeImage from "../../assets/flappy/pipe.png";
@@ -290,20 +291,10 @@ function FlappyBird() {
                     { label: "High Score", value: highScore }
                 ]}
             />
-            <div className="difficulty">
-
-                <label>Difficulty : </label>
-
-                <select
-                    value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value)}
-                >
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-
-            </div>
+            <DifficultySelector
+                value={difficulty}
+                onChange={setDifficulty}
+            />
 
             {/* Game Area */}
 

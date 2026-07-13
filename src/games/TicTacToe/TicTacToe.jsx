@@ -4,6 +4,7 @@ import { getWinner } from "./winner";
 import { computerMove } from "./ai";
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 
 function TicTacToe() {
 
@@ -149,20 +150,10 @@ function TicTacToe() {
 
                     </div>
                     {mode === "computer" && (
-                        <div className="difficulty">
-
-                            <label>Difficulty : </label>
-
-                            <select
-                                value={difficulty}
-                                onChange={(e) => setDifficulty(e.target.value)}
-                            >
-                                <option value="easy">Easy</option>
-                                <option value="medium">Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-
-                        </div>
+                        <DifficultySelector
+                            value={difficulty}
+                            onChange={setDifficulty}
+                        />
                     )}
                         {winner && (
 

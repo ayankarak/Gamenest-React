@@ -1,6 +1,10 @@
 import "./RockPaperScissors.css";
 import { useState, useEffect } from "react";
+
 import GameHeader from "../../component/PlayPage/GameHeader";
+import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import DifficultySelector from "../../component/PlayPage/DifficultySelector";
+
 function RockPaperScissors() {
 
     const [difficulty, setDifficulty] = useState("easy");
@@ -128,24 +132,6 @@ function RockPaperScissors() {
 
             <GameHeader title="✊ Rock Paper Scissors 📄" />
 
-            {/* Difficulty */}
-
-            <div className="difficulty">
-
-                <label>Difficulty</label>
-
-                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-
-                    <option value="easy">Easy</option>
-
-                    <option value="medium">Medium</option>
-
-                    <option value="hard">Hard</option>
-
-                </select>
-
-            </div>
-
             {/* Score */}
 
             <ScoreBoard
@@ -153,6 +139,13 @@ function RockPaperScissors() {
                     { label: "Player Score", value: userScore },
                     { label: "Computer Score", value: compScore }
                 ]}
+            />
+
+            {/* Difficulty */}
+
+            <DifficultySelector
+                value={difficulty}
+                onChange={setDifficulty}
             />
 
             {/* Moves */}

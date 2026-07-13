@@ -255,18 +255,11 @@ function Snake() {
                 />
 
             {/* Difficulty */}
-            <div className="difficulty">
-                <label>Difficulty : </label>
-
-                <select
-                    value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value)}
-                >
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-            </div>
+            
+            <DifficultySelector
+                value={difficulty}
+                onChange={setDifficulty}
+            />
 
             {/* Status */}
             <div className="status">
