@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./Snake.css";
+import GameHeader from "../../component/PlayPage/GameHeader";
+import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 
 const BOARD_SIZE = 20;
 
@@ -243,6 +245,15 @@ function Snake() {
             {/* Title */}
             <h1>🐍 Snake Game</h1>
 
+            {/* Scoreboard */}
+
+            <ScoreBoard
+                    items={[
+                        { label: "Score", value: score },
+                        { label: "High Score", value: highScore }
+                    ]}
+                />
+
             {/* Difficulty */}
             <div className="difficulty">
                 <label>Difficulty : </label>
@@ -272,19 +283,7 @@ function Snake() {
             <div className="game-layout">
 
                 {/* Left Panel */}
-                <div className="left-panel">
-
-                    <div className="score-card">
-                        <h3>Score</h3>
-                        <p>{score}</p>
-                    </div>
-
-                    <div className="score-card">
-                        <h3>High Score</h3>
-                        <p>{highScore}</p>
-                    </div>
-
-                </div>
+                
 
                 {/* Game Board */}
                 <div className="board">

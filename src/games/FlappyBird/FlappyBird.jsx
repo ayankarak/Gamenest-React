@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "./FlappyBird.css";
 
+import GameHeader from "../../component/PlayPage/GameHeader";
+import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+
 import bgImage from "../../assets/flappy/flappy_back.png";
 import pipeImage from "../../assets/flappy/pipe.png";
 import birdImg from "../../assets/flappy/bird.png";
@@ -277,29 +280,16 @@ function FlappyBird() {
 
         <div className="flappy-container">
 
-            <h1>🐦 Flappy Bird</h1>
+            <GameHeader title="🐦 Flappy Bird" />
 
             {/* Scoreboard */}
 
-            <div className="scoreboard">
-
-                <div className="score-card">
-
-                    <h3>Score</h3>
-
-                    <p>{score}</p>
-
-                </div>
-
-                <div className="score-card">
-
-                    <h3>High Score</h3>
-
-                    <p>{highScore}</p>
-
-                </div>
-
-            </div>
+            <ScoreBoard
+                items={[
+                    { label: "Score", value: score },
+                    { label: "High Score", value: highScore }
+                ]}
+            />
             <div className="difficulty">
 
                 <label>Difficulty : </label>

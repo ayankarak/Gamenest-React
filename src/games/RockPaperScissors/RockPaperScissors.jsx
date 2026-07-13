@@ -1,5 +1,6 @@
 import "./RockPaperScissors.css";
 import { useState, useEffect } from "react";
+import GameHeader from "../../component/PlayPage/GameHeader";
 function RockPaperScissors() {
 
     const [difficulty, setDifficulty] = useState("easy");
@@ -125,7 +126,7 @@ function RockPaperScissors() {
     return (
         <div className="rps-container">
 
-            <h1>Rock Paper Scissors</h1>
+            <GameHeader title="✊ Rock Paper Scissors 📄" />
 
             {/* Difficulty */}
 
@@ -147,25 +148,12 @@ function RockPaperScissors() {
 
             {/* Score */}
 
-            <div className="scoreboard">
-
-                <div>
-
-                    <h3>You</h3>
-
-                    <p>{userScore}</p>
-
-                </div>
-
-                <div>
-
-                    <h3>Computer</h3>
-
-                    <p>{compScore}</p>
-
-                </div>
-
-            </div>
+            <ScoreBoard
+                items={[
+                    { label: "Player Score", value: userScore },
+                    { label: "Computer Score", value: compScore }
+                ]}
+            />
 
             {/* Moves */}
 

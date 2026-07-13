@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./TicTacToe.css";
 import { getWinner } from "./winner";
 import { computerMove } from "./ai";
+import GameHeader from "../../component/PlayPage/GameHeader";
+import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 
 function TicTacToe() {
 
@@ -12,6 +14,11 @@ function TicTacToe() {
     const [winningCells, setWinningCells] = useState([]);
     const [difficulty, setDifficulty] = useState("easy");
     const [isThinking, setIsThinking] = useState(false);
+    const [xWins, setXWins] = useState(0);
+
+    const [oWins, setOWins] = useState(0);
+
+    const [draws, setDraws] = useState(0);
 
 
     const handleClick = (index) => {
@@ -88,7 +95,7 @@ function TicTacToe() {
 
         <div className="ttt-container">
 
-            <h1>⭕ Tic Tac Toe</h1>
+            <GameHeader title="⭕ Tic Tac Toe" />
 
             {!mode ? (
 
@@ -111,6 +118,7 @@ function TicTacToe() {
                 </div>
 
             ) : (
+                
 
                 <>
 
