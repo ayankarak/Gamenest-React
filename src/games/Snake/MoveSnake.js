@@ -1,8 +1,5 @@
 import { checkCollision } from "./checkCollision";
-// ==============================
-// Board Size
-// ==============================
-const BOARD_SIZE = 20;
+import {BOARD_SIZE} from "./constant";
 
 // ==============================
 // Game Speed

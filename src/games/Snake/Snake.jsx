@@ -2,15 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import "./Snake.css";
 import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 
-const BOARD_SIZE = 20;
+import {
+    getSpeed,
+    moveSnake,
+    generateFood
+} from "./moveSnake";
 
-const INITIAL_SNAKE = [
-    { x: 8, y: 10 },
-    { x: 7, y: 10 },
-    { x: 6, y: 10 },
-];
+import {
+
+    BOARD_SIZE,
+    INITIAL_SNAKE
+
+} from "./constants";
 
 function Snake() {
     const [snake, setSnake] = useState(INITIAL_SNAKE);
@@ -45,123 +51,6 @@ function Snake() {
 
     const isFoodCell = (x, y) => {
         return food.x === x && food.y === y;
-    };
-
-    // -----------------------------
-    // Difficulty Speed
-    // -----------------------------
-
-    const getSpeed = () => {
-        switch (difficulty) {
-            case "easy":
-                return 200;
-
-            case "medium":
-                return 130;
-
-            case "hard":
-                return 80;
-
-            default:
-                return 200;
-        }
-    };
-
-    const generateFood = (currentSnake) => {
-        let newFood;
-
-        do {
-            newFood = {
-                x: Math.floor(Math.random() * BOARD_SIZE),
-                y: Math.floor(Math.random() * BOARD_SIZE),
-            };
-        } while (
-            currentSnake.some(
-                (cell) => cell.x === newFood.x && cell.y === newFood.y
-            )
-        );
-
-        return newFood;
-    };
-
-    // -----------------------------
-    // Collision Check
-    // -----------------------------
-
-    const checkCollision = (head, snakeBody) => {
-        // Wall Collision
-        if (
-            head.x < 0 ||
-            head.x >= BOARD_SIZE ||
-            head.y < 0 ||
-            head.y >= BOARD_SIZE
-        ) {
-            return true;
-        }
-
-        // Self Collision
-        return snakeBody.some(
-            (cell) => cell.x === head.x && cell.y === head.y
-        );
-    };
-
-    // -----------------------------
-    // Snake Movement
-    // -----------------------------
-
-    const moveSnake = () => {
-        setSnake((prevSnake) => {
-            const head = { ...prevSnake[0] };
-
-            switch (direction) {
-                case "UP":
-                    head.y--;
-                    break;
-
-                case "DOWN":
-                    head.y++;
-                    break;
-
-                case "LEFT":
-                    head.x--;
-                    break;
-
-                case "RIGHT":
-                    head.x++;
-                    break;
-
-                default:
-                    break;
-            }
-
-            // Game Over
-            if (checkCollision(head, prevSnake)) {
-                setGameOver(true);
-                setGameStarted(false);
-
-                if (score > highScore) {
-                    setHighScore(score);
-                    localStorage.setItem("snakeHighScore", score);
-                }
-
-                clearInterval(intervalRef.current);
-
-                return prevSnake;
-            }
-
-            const newSnake = [head, ...prevSnake];
-
-            // Food Eat
-            if (head.x === food.x && head.y === food.y) {
-                setScore((prev) => prev + 10);
-
-                setFood(generateFood(newSnake));
-            } else {
-                newSnake.pop();
-            }
-
-            return newSnake;
-        });
     };
 
     // -----------------------------
@@ -230,21 +119,46 @@ function Snake() {
     useEffect(() => {
         if (!gameStarted || gameOver || paused) return;
 
-        intervalRef.current = setInterval(() => {
-            moveSnake();
-        }, getSpeed());
+       intervalRef.current = setInterval(() => {
+
+            moveSnake({
+                snake,
+                setSnake,
+                food,
+                setFood,
+                direction,
+                score,
+                setScore,
+                highScore,
+                setHighScore,
+                setGameOver,
+                setGameStarted
+            });
+
+        }, getSpeed(difficulty));
 
         return () => {
             clearInterval(intervalRef.current);
         };
-    }, [gameStarted, direction, paused, gameOver, difficulty]);
+    }, [
+            gameStarted,
+            direction,
+            paused,
+            gameOver,
+            difficulty,
+
+            snake,
+            food,
+            score,
+            highScore
+        ]);
 
 
     return (
         <div className="snake-container">
 
             {/* Title */}
-            <h1>🐍 Snake Game</h1>
+            <GameHeader title="🐍 Snake Game" />
 
             {/* Scoreboard */}
 
@@ -273,7 +187,7 @@ function Snake() {
                             : "▶ Ready"}
             </div>
 
-            <GameContainer width={900} height={900}>
+            <GameContainer width={900}>
                 {/* Game Layout */}
                 <div className="game-layout">
                     {/* Game Board */}

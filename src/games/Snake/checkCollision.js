@@ -1,4 +1,4 @@
-const BOARD_SIZE = 20;
+import { BOARD_SIZE } from "./constant";
 
 export const checkCollision = (head, snakeBody) => {
 
