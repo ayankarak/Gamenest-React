@@ -7,9 +7,9 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 
 import {
     getSpeed,
-    MoveSnake,
+    moveSnake,
     generateFood
-} from "./moveSnake";
+} from "./MoveSnake";
 
 import {
 
