@@ -16,7 +16,7 @@ import {
     BOARD_SIZE,
     INITIAL_SNAKE
 
-} from "./constants";
+} from "./constant";
 
 function Snake() {
     const [snake, setSnake] = useState(INITIAL_SNAKE);
@@ -189,7 +189,7 @@ function Snake() {
 
             <GameContainer width={900}>
                 {/* Game Layout */}
-                <div className="game-layout">
+                {/* <div className="game-layout">
                     {/* Game Board */}
                     <div className="board">
                         {Array.from({ length: BOARD_SIZE }).map((_, row) =>
@@ -217,7 +217,7 @@ function Snake() {
                         )}
                     </div>
 
-                </div>
+                {/* </div> */}
             </GameContainer>
 
             {/* Buttons */}

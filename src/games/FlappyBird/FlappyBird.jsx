@@ -26,7 +26,7 @@ import {
 } from "./constants";
 
 import { gameLoop } from "./gameLoop";
-import GameContainer from "../../component/PlayPage/GameContainer";
+//import GameContainer from "../../component/PlayPage/GameContainer";
 
 function FlappyBird() {
 
