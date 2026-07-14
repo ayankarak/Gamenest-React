@@ -1,0 +1,131 @@
+/* =========================================
+   Pong Game
+========================================= */
+
+.pong-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Canvas*/
+
+.pong-canvas {
+    display: block;
+    margin: 0 auto;
+    background: #111827;
+    border: 3px solid #00e5ff;
+    border-radius: 12px;
+    box-shadow:
+        0 0 20px rgba(0, 229, 255, 0.25);
+}
+
+/*  Status*/
+
+.status {
+    text-align: center;
+    color: #00e5ff;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+/* Buttons */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.buttons button:hover {
+    transform: translateY(-2px);
+    opacity: .95;
+}
+
+.restart-btn {
+    background: #ef4444;
+    color: white;
+}
+
+/* Winner Overlay */
+
+.game-over-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.game-over-card {
+    width: min(340px,90vw);
+    background: #181818;
+    border: 2px solid #00e5ff;
+    border-radius: 15px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,229,255,.35);
+}
+
+.game-over-card h2 {
+    color: #00e5ff;
+    margin-bottom: 20px;
+}
+
+.game-over-card p {
+    color: white;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.play-again-btn {
+    margin-top: 20px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    background: #00e5ff;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.play-again-btn:hover {
+    transform: scale(1.05);
+}
+
+   /* Responsive */
+
+@media (max-width: 900px) {
+    .pong-container {
+        padding: 15px;
+    }
+
+    .pong-canvas {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .buttons button {
+        width: 100%;
+        max-width: 220px;
+    }
+}

@@ -22,6 +22,7 @@ import {
 function Pong() {
 
     const canvasRef = useRef(null);
+    const mouseYRef = useRef(CANVAS_HEIGHT / 2);
     const [playerScore, setPlayerScore] = useState(0);
     const [aiScore, setAiScore] = useState(0);
     const animationRef = useRef(null);
@@ -37,164 +38,101 @@ function Pong() {
         createBall()
     );
 
-    const keysRef = useRef({
-
-        ArrowUp: false,
-
-        ArrowDown: false
-
-    });
-
     useEffect(() => {
 
-        const handleKeyDown = (e) => {
-
-            if (
-                e.key === "ArrowUp" ||
-                e.key === "ArrowDown"
-            ) {
-                keysRef.current[e.key] = true;
-            }
-
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const handleMouseMove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseYRef.current = e.clientY - rect.top;
         };
-
-        const handleKeyUp = (e) => {
-
-            if (
-                e.key === "ArrowUp" ||
-                e.key === "ArrowDown"
-            ) {
-                keysRef.current[e.key] = false;
-            }
-
-        };
-
-        window.addEventListener(
-            "keydown",
-            handleKeyDown
+        canvas.addEventListener(
+            "mousemove",
+            handleMouseMove
         );
-
-        window.addEventListener(
-            "keyup",
-            handleKeyUp
-        );
-
         return () => {
-
-            window.removeEventListener(
-                "keydown",
-                handleKeyDown
+            canvas.removeEventListener(
+                "mousemove",
+                handleMouseMove
             );
-
-            window.removeEventListener(
-                "keyup",
-                handleKeyUp
-            );
-
         };
 
     }, []);
 
-    // ===========================
     // Draw
-    // ===========================
 
     const draw = (ctx) => {
-
+        //console.log("drawing....");
         ctx.clearRect(
             0,
             0,
             CANVAS_WIDTH,
             CANVAS_HEIGHT
         );
-
         ctx.fillStyle = "#00e5ff";
-
+        ctx.strokeStyle = "rgba(255,255,255,0.35)";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.setLineDash([12, 12]);
+            ctx.moveTo(CANVAS_WIDTH / 2, 0);
+            ctx.lineTo(CANVAS_WIDTH / 2, CANVAS_HEIGHT);
+            ctx.stroke();
+            ctx.setLineDash([]);
+                    
         // Player Paddle
-
         ctx.fillRect(
-
             playerRef.current.x,
-
             playerRef.current.y,
-
             PADDLE_WIDTH,
-
             PADDLE_HEIGHT
-
         );
-
         // AI Paddle
-
         ctx.fillRect(
-
             aiRef.current.x,
-
             aiRef.current.y,
-
             PADDLE_WIDTH,
-
             PADDLE_HEIGHT
-
         );
         // Ball
-
         ctx.fillStyle = "white";
         ctx.beginPath();
         ctx.arc(
-            ballRef.current.x,
-            ballRef.current.y,
+            ballRef.current.x + BALL_SIZE / 2,
+            ballRef.current.y + BALL_SIZE / 2,
             BALL_SIZE / 2,
             0,
             Math.PI * 2
-            );
-            ctx.fill();
-
+        );
+        ctx.fill();
     };
 
-    // ===========================
     // Animation Loop
-    // ===========================
 
     useEffect(() => {
-
     const canvas = canvasRef.current;
-
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
-
     const animate = () => {
-
-        const animate = () => {
 
             gameLoop({
                 player: playerRef.current,
                 ai: aiRef.current,
                 ball: ballRef.current,
-                keys: keysRef.current,
+                mouseY: mouseYRef.current,
                 difficulty,
                 setPlayerScore,
                 setAiScore
             });
-
             draw(ctx);
-
             animationRef.current =
                 requestAnimationFrame(animate);
-
-        };
+        
     };
     animate();
-
     return () => {
-
         cancelAnimationFrame(
-
             animationRef.current
-
         );
-
     };
 
 }, [difficulty]);
@@ -228,6 +166,7 @@ function Pong() {
 
             <canvas
                 ref={canvasRef}
+                className="pong-canvas"
                 width={CANVAS_WIDTH}
                 height={CANVAS_HEIGHT}
             />

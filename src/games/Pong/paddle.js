@@ -24,23 +24,13 @@ export const createAIPaddle = () => ({
 
 export const movePlayer = (
     paddle,
-    keys
+    mouseY
 ) => {
-
-    if (keys.ArrowUp) {
-        paddle.y -= PLAYER_SPEED;
-    }
-
-    if (keys.ArrowDown) {
-        paddle.y += PLAYER_SPEED;
-    }
-
+    paddle.y = mouseY - PADDLE_HEIGHT / 2;
     // Keep Paddle Inside Canvas
-
     if (paddle.y < 0) {
         paddle.y = 0;
     }
-
     if (
         paddle.y >
         CANVAS_HEIGHT - PADDLE_HEIGHT
@@ -48,5 +38,4 @@ export const movePlayer = (
         paddle.y =
             CANVAS_HEIGHT - PADDLE_HEIGHT;
     }
-
 };

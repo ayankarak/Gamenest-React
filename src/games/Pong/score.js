@@ -1,46 +1,38 @@
 import {
-    CANVAS_HEIGHT,
-    PADDLE_WIDTH,
-    PADDLE_HEIGHT,
+    CANVAS_WIDTH,
     BALL_SIZE
 } from "./constant";
 
-// Wall Collision
+export const updateScore = ({
 
-export const checkWallCollision = (ball) => {
-    if (ball.y <= 0) {
-        ball.y = 0;
-        ball.vy *= -1;
-    }
-    if (ball.y + BALL_SIZE >= CANVAS_HEIGHT) {
-        ball.y = CANVAS_HEIGHT - BALL_SIZE;
-        ball.vy *= -1;
-    }
-};
-
-// Paddle Collision
-
-export const checkPaddleCollision = (
     ball,
-    player,
-    ai
-) => {
-    // Player Paddle
-    if (
-        ball.x <= player.x + PADDLE_WIDTH &&
-        ball.y + BALL_SIZE >= player.y &&
-        ball.y <= player.y + PADDLE_HEIGHT
-    ) {
-        ball.x = player.x + PADDLE_WIDTH;
-        ball.vx *= -1;
+
+    setPlayerScore,
+
+    setAiScore,
+
+    resetBall
+
+}) => {
+
+    // AI scores
+    if (ball.x + BALL_SIZE < 0) {
+
+        setAiScore(prev => prev + 1);
+
+        resetBall(ball);
+
+        return;
+
     }
-    // AI Paddle
-    if (
-        ball.x + BALL_SIZE >= ai.x &&
-        ball.y + BALL_SIZE >= ai.y &&
-        ball.y <= ai.y + PADDLE_HEIGHT
-    ) {
-        ball.x = ai.x - BALL_SIZE;
-        ball.vx *= -1;
+
+    // Player scores
+    if (ball.x > CANVAS_WIDTH) {
+
+        setPlayerScore(prev => prev + 1);
+
+        resetBall(ball);
+
     }
+
 };

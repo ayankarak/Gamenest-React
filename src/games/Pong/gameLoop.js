@@ -8,7 +8,7 @@ export const gameLoop = ({
     player,
     ai,
     ball,
-    keys,
+    mouseY,
     difficulty,
     setPlayerScore,
     setAiScore
@@ -18,7 +18,7 @@ export const gameLoop = ({
 
     movePlayer(
         player,
-        keys
+        mouseY
     );
 
     // AI Movement
