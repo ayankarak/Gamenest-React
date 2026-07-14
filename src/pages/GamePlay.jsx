@@ -3,6 +3,7 @@ import RockPaperScissors from "../games/RockPaperScissors/RockPaperScissors";
 import Snake from "../games/Snake/Snake";
 import TicTacToe from "../games/TicTacToe/TicTacToe";
 import FlappyBird from "../games/FlappyBird/FlappyBird";
+import Pong from "../games/Pong/Pong";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -16,6 +17,8 @@ function GamePlay() {
       return <TicTacToe />;
     case "flappy-bird":
       return <FlappyBird />;
+    case "pong":
+      return <Pong />;
 
     default:
       return (

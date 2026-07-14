@@ -6,12 +6,11 @@ import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
-
-import {CANVAS_WIDTH,CANVAS_HEIGHT,PADDLE_WIDTH,PADDLE_HEIGHT} from "./constant";
 import {createBall} from "./ball";
 
 import {createPlayerPaddle,createAIPaddle,movePlayer} from "./paddle";
 import { moveAI } from "./ai";
+import { gameLoop } from "./gameLoop";
 import {
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
@@ -23,10 +22,10 @@ import {
 function Pong() {
 
     const canvasRef = useRef(null);
-
+    const [playerScore, setPlayerScore] = useState(0);
+    const [aiScore, setAiScore] = useState(0);
     const animationRef = useRef(null);
     const [difficulty, setDifficulty] = useState("easy");
-
     const playerRef = useRef(
         createPlayerPaddle()
     );
@@ -167,32 +166,25 @@ function Pong() {
 
     const animate = () => {
 
-        movePlayer(
+        const animate = () => {
 
-            playerRef.current,
+            gameLoop({
+                player: playerRef.current,
+                ai: aiRef.current,
+                ball: ballRef.current,
+                keys: keysRef.current,
+                difficulty,
+                setPlayerScore,
+                setAiScore
+            });
 
-            keysRef.current
+            draw(ctx);
 
-        );
+            animationRef.current =
+                requestAnimationFrame(animate);
 
-        moveAI(
-
-            aiRef.current,
-
-            ballRef.current,
-
-            difficulty
-
-        );
-
-        draw(ctx);
-
-        animationRef.current =
-
-            requestAnimationFrame(animate);
-
+        };
     };
-
     animate();
 
     return () => {
@@ -216,8 +208,14 @@ function Pong() {
 
         <ScoreBoard
             items={[
-                { label: "Score", value: 0 },
-                { label: "High Score", value: 0 }
+                {
+                    label: "Player",
+                    value: playerScore
+                },
+                {
+                    label: "Computer",
+                    value: aiScore
+                }
             ]}
         />
 

@@ -1,89 +1,57 @@
 import { movePlayer } from "./paddle";
-
 import { moveAI } from "./ai";
-
 import { moveBall } from "./ball";
-
-import {
-
-    checkWallCollision,
-
-    checkPaddleCollision
-
-} from "./collision";
-
+import {checkWallCollision,checkPaddleCollision} from "./collision";
+import { updateScore } from "./score";
+import { resetBall } from "./ball";
 export const gameLoop = ({
-
     player,
-
     ai,
-
     ball,
-
     keys,
-
-    difficulty
-
+    difficulty,
+    setPlayerScore,
+    setAiScore
 }) => {
 
-    // ==========================
-    // Player
-    // ==========================
+    // Player Movement
 
     movePlayer(
-
         player,
-
         keys
-
     );
 
-    // ==========================
-    // AI
-    // ==========================
+    // AI Movement
 
     moveAI(
-
         ai,
-
         ball,
-
         difficulty
-
-    );
-
-    // ==========================
-    // Ball
-    // ==========================
-
+    )
+    // Ball Movement
     moveBall(
-
         ball
-
     );
 
-    // ==========================
     // Wall Collision
-    // ==========================
 
     checkWallCollision(
-
         ball
-
     );
 
-    // ==========================
     // Paddle Collision
-    // ==========================
 
     checkPaddleCollision(
-
         ball,
-
         player,
-
         ai
-
     );
 
+    // Score Update
+    updateScore({
+        ball,
+        setPlayerScore,
+        setAiScore,
+        resetBall
+    });
 };

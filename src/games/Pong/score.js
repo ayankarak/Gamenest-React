@@ -6,6 +6,7 @@ import {
 } from "./constant";
 
 // Wall Collision
+
 export const checkWallCollision = (ball) => {
     if (ball.y <= 0) {
         ball.y = 0;
