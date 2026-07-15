@@ -1,24 +1,30 @@
 import {
     CANVAS_WIDTH,
-    BALL_SIZE
+    BALL_SIZE,
+    WINNING_SCORE
 } from "./constant";
 
 export const updateScore = ({
-
     ball,
-
     setPlayerScore,
-
     setAiScore,
-
-    resetBall
+    resetBall,
+    setGameOver,
+    setWinner
 
 }) => {
 
     // AI scores
     if (ball.x + BALL_SIZE < 0) {
 
-        setAiScore(prev => prev + 1);
+        setAiScore(prev => {
+            const newScore = prev + 1;
+            if (newScore >= WINNING_SCORE) {
+                setWinner("Computer");
+                setGameOver(true);
+            }
+            return newScore;
+        });
 
         resetBall(ball);
 
@@ -29,7 +35,14 @@ export const updateScore = ({
     // Player scores
     if (ball.x > CANVAS_WIDTH) {
 
-        setPlayerScore(prev => prev + 1);
+        setPlayerScore(prev => {
+            const newScore = prev + 1;
+            if (newScore >= WINNING_SCORE) {
+                setWinner("Player");
+                setGameOver(true);
+            }
+            return newScore;
+        });
 
         resetBall(ball);
 

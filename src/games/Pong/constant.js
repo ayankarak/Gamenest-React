@@ -10,3 +10,5 @@ export const PLAYER_SPEED = 8;
 export const AI_SPEED = 5;
 
 export const INITIAL_BALL_SPEED = 5;
+
+export const WINNING_SCORE = 5;

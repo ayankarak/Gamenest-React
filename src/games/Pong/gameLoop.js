@@ -11,8 +11,12 @@ export const gameLoop = ({
     mouseY,
     difficulty,
     setPlayerScore,
-    setAiScore
+    setAiScore,
+    gameOver,
+    setGameOver,
+    setWinner
 }) => {
+    if (gameOver) return;
 
     // Player Movement
 
@@ -52,6 +56,8 @@ export const gameLoop = ({
         ball,
         setPlayerScore,
         setAiScore,
+        setWinner,
+        setGameOver,
         resetBall
     });
 };

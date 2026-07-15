@@ -27,6 +27,8 @@ function Pong() {
     const [aiScore, setAiScore] = useState(0);
     const animationRef = useRef(null);
     const [difficulty, setDifficulty] = useState("easy");
+    const [gameOver, setGameOver] = useState(false);
+    const [winner, setWinner] = useState("");
     const playerRef = useRef(
         createPlayerPaddle()
     );
@@ -113,15 +115,21 @@ function Pong() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     const animate = () => {
-
+        if (gameOver) {
+        draw(ctx);      
+        return;         // Animation stop
+    }
             gameLoop({
                 player: playerRef.current,
                 ai: aiRef.current,
                 ball: ballRef.current,
                 mouseY: mouseYRef.current,
                 difficulty,
+                gameOver,
                 setPlayerScore,
-                setAiScore
+                setAiScore,
+                setGameOver,
+                setWinner
             });
             draw(ctx);
             animationRef.current =
@@ -135,7 +143,19 @@ function Pong() {
         );
     };
 
-}, [difficulty]);
+}, [difficulty,gameOver]);
+
+const restartGame = () => {
+    setPlayerScore(0);
+    setAiScore(0);
+    setGameOver(false);
+    setWinner("");
+    playerRef.current = createPlayerPaddle();
+    aiRef.current = createAIPaddle();
+    ballRef.current = createBall();
+    //cancelAnimationFrame(animationRef.current);
+
+};
 
     // return (...)
 
@@ -172,6 +192,34 @@ function Pong() {
             />
 
         </GameContainer>
+        {gameOver && (
+
+        <div className="game-over-overlay">
+
+            <div className="game-over-card">
+
+                <h2>🏆 {winner} Wins!</h2>
+
+                <p>
+                    Player : {playerScore}
+                </p>
+
+                <p>
+                    Computer : {aiScore}
+                </p>
+
+                <button
+                    className="play-again-btn"
+                    onClick={restartGame}
+                >
+                    🔄 Play Again
+                </button>
+
+            </div>
+
+        </div>
+
+        )}
 
     </div>
 );
