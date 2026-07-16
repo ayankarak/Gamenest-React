@@ -4,6 +4,7 @@ import Snake from "../games/Snake/Snake";
 import TicTacToe from "../games/TicTacToe/TicTacToe";
 import FlappyBird from "../games/FlappyBird/FlappyBird";
 import Pong from "../games/Pong/Pong";
+import Tetris from "../games/Tetris/Tetris";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -19,6 +20,8 @@ function GamePlay() {
       return <FlappyBird />;
     case "pong":
       return <Pong />;
+    case "tetris":
+      return<Tetris/>
 
     default:
       return (

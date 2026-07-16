@@ -22,7 +22,8 @@ import {createPiece} from "./pieces";
 function Tetris(){
 
     const animationRef = useRef(null);
-
+    const [score, setScore] = useState(0);
+    const [highScore, setHighScore] = useState(0);
     const lastDropTime = useRef(Date.now());
     const canvasRef = useRef(null);
 
@@ -113,12 +114,14 @@ function Tetris(){
 
             gameLoop({
 
+                board:boardRef.current,
                 piece: pieceRef.current,
 
                 lastDropTime,
 
-                dropInterval: getDropInterval()
-
+                dropInterval: getDropInterval(),
+                setScore,
+                setHighScore
             });
 
             ctx.clearRect(
@@ -163,7 +166,29 @@ function Tetris(){
         };
 
     }, [difficulty]);
-    return(
+    return (
+    <div className="tetris-container">
+
+        <GameHeader title="🧩 Tetris" />
+
+        <ScoreBoard
+            items={[
+                {
+                    label: "Score",
+                    value: score
+                },
+                {
+                    label: "High Score",
+                    value: highScore
+                }
+            ]}
+        />
+
+        <DifficultySelector
+            value={difficulty}
+            onChange={setDifficulty}
+        />
+
         <GameContainer width={420}>
 
             <canvas
@@ -174,5 +199,8 @@ function Tetris(){
             />
 
         </GameContainer>
-    );
+
+    </div>
+);
 }
+export default Tetris;
