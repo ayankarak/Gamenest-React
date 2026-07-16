@@ -1,20 +1,25 @@
 import { createPiece } from "./pieces";
-
-import {isCollision} from "./collision";
-
-import {mergePiece, clearLines} from "./board";
-import { updateScore } from "./score";
+import { isCollision } from "./collision";
+import {
+    mergePiece,
+    clearLines
+} from "./board";
+import {
+    updateScore
+} from "./score";
 
 export const gameLoop = ({
 
     board,
-
     piece,
 
     lastDropTime,
-
     dropInterval,
-    setScore
+
+    setScore,
+    setHighScore,
+
+    setGameOver
 
 }) => {
 
@@ -27,7 +32,11 @@ export const gameLoop = ({
         return;
     }
 
+    // Move Piece Down
+
     piece.y++;
+
+    // Collision
 
     if (
         isCollision(
@@ -38,26 +47,55 @@ export const gameLoop = ({
 
         piece.y--;
 
+        // Merge Piece
+
         mergePiece(
             board,
             piece
         );
-        // updateScore({
-        //     lines,
-        //     setScore,
-        //     setHighScore
-        // });
 
-        const nextPiece = createPiece();
+        // Clear Lines
 
-        piece.shape = nextPiece.shape;
+        const lines =
+            clearLines(board);
 
-        piece.x = nextPiece.x;
+        // Update Score
+
+        updateScore({
+
+            lines,
+
+            setScore,
+
+            setHighScore
+
+        });
+
+        // Spawn New Piece
+
+        const nextPiece =
+            createPiece();
+
+        piece.shape =
+            nextPiece.shape;
+
+        piece.x =
+            nextPiece.x;
 
         piece.y = nextPiece.y;
 
+        // GAME OVER
+
+        if (
+            isCollision(board,piece)
+        ) {
+            setGameOver(true);
+            return;
+        }
+
     }
 
-    lastDropTime.current = now;
+    lastDropTime.current =
+        now;
 
 };

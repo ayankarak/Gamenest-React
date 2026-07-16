@@ -1,10 +1,8 @@
 import {
-    COLS
-} from "./constant";
-
-import {
     isCollision
 } from "./collision";
+
+// Move Left
 
 export const moveLeft = (
     board,
@@ -21,6 +19,8 @@ export const moveLeft = (
 
 };
 
+// Move Right
+
 export const moveRight = (
     board,
     piece
@@ -35,6 +35,8 @@ export const moveRight = (
     }
 
 };
+
+// Soft Drop
 
 export const softDrop = (
     board,

@@ -15,6 +15,10 @@ import {
     COLORS
 } from "./constant";
 
+import {moveLeft,moveRight,softDrop} from "./controls";
+import {rotatePiece} from "./rotate";
+
+
 import {createBoard, drawBoard} from "./board";
 
 import {createPiece} from "./pieces";
@@ -24,6 +28,7 @@ function Tetris(){
     const animationRef = useRef(null);
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
     const lastDropTime = useRef(Date.now());
     const canvasRef = useRef(null);
 
@@ -104,6 +109,71 @@ function Tetris(){
 
     useEffect(() => {
 
+        const handleKeyDown = (e) => {
+
+            switch (e.key) {
+
+                case "ArrowLeft":
+
+                    moveLeft(
+                        boardRef.current,
+                        pieceRef.current
+                    );
+
+                    break;
+
+                case "ArrowRight":
+
+                    moveRight(
+                        boardRef.current,
+                        pieceRef.current
+                    );
+
+                    break;
+
+                case "ArrowDown":
+
+                    softDrop(
+                        boardRef.current,
+                        pieceRef.current
+                    );
+
+                    break;
+
+                case "ArrowUp":
+
+                    rotatePiece(
+                        boardRef.current,
+                        pieceRef.current
+                    );
+
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        };
+
+        window.addEventListener(
+            "keydown",
+            handleKeyDown
+        );
+
+        return () => {
+
+            window.removeEventListener(
+                "keydown",
+                handleKeyDown
+            );
+
+        };
+
+    }, []);
+
+    useEffect(() => {
+
         const canvas = canvasRef.current;
 
         if (!canvas) return;
@@ -111,7 +181,7 @@ function Tetris(){
         const ctx = canvas.getContext("2d");
 
         const animate = () => {
-
+           if (gameOver) return;
             gameLoop({
 
                 board:boardRef.current,
@@ -121,7 +191,8 @@ function Tetris(){
 
                 dropInterval: getDropInterval(),
                 setScore,
-                setHighScore
+                setHighScore,
+                setGameOver
             });
 
             ctx.clearRect(
@@ -165,7 +236,7 @@ function Tetris(){
 
         };
 
-    }, [difficulty]);
+    }, [difficulty,gameOver]);
     return (
     <div className="tetris-container">
 
