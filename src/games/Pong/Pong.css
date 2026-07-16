@@ -17,10 +17,18 @@
     display: block;
     margin: 0 auto;
     background: #111827;
-    border: 3px solid #00e5ff;
+    /* border: 3px solid #00e5ff; */
     border-radius: 12px;
     box-shadow:
         0 0 20px rgba(0, 229, 255, 0.25);
+}
+
+.pong-container .playpage-game-container{
+
+    padding: 0;
+
+    background: transparent;
+
 }
 
 /*  Status*/
