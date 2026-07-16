@@ -182,7 +182,7 @@ const restartGame = () => {
             onChange={setDifficulty}
         />
 
-        <GameContainer width={900}>
+        <GameContainer width={960}>
 
             <canvas
                 ref={canvasRef}
