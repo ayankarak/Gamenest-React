@@ -1,103 +1,47 @@
-/* Tetris*/
-.tetris-container{
-    max-width:900px;
-    margin:0 auto;
-    padding:20px;
+/*  Layout*/
+
+.tetris-layout{
+
     display:flex;
-    flex-direction:column;
-    gap:20px;
+    justify-content:center;
+    align-items:flex-start;
+    gap:25px;
+
 }
-
-/* Canvas */
-
+/*   Main Canvas */
 .tetris-canvas{
     display:block;
-    margin:0 auto;
     background:#181818;
     border:3px solid #00d4ff;
     border-radius:12px;
-    box-shadow:
-        0 0 20px rgba(0,212,255,.25);
+    box-shadow:0 0 20px rgba(0,212,255,.25);
+
 }
-
-/* Game Over */
-
-.game-over-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.75);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-}
-
-.game-over-card{
-    width:min(340px,90vw);
+/*  Next Piece*/
+.next-piece-panel{
+    width:150px;
     background:#181818;
     border:2px solid #00d4ff;
-    border-radius:15px;
-    padding:35px;
+    border-radius:12px;
+    padding:15px;
     text-align:center;
-    box-shadow:
-        0 0 30px rgba(0,212,255,.35);
+    box-shadow:0 0 15px rgba(0,212,255,.2);
 }
 
-.game-over-card h2{
-    color:#00d4ff;
-    margin-bottom:20px;
-    font-size:2rem;
-}
-
-.game-over-card p{
+.next-piece-panel h3{
     color:white;
-    font-size:20px;
-    margin:15px 0;
+    margin-bottom:15px;
 }
 
-.play-again-btn{
-    margin-top:20px;
-    padding:12px 28px;
-    border:none;
+.next-canvas{
+    background:#111;
     border-radius:10px;
-    background:#00d4ff;
-    color:#111;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.25s;
+    border:2px solid #333;
 }
-
-.play-again-btn:hover{
-    transform:scale(1.05);
-}
-
-/* Responsive */
-
-@media(max-width:768px){
-    .tetris-container{
-        padding:15px;
-    }
-
-    .tetris-canvas{
-        width:100%;
-        height:auto;
-    }
-}
-
-@media(max-width:500px){
-    .game-over-card{
-        padding:25px;
-    }
-
-    .game-over-card h2{
-        font-size:1.6rem;
-    }
-
-    .game-over-card p{
-        font-size:18px;
-    }
-    .play-again-btn{
-        width:100%;
+/*  Responsive */
+@media(max-width:900px){
+    .tetris-layout{
+        flex-direction:column;
+        align-items:center;
     }
 }
