@@ -1,6 +1,3 @@
-// import {
-//     WINNING_SCORE
-// } from "./constant";
 
 export const updateScore = ({
     lines,

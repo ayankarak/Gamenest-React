@@ -237,6 +237,19 @@ function Tetris(){
         };
 
     }, [difficulty,gameOver]);
+    const restartGame = () => {
+
+        setScore(0);
+
+        setGameOver(false);
+
+        boardRef.current = createBoard();
+
+        pieceRef.current = createPiece();
+
+        lastDropTime.current = Date.now();
+
+    };
     return (
     <div className="tetris-container">
 
@@ -270,6 +283,34 @@ function Tetris(){
             />
 
         </GameContainer>
+        {gameOver && (
+
+            <div className="game-over-overlay">
+
+                <div className="game-over-card">
+
+                    <h2>💀 Game Over</h2>
+
+                    <p>
+
+                        Final Score : {score}
+
+                    </p>
+
+                    <button
+                        className="play-again-btn"
+                        onClick={restartGame}
+                    >
+
+                        🔄 Play Again
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        )}
 
     </div>
 );
