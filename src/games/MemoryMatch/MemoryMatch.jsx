@@ -111,21 +111,17 @@ function MemoryMatch() {
 
     // Check Player Match
 
-    const checkPlayerMatch = (
-        selectedIds
-    ) => {
+    const checkPlayerMatch = ( selectedIds ) => {
         setIsChecking(true);
         const firstCard =
             cards.find(
                 card =>
-                    card.id ===
-                    selectedIds[0]
+                    card.id === selectedIds[0]
             );
         const secondCard =
             cards.find(
                 card =>
-                    card.id ===
-                    selectedIds[1]
+                    card.id ===  selectedIds[1]
             );
         const matched =
             isMatch(
