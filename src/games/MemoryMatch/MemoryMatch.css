@@ -1,0 +1,268 @@
+/*  Memory Match Game */
+
+.memory-match-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Turn Status */
+
+.turn-status {
+    color: #00e5ff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    min-height: 28px;
+}
+
+/*  Card Grid */
+
+.memory-card-grid {
+    width: 100%;
+    display: grid;
+    gap: 18px;
+    justify-content: center;
+}
+
+
+/* Easy - 8 Cards */
+
+.memory-card-grid.difficulty-easy {
+
+    grid-template-columns:
+        repeat(4, minmax(70px, 100px));
+
+}
+
+/* Medium - 12 Cards */
+
+.memory-card-grid.difficulty-medium {
+
+    grid-template-columns:
+        repeat(4, minmax(70px, 100px));
+}
+
+/* Hard - 14 Cards */
+.memory-card-grid.difficulty-hard {
+    grid-template-columns:
+        repeat(7, minmax(60px, 90px));
+}
+
+/*  Memory Card */
+
+.memory-card {
+    aspect-ratio: 1 / 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+/*  Card Inner Effect */
+
+.memory-card::before,
+.memory-card::after {
+    content: "";
+    position: absolute;
+}
+
+/*  Front and Back */
+
+.card-front,
+.card-back {
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    backface-visibility: hidden;
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.3s ease;
+}
+
+/*  Hidden Card */
+
+.card-front {
+    background:
+        linear-gradient(
+            135deg,
+            #00d4ff,
+            #0066ff
+        );
+    border: 3px solid #00e5ff;
+    box-shadow:0 0 12px
+        rgba(0,229,255,0.3);
+}
+
+/* Visible Card*/
+
+.card-back {
+    background: #1f2937;
+    border: 3px solid #00d4ff;
+    transform: rotateY(180deg);
+}
+
+/* Card Flip */
+
+.memory-card {
+    position: relative;
+}
+.card-front,
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.memory-card.flipped
+.card-front {
+    transform:rotateY(180deg);
+}
+.memory-card.flipped
+.card-back {
+    transform:rotateY(0deg);
+}
+
+/* Hover Effect */
+
+.memory-card:not(.flipped):hover
+.card-front {
+    transform:scale(1.05);
+    box-shadow:0 0 22px
+        rgba(0,229,255,0.7);
+
+}
+
+
+/* Matched Card */
+
+.memory-card.flipped
+.card-back {
+    box-shadow:0 0 20px
+        rgba(0,255,150,0.7);
+}
+
+/* Game Over Overlay */
+
+.game-over-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        rgba(0, 0, 0, 0.75);
+}
+
+/* Game Over Card*/
+
+.game-over-card {
+    width:
+        min(
+            340px,
+            90vw
+        );
+    padding: 35px;
+    text-align: center;
+    border-radius: 16px;
+    background: #181818;
+    border: 2px solid #00e5ff;
+    box-shadow:
+        0 0 30px
+        rgba(
+            0,
+            229,
+            255,
+            0.4
+        );
+}
+
+.game-over-card h2 {
+    color: #00e5ff;
+    margin-bottom: 20px;
+}
+.game-over-card p {
+    color: white;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/*  Play Again Button */
+
+.play-again-btn {
+    margin-top: 20px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    background: #00e5ff;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.play-again-btn:hover {
+    transform:
+        scale(1.05);
+}
+
+/*  Responsive*/
+@media (max-width: 700px) {
+    .memory-match-container {
+        padding: 15px;
+    }
+
+    .memory-card-grid {
+        gap: 12px;
+    }
+
+    .memory-card-grid.difficulty-easy,
+    .memory-card-grid.difficulty-medium {
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(
+                    55px,
+                    80px
+                )
+            );
+    }
+
+    .memory-card-grid.difficulty-hard {
+        grid-template-columns:
+            repeat(
+                7,
+                minmax(
+                    40px,
+                    60px
+                )
+            );
+        gap: 8px;
+    }
+    .card-front,
+    .card-back {
+        font-size: 1.8rem;
+        border-width: 2px;
+    }
+}
+@media (max-width: 450px) {
+    .memory-card-grid.difficulty-easy,
+    .memory-card-grid.difficulty-medium {
+        gap: 8px;
+    }
+    .memory-card-grid.difficulty-hard {
+        gap: 5px;
+    }
+    .card-front,
+    .card-back {
+        font-size: 1.4rem;
+        border-radius: 10px;
+    }
+}

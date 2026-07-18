@@ -9,72 +9,70 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 
 import { createCards } from "./cards";
 
+import {
+    isMatch,
+    flipCards,
+    matchCards,
+    hideCards,
+    isGameOver,
+    getWinner
+} from "./gameLogic";
+
+
 function MemoryMatch() {
-
     const [difficulty, setDifficulty] = useState("easy");
-
     const [cards, setCards] =
         useState(() =>
             createCards("easy")
         );
-
-    const [selectedCards, setSelectedCards] =useState([]);
-
+    const [selectedCards, setSelectedCards] = useState([]);
     const [playerScore, setPlayerScore] = useState(0);
-
     const [computerScore, setComputerScore] = useState(0);
-
     const [turn, setTurn] = useState("player");
-
     const [gameOver, setGameOver] = useState(false);
-
     const [winner, setWinner] = useState("");
-
     const [isChecking, setIsChecking] = useState(false);
 
-
-    // ============================
     // Difficulty Change
-    // ============================
 
-    const handleDifficultyChange = (value) => {
-
+    const handleDifficultyChange = (
+        value
+    ) => {
         setDifficulty(value);
-
         setCards(
             createCards(value)
         );
-
         setSelectedCards([]);
-
         setPlayerScore(0);
-
         setComputerScore(0);
-
         setTurn("player");
-
         setGameOver(false);
-
         setWinner("");
-
+        setIsChecking(false);
     };
 
+    // Player Card Click
 
-    // ============================
-    // Card Click
-    // ============================
+    const handleCardClick = (
+        card
+    ) => {
 
-    const handleCardClick = (card) => {
+        // Only player can play
 
-        // Only Player can click
+        if (
+            turn !== "player"
+        ) {
+            return;
+        }
 
-        if (turn !== "player") return;
+        // Prevent click while checking
 
-        // Prevent clicking while checking
-
-        if (isChecking) return;
-
-        // Already opened/matched card
+        if (
+            isChecking
+        ) {
+            return;
+        }
+        // Already flipped or matched
 
         if (
             card.isFlipped ||
@@ -82,241 +80,131 @@ function MemoryMatch() {
         ) {
             return;
         }
-
-        // Maximum 2 cards
-
+        // Maximum two cards
         if (
             selectedCards.length >= 2
         ) {
             return;
         }
-
-        const updatedCards =
-            cards.map(currentCard =>
-
-                currentCard.id === card.id
-
-                    ? {
-                        ...currentCard,
-                        isFlipped: true
-                    }
-
-                    : currentCard
-
+        const newCards =
+            flipCards(
+                cards,
+                [card.id]
             );
-
-        setCards(updatedCards);
-
+        setCards(newCards);
         const newSelectedCards = [
-
             ...selectedCards,
-
             card.id
-
         ];
-
         setSelectedCards(
             newSelectedCards
         );
-
-        // Check after 2 cards
-
+        // Check after two cards
         if (
             newSelectedCards.length === 2
         ) {
-
-            checkMatch(
+            checkPlayerMatch(
                 newSelectedCards
             );
-
         }
-
     };
 
+    // Check Player Match
 
-    // ============================
-    // Check Match
-    // ============================
-
-    const checkMatch = (
+    const checkPlayerMatch = (
         selectedIds
     ) => {
-
         setIsChecking(true);
-
         const firstCard =
             cards.find(
                 card =>
-                    card.id === selectedIds[0]
+                    card.id ===
+                    selectedIds[0]
             );
-
         const secondCard =
             cards.find(
                 card =>
-                    card.id === selectedIds[1]
+                    card.id ===
+                    selectedIds[1]
             );
-
-
-        if (
-            firstCard.image ===
-            secondCard.image
-        ) {
-
-            // Match
-
+        const matched =
+            isMatch(
+                firstCard,
+                secondCard
+            );
+        if (matched) {
             setTimeout(() => {
-
-                setCards(prevCards =>
-
-                    prevCards.map(card =>
-
-                        selectedIds.includes(
-                            card.id
+                setCards(
+                    prevCards =>
+                        matchCards(
+                            prevCards,
+                            selectedIds
                         )
-
-                            ? {
-                                ...card,
-                                isMatched: true,
-                                isFlipped: true
-                            }
-
-                            : card
-
-                    )
-
                 );
-
                 setPlayerScore(
                     prev => prev + 1
                 );
-
                 setSelectedCards([]);
-
                 setIsChecking(false);
-
-                // Player gets another chance
-
+                // Player gets another turn
             }, 700);
-
         }
-
         else {
 
-            // Not Match
+            // NOT MATCH
 
             setTimeout(() => {
-
-                setCards(prevCards =>
-
-                    prevCards.map(card =>
-
-                        selectedIds.includes(
-                            card.id
+                setCards(
+                    prevCards =>
+                        hideCards(
+                            prevCards,
+                            selectedIds
                         )
-
-                            ? {
-                                ...card,
-                                isFlipped: false
-                            }
-
-                            : card
-
-                    )
-
                 );
-
                 setSelectedCards([]);
-
                 setIsChecking(false);
-
-                // Turn goes to Computer
-
+                // Computer turn
                 setTurn("computer");
-
             }, 1000);
-
         }
-
     };
 
-
-    // ============================
-    // Game Over Check
-    // ============================
+    // Game Over
 
     useEffect(() => {
-
         if (
             cards.length > 0 &&
-            cards.every(
-                card => card.isMatched
-            )
+            isGameOver(cards)
         ) {
-
             setGameOver(true);
-
-            if (
-                playerScore >
-                computerScore
-            ) {
-
-                setWinner("Player");
-
-            }
-
-            else if (
-                computerScore >
-                playerScore
-            ) {
-
-                setWinner("Computer");
-
-            }
-
-            else {
-
-                setWinner("Draw");
-
-            }
-
+            setWinner(
+                getWinner(
+                    playerScore,
+                    computerScore
+                )
+            );
         }
-
     }, [
         cards,
         playerScore,
         computerScore
     ]);
-
-
-    // ============================
     // Restart Game
-    // ============================
-
     const restartGame = () => {
-
         setCards(
-            createCards(difficulty)
+            createCards(
+                difficulty
+            )
         );
-
         setSelectedCards([]);
-
         setPlayerScore(0);
-
         setComputerScore(0);
-
         setTurn("player");
-
         setGameOver(false);
-
         setWinner("");
-
         setIsChecking(false);
-
     };
-
-
     return (
-
         <div className="memory-match-container">
             <GameHeader
                 title="🧠 Memory Match"
@@ -345,8 +233,9 @@ function MemoryMatch() {
                     : "🤖 Computer's Turn"
                 }
             </p>
-            <GameContainer width={700}>
-
+            <GameContainer
+                width={700}
+            >
                 <div
                     className={`
                         memory-card-grid
@@ -383,8 +272,6 @@ function MemoryMatch() {
                     ))}
                 </div>
             </GameContainer>
-
-
             {gameOver && (
                 <div
                     className="game-over-overlay"
@@ -417,7 +304,7 @@ function MemoryMatch() {
             )}
         </div>
     );
-
 }
+
 
 export default MemoryMatch;
