@@ -5,6 +5,7 @@ import TicTacToe from "../games/TicTacToe/TicTacToe";
 import FlappyBird from "../games/FlappyBird/FlappyBird";
 import Pong from "../games/Pong/Pong";
 import Tetris from "../games/Tetris/Tetris";
+import MemoryMatch from "../games/MemoryMatch/MemoryMatch";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -22,7 +23,8 @@ function GamePlay() {
       return <Pong />;
     case "tetris":
       return<Tetris/>
-
+    case "memory-match":
+      return <MemoryMatch/>
     default:
       return (
         <h1 style={{ textAlign: "center", marginTop: "50px" }}>
