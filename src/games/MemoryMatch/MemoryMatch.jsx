@@ -10,6 +10,7 @@ import { chooseAICards } from "./AI";
 import { createCards } from "./cards";
 import {checkPlayerMatch} from "./playerLogic";
 import {getWinner} from "./score";
+import {computerTurn} from "./computerLogic";
 
 import {isMatch, flipCards, matchCards, hideCards, isGameOver} from "./gameLogic";
 
@@ -102,67 +103,29 @@ function MemoryMatch() {
 // Computer Turn
 
     useEffect(() => {
-        if ( turn !== "computer" || gameOver || isChecking) {
+        if (turn !== "computer" || gameOver || isChecking ) {
             return;
         }
         setIsChecking(true);
         const timer = setTimeout(() => {
-            const aiSelectedCards =
-                chooseAICards({
-                    cards,
-                    matchedCards: cards
-                        .filter(card => card.isMatched)
-                        .map(card => card.id),
-                    difficulty,
-                    memory: aiMemory
-                });
-            if (aiSelectedCards.length < 2 ) {
-                setIsChecking(false);
-                return;
-            }
-            const selectedIds = aiSelectedCards.map(card => card.id);
-            // Reveal AI cards
-            setCards(prevCards =>
-                flipCards(prevCards,selectedIds)
-            );
-            // AI remembers its own cards
-            setAiMemory(prev => {
-                const updatedMemory = {...prev };
-                aiSelectedCards.forEach(card => {
-                    if (!updatedMemory[card.image]) {
-                        updatedMemory[card.image] = [];
-                    }
-                    if (!updatedMemory[card.image].includes(card.id)){
-                        updatedMemory[card.image].push(card.id );
-                    }
-                });
-                return updatedMemory;
+            computerTurn({
+                cards,
+                difficulty,
+                aiMemory,
+                setCards,
+                setComputerScore,
+                setAiMemory,
+                setIsChecking,
+                setTurn,
+                matchedCards:
+                    cards.filter( card => card.isMatched)
+                        .map(card => card.id )
             });
-            setTimeout(() => {
-                const firstCard = aiSelectedCards[0];
-                const secondCard = aiSelectedCards[1];
-                const matched = isMatch( firstCard,secondCard );
-                if (matched) {
-                    setCards( prevCards =>
-                        matchCards(prevCards,selectedIds)
-                    )
-                    setComputerScore(prev => prev + 1);
-                    setIsChecking(false);
-                    // Computer gets another turn
-                    setTurn("computer");
-                }
-                else {
-                    setCards( prevCards =>
-                        hideCards( prevCards,selectedIds )
-                    );
-                    setIsChecking(false);
-                    // Back to player
-                    setTurn("player");
-                }
-            }, 1000);
         }, 800);
-        return () => {clearTimeout(timer); };
-    }, [turn,gameOver,difficulty]);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [turn,gameOver,isChecking, cards,difficulty,aiMemory]);
 
     // Restart Game
     const restartGame = () => {
