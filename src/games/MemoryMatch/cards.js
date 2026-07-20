@@ -80,12 +80,13 @@ export const createCards = (
     const pairCount =
         totalCards / 2;
 
+    const shuffledImages = shuffle(CARD_IMAGES);
+
     const selectedImages =
-        CARD_IMAGES.slice(
+        shuffledImages.slice(
             0,
             pairCount
         );
-
     const cards = [
 
         ...selectedImages,
