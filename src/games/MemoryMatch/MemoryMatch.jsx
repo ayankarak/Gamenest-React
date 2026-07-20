@@ -28,6 +28,7 @@ function MemoryMatch() {
     const [turn, setTurn] = useState("player");
     const [gameOver, setGameOver] = useState(false);
     const [winner, setWinner] = useState("");
+    const [computerTurnKey, setComputerTurnKey] = useState(0);
     //const [isChecking, setIsChecking] = useState(false);
 
     // Difficulty Change
@@ -103,7 +104,7 @@ function MemoryMatch() {
 // Computer Turn
 
     useEffect(() => {
-        if (turn !== "computer" || gameOver || isChecking ) {
+        if (turn !== "computer" || gameOver ) {
             return;
         }
         setIsChecking(true);
@@ -117,6 +118,7 @@ function MemoryMatch() {
                 setAiMemory,
                 setIsChecking,
                 setTurn,
+                setComputerTurnKey,
                 matchedCards:
                     cards.filter( card => card.isMatched)
                         .map(card => card.id )
@@ -125,7 +127,7 @@ function MemoryMatch() {
         return () => {
             clearTimeout(timer);
         };
-    }, [turn,gameOver,isChecking, cards,difficulty,aiMemory]);
+    }, [turn,computerTurnKey,gameOver,difficulty]);
 
     // Restart Game
     const restartGame = () => {

@@ -20,7 +20,7 @@ export const computerTurn = ({
     setAiMemory,
     setIsChecking,
     setTurn,
-
+    setComputerTurnKey,
     matchedCards
 }) => {
     const aiSelectedCards =
@@ -33,6 +33,7 @@ export const computerTurn = ({
 
     if (aiSelectedCards.length < 2) {
         setIsChecking(false);
+        setTurn("player");
         return;
     }
 
@@ -73,7 +74,7 @@ export const computerTurn = ({
             setComputerScore( prev => prev + 1 );
             setIsChecking(false);
             // Computer gets another turn
-            setTurn("computer");
+            setComputerTurnKey(prev => prev + 1);
         }
         else {
             // NOT MATCH
