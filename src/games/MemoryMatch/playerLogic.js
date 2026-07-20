@@ -3,6 +3,7 @@ import {
     matchCards,
     hideCards
 } from "./gameLogic";
+import {addPlayerScore} from "./score";
 
 export const checkPlayerMatch = ({
     cards,

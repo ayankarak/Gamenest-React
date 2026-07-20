@@ -61,19 +61,19 @@ export const createCards = (
     switch (difficulty) {
 
         case "easy":
-            totalCards = 8;
-            break;
-
-        case "medium":
             totalCards = 12;
             break;
 
+        case "medium":
+            totalCards = 20;
+            break;
+
         case "hard":
-            totalCards = 14;
+            totalCards = 28;
             break;
 
         default:
-            totalCards = 8;
+            totalCards = 16;
 
     }
 

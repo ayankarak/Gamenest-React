@@ -9,8 +9,9 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 import { chooseAICards } from "./AI";
 import { createCards } from "./cards";
 import {checkPlayerMatch} from "./playerLogic";
+import {getWinner} from "./score";
 
-import {isMatch, flipCards, matchCards, hideCards, isGameOver, getWinner} from "./gameLogic";
+import {isMatch, flipCards, matchCards, hideCards, isGameOver} from "./gameLogic";
 
 function MemoryMatch() {
     const [difficulty, setDifficulty] = useState("easy");
@@ -161,7 +162,7 @@ function MemoryMatch() {
             }, 1000);
         }, 800);
         return () => {clearTimeout(timer); };
-    }, [turn,gameOver,isChecking,cards,aiMemory,difficulty]);
+    }, [turn,gameOver,difficulty]);
 
     // Restart Game
     const restartGame = () => {

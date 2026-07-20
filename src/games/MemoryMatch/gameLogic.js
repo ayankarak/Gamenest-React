@@ -54,12 +54,12 @@ export const isGameOver = ( cards ) => {
 
 // Find Winner
 
-export const getWinner = ( playerScore, computerScore ) => {
-    if ( playerScore > computerScore ) {
-        return "Player";
-    }
-    if ( computerScore > playerScore ) {
-        return "Computer";
-    }
-    return "Draw";
-};
+// export const getWinner = ( playerScore, computerScore ) => {
+//     if ( playerScore > computerScore ) {
+//         return "Player";
+//     }
+//     if ( computerScore > playerScore ) {
+//         return "Computer";
+//     }
+//     return "Draw";
+// };
