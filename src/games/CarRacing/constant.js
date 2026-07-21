@@ -13,6 +13,7 @@ export const ENEMY_WIDTH = 60;
 export const ENEMY_HEIGHT = 100;
 
 export const INITIAL_SPEED = 5;
+export const TOTAL_LANES = 5;
 
 export const DIFFICULTY_SPEED = {
     easy: 4,
