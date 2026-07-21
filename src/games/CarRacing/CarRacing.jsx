@@ -6,6 +6,7 @@ import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
+import {moveLeft,moveRight} from "./control";
 import { createPlayer } from "./cars";
 
 function CarRacing() {
@@ -27,10 +28,10 @@ function CarRacing() {
                 return;
             }
             if (e.key === "ArrowLeft") {
-                playerRef.current.lane--;
+                moveLeft(playerRef.current);
             }
             if (e.key === "ArrowRight") {
-                playerRef.current.lane++;
+                moveRight(playerRef.current);
             }
         };
         window.addEventListener(

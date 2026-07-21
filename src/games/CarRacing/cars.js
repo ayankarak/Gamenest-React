@@ -19,10 +19,7 @@ export const getLaneX = (lane) => {
 // Create Player
 
 export const createPlayer = () => {
-    const lane =
-        Math.floor(
-            LANE_COUNT / 2
-        );
+    const lane = Math.floor(LANE_COUNT / 2 );
     return {
         lane,
         x: getLaneX(lane),
