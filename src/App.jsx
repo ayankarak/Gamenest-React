@@ -16,6 +16,7 @@ import FlappyBird from "./games/FlappyBird/FlappyBird";
 import Pong from "./games/Pong/Pong";
 import Tetris from "./games/Tetris/Tetris";
 import MemoryMatch from "./games/MemoryMatch/MemoryMatch";
+import CarRacing from "./games/CarRacing/CarRacing";
 
 function App() {
   return (

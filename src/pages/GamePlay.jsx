@@ -6,6 +6,7 @@ import FlappyBird from "../games/FlappyBird/FlappyBird";
 import Pong from "../games/Pong/Pong";
 import Tetris from "../games/Tetris/Tetris";
 import MemoryMatch from "../games/MemoryMatch/MemoryMatch";
+import CarRacing from "../games/CarRacing/CarRacing";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -25,6 +26,8 @@ function GamePlay() {
       return<Tetris/>
     case "memory-match":
       return <MemoryMatch/>
+    case "car-racing":
+      return <CarRacing/>
     default:
       return (
         <h1 style={{ textAlign: "center", marginTop: "50px" }}>
