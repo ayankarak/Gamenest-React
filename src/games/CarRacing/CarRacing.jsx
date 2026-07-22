@@ -7,13 +7,16 @@ import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
 import {moveLeft,moveRight} from "./controls";
-import { createPlayer } from "./cars";
+import { createPlayer , createEnemy } from "./cars";
 
 function CarRacing() {
     // Canvas
     const canvasRef = useRef(null);
     // Player
     const playerRef = useRef(createPlayer());
+    const playerImageRef = useRef(new Image());
+    const enemyImageRefs = useRef([]);
+    const enemyCarsRef = useRef([createEnemy(0),createEnemy(3), createEnemy(4)]);
     // Game State
     const [ difficulty, setDifficulty ] = useState("easy");
     const [ score, setScore ] = useState(0);
@@ -45,6 +48,19 @@ function CarRacing() {
             );
         };
     }, [gameOver]);
+//player car draw
+    useEffect(() => {
+        playerImageRef.current.src = playerRef.current.image;
+    }, []);
+// enemy car draw
+    useEffect(() => {
+        enemyImageRefs.current = enemyCarsRef.current.map( enemy => {
+                    const image = new Image();
+                    image.src = enemy.image;
+                    return image;
+                }
+            );
+    }, []);
 
     // Canvas Draw
 
@@ -89,21 +105,33 @@ function CarRacing() {
             }
             ctx.setLineDash([]);
             // Player Car
-            const player = playerRef.current;
-            ctx.fillStyle = "#00ffff";
-            ctx.fillRect(
-                player.x,
-                player.y,
-                player.width,
-                player.height
+            const player =playerRef.current;
+            if (playerImageRef.current.complete) {
+                ctx.drawImage(
+                    playerImageRef.current,
+                    player.x,
+                    player.y,
+                    player.width,
+                    player.height
+                );
+            }
+            // Enemy Cars
+            enemyCarsRef.current.forEach( (enemy, index) => {
+                    const enemyImage = enemyImageRefs.current[index];
+                    if (enemyImage &&enemyImage.complete) {
+                        ctx.drawImage(
+                            enemyImage,
+                            enemy.x,
+                            enemy.y,
+                            enemy.width,
+                            enemy.height
+                        );
+                    }
+                }
             );
             requestAnimationFrame( draw );
         };
-
-
         draw();
-
-
     }, []);
 
     // Restart Game

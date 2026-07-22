@@ -1,46 +1,46 @@
-import {
-    GAME_HEIGHT,
-    LANE_COUNT,
-    LANE_WIDTH,
-    PLAYER_WIDTH,
-    PLAYER_HEIGHT,
-    ENEMY_WIDTH,
-    ENEMY_HEIGHT
-} from "./constant";
+import playerCarImage from "../../assets/car/car.png";
 
-// Get lane X position
-export const getLaneX = (lane) => {
-    return (
-        lane * LANE_WIDTH +
-        (LANE_WIDTH - PLAYER_WIDTH) / 2
-    );
+import blueCarImage from "../../assets/car/bluecar.png";
+import greenCarImage from "../../assets/car/greencar.png";
+import yellowCarImage from "../../assets/car/yellowcar.png";
+import { GAME_WIDTH, TOTAL_LANES } from "./constant";
+
+// Player Car
+
+const getLaneX = (lane, carWidth) => {
+    const laneWidth =GAME_WIDTH / TOTAL_LANES;
+    return (lane * laneWidth +(laneWidth - carWidth) / 2);
 };
-
-// Create Player
 
 export const createPlayer = () => {
-    const lane = Math.floor(LANE_COUNT / 2 );
     return {
-        lane,
-        x: getLaneX(lane),
-        y:GAME_HEIGHT - PLAYER_HEIGHT - 20,
-        width: PLAYER_WIDTH,
-        height: PLAYER_HEIGHT
+        lane: 2,
+        x: getLaneX(2, 80),
+        y: 600,
+        width: 80,
+        height: 80,
+        image: playerCarImage
     };
 };
 
-// Create Enemy
-export const createEnemy = () => {
-    const lane =
-        Math.floor(
-            Math.random() * LANE_COUNT
-        );
+// Enemy Car Images
+
+export const ENEMY_CAR_IMAGES = [
+    blueCarImage,
+    greenCarImage,
+    yellowCarImage
+];
+
+// Create Enemy Car
+
+export const createEnemy = ( lane ) => {
+    const randomIndex = Math.floor(Math.random() * ENEMY_CAR_IMAGES.length );
     return {
         lane,
-        x:lane * LANE_WIDTH +(LANE_WIDTH - ENEMY_WIDTH) / 2,
-        y: -ENEMY_HEIGHT,
-        width: ENEMY_WIDTH,
-        height: ENEMY_HEIGHT
+        x: getLaneX(lane, 80),
+        y: -100,
+        width: 80,
+        height: 80,
+        image:ENEMY_CAR_IMAGES[randomIndex]
     };
-
 };
