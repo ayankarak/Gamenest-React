@@ -40,4 +40,11 @@ export const moveBackward = (player) => {
 
 export const moveEnemy = (enemy,speed) => {
     enemy.y += speed;
+    if (enemy.y > GAME_HEIGHT) {
+        enemy.y = -enemy.height;
+        // Random lane
+        enemy.lane = Math.floor( Math.random() * TOTAL_LANES );
+        const laneWidth = GAME_WIDTH / TOTAL_LANES;
+        enemy.x = enemy.lane * laneWidth + (laneWidth - enemy.width) / 2;
+    }
 };

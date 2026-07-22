@@ -8,6 +8,7 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
 import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
+import {checkCollision} from "./gameLogic";
 
 function CarRacing() {
     // Canvas
@@ -120,6 +121,12 @@ function CarRacing() {
             ctx.setLineDash([]);
             // Player Car
             const player =playerRef.current;
+            enemyCarsRef.current.forEach(enemy => {moveEnemy(enemy, 4); });
+            if (checkCollision(player, enemyCarsRef.current, player.height))
+            {
+                setGameOver(true);
+                return;
+            }
             if (playerImageRef.current.complete) {
                 ctx.drawImage(
                     playerImageRef.current,

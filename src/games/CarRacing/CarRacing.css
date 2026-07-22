@@ -1,162 +1,174 @@
-/*  CAR RACING CONTAINER */
+/* =========================
+   CAR RACING GAME
+========================= */
 
 .car-racing-container {
-    width: 100%;
     min-height: 100vh;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
     background:
         radial-gradient(
             circle at top,
-            #182848,
-            #050505 70%
-        );
-    color: white;
+            rgba(0, 229, 255, 0.12),
+            transparent 40%
+        ),
+        #050b14;
+    color: #ffffff;
 }
 
-/*  GAME CANVAS */
+/*  GAME AREA */
 
-.car-racing-canvas {
-    display: block;
-    background: #222;
-    border: 3px solid #00ffff;
-    border-radius: 10px;
-    box-shadow:
-        0 0 10px #00ffff,
-        0 0 25px rgba(0, 255, 255, 0.5);
-    max-width: 100%;
-}
-
-/* ROAD EFFECT*/
-
-.car-racing-canvas {
-    display: block;
-    background: #222;
-    border: 3px solid #00ffff;
-    border-radius: 10px;
-    box-shadow:
-        0 0 10px #00ffff,
-        0 0 25px rgba(0, 255, 255, 0.5);
-    max-width: 100%;
-}
-
-/*  GAME OVER OVERLAY */
-
-.car-racing-container
-.game-over-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
+.car-racing-container .game-container {
+    position: relative;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background:rgba(0, 0, 0, 0.75);
-    background: rgba(0, 0, 0, 0.75);
 }
 
-/*  GAME OVER CARD */
+/*  CANVAS */
 
-.car-racing-container
+.car-racing-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background: #222;
+    border: 3px solid #00e5ff;
+    border-radius: 14px;
+    box-shadow:0 0 10px #00e5ff,
+        0 0 25px rgba(0, 229, 255, 0.5);
+
+    outline: none;
+}
+
+
+/*  SCOREBOARD */
+
+.car-racing-container .score-board {
+    margin-top: 15px;
+}
+
+/*  TURN / STATUS */
+
+.car-racing-container .turn-status {
+    margin: 15px 0;
+    color: #00e5ff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-shadow:0 0 8px #00e5ff;
+}
+
+
+/*  GAME OVER OVERLAY */
+
+.game-over-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(5, 10, 20, 0.86);
+    z-index: 1000;
+}
+
+/* GAME OVER CARD */
+
 .game-over-card {
-    width: min(90%,400px);
-    padding: 35px 25px;
+    width: 90%;
+    max-width: 500px;
+    padding: 40px 30px;
     text-align: center;
+    background: #111827;
+    border: 2px solid #00e5ff;
     border-radius: 20px;
-    background:
-        linear-gradient(
-            145deg,
-            #151515,
-            #252525
-        );
-    border: 2px solid #ff1744;
-    box-shadow:
-        0 0 15px #ff1744,
-        0 0 40px
-        rgba(255,23,68,0.45);
-    animation:
-        gameOverPop
-        0.35s
-        ease-out;
+    box-shadow:0 0 15px #00e5ff,
+        0 0 35px rgba(0, 229, 255, 0.6);
+    animation: gameOverPop 0.3s ease-out;
 }
 
 /*  GAME OVER TITLE */
 
-.car-racing-container
 .game-over-card h2 {
-    margin-bottom: 15px;
-    color: #ff1744;
-    font-size: 2rem;
-    text-shadow:0 0 10px #ff1744;
+    margin-bottom: 20px;
+    color: #00e5ff;
+    font-size: 2.2rem;
+    text-shadow: 0 0 8px #00e5ff,
+        0 0 20px #00e5ff;
 }
 
-/*  SCORE */
+/*  SCORE TEXT */
 
-.car-racing-container
 .game-over-card p {
     margin: 10px 0;
+    color: #ffffff;
     font-size: 1.2rem;
-    color: #eeeeee;
 }
 
 /*  PLAY AGAIN BUTTON */
 
-.car-racing-container
 .play-again-btn {
     margin-top: 20px;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
+    background: linear-gradient(135deg,
+        #00e5ff,
+        #007bff
+    );
+    color: #ffffff;
+    font-size: 1.1rem;
     font-weight: bold;
-    color: white;
-    background:
-        linear-gradient(
-            135deg,
-            #00c6ff,
-            #0072ff
-        );
-    box-shadow: 0 0 10px
-        rgba(0,198,255,0.7);
+    cursor: pointer;
+    box-shadow:0 0 10px #00e5ff,
+        0 0 20px rgba(0, 229, 255, 0.5);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.car-racing-container
+
 .play-again-btn:hover {
-    transform:translateY(-3px) scale(1.05);
-    box-shadow:0 0 20px rgba(0,198,255,1);
+    transform: scale(1.05);
+    box-shadow:0 0 15px #00e5ff,
+        0 0 30px rgba(0, 229, 255, 0.8);
 }
 
-/* ANIMATION*/
+.play-again-btn:active {
+    transform: scale(0.97);
+}
+
+
+/*  GAME OVER ANIMATION */
 
 @keyframes gameOverPop {
     from {
         opacity: 0;
-        transform:scale(0.7) translateY(30px);
+        transform: scale(0.8);
     }
+
     to {
         opacity: 1;
-        transform:scale(1)translateY(0);
+        transform: scale(1);
     }
 }
 
-/* MOBILE RESPONSIVE */
+/*  MOBILE RESPONSIVE*/
 
 @media (max-width: 600px) {
-    .car-racing-container {
-        padding: 10px;
-    }
-    .car-racing-canvas {
-        width: 100%;
-        height: auto;
-    }
-    .car-racing-container
+
+    .car-racing-container {padding: 10px;}
+    .car-racing-canvas { width: 100%; max-width: 500px;}
     .game-over-card {
-        padding: 25px 20px;
+        padding: 30px 20px;
     }
-    .car-racing-container
     .game-over-card h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+    }
+    .game-over-card p {
+        font-size: 1rem;
+    }
+    .play-again-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
     }
 }
