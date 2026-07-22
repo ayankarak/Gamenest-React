@@ -37,3 +37,7 @@ export const moveBackward = (player) => {
     }
 
 };
+
+export const moveEnemy = (enemy,speed) => {
+    enemy.y += speed;
+};

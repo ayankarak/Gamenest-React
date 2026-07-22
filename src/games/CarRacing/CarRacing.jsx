@@ -6,7 +6,7 @@ import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
-import {moveLeft,moveRight ,moveForward,moveBackward} from "./controls";
+import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
 
 function CarRacing() {
@@ -131,6 +131,8 @@ function CarRacing() {
             }
             // Enemy Cars
             enemyCarsRef.current.forEach( (enemy, index) => {
+                   // Move Enemy
+                    moveEnemy( enemy, 4 );
                     const enemyImage = enemyImageRefs.current[index];
                     if (enemyImage &&enemyImage.complete) {
                         ctx.drawImage(
