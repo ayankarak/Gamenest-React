@@ -1,4 +1,4 @@
-import {TOTAL_LANES, GAME_WIDTH} from "./constant";
+import {TOTAL_LANES, GAME_WIDTH,GAME_HEIGHT} from "./constant";
 
 // Move Player Left
 
@@ -17,6 +17,23 @@ export const moveRight = (player) => {
         player.lane++;
         const laneWidth = GAME_WIDTH / TOTAL_LANES;
         player.x = player.lane * laneWidth + (laneWidth - player.width) / 2;
+    }
+
+};
+
+// Move Player Forward
+
+export const moveForward = (player) => {
+    if (player.y > 0) {
+        player.y -= 20;
+    }
+};
+
+// Move Player Backward
+
+export const moveBackward = (player) => {
+    if (player.y <GAME_HEIGHT - player.height) {
+        player.y += 20;
     }
 
 };

@@ -6,7 +6,7 @@ import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
-import {moveLeft,moveRight} from "./controls";
+import {moveLeft,moveRight ,moveForward,moveBackward} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
 
 function CarRacing() {
@@ -27,6 +27,14 @@ function CarRacing() {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
+            if (
+                e.key === "ArrowUp" ||
+                e.key === "ArrowDown" ||
+                e.key === "ArrowLeft" ||
+                e.key === "ArrowRight"
+            ) {
+                e.preventDefault();
+            }
             if (gameOver) {
                 return;
             }
@@ -35,6 +43,12 @@ function CarRacing() {
             }
             if (e.key === "ArrowRight") {
                 moveRight(playerRef.current);
+            }
+            if (e.key === "ArrowUp") {
+                moveForward(playerRef.current);
+            }
+            if (e.key === "ArrowDown") {
+                moveBackward(playerRef.current);
             }
         };
         window.addEventListener(
