@@ -80,61 +80,63 @@ function CarRacing() {
 
     // Canvas Draw
 
-    useEffect(() => {
-
+   useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas||gameOver) {
+        if (!canvas || gameOver) {
             return;
         }
         const ctx = canvas.getContext("2d");
         let animationId;
         const draw = () => {
-            // Clear Canvas
-
-            ctx.clearRect(
-                0,
-                0,
+            // CLEAR CANVAS
+            ctx.clearRect( 0, 0,
                 GAME_WIDTH,
                 GAME_HEIGHT
             );
-
-            // Road
-
+            // ROAD
             ctx.fillStyle = "#222";
-
-            ctx.fillRect(
-                0,
-                0,
+            ctx.fillRect( 0, 0,
                 GAME_WIDTH,
                 GAME_HEIGHT
             );
-
-            // Lane Lines
-
+            // LANE LINES
             ctx.strokeStyle = "#ffffff";
-            ctx.setLineDash([20,20]);
-            for (let i = 1;i < 5;i++) {
-                const x = i * (GAME_WIDTH / 5);
+            ctx.setLineDash([20, 20]);
+            for (let i = 1; i < 5; i++) {
+                const x =i * (GAME_WIDTH / 5);
                 ctx.beginPath();
-                ctx.moveTo( x, 0 );
-                ctx.lineTo( x, GAME_HEIGHT );
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x,GAME_HEIGHT);
                 ctx.stroke();
             }
             ctx.setLineDash([]);
-            // Player Car
-            const player =playerRef.current;
-            enemyCarsRef.current.forEach(enemy => {moveEnemy(enemy, 4);
-                if (enemy.y > GAME_HEIGHT &&!enemy.scored) {
-                    enemy.scored = true;
-                    increaseScore(setScore);
+            const player = playerRef.current;
+            // UPDATE ENEMIES
+            enemyCarsRef.current.forEach(
+                (enemy, index) => {
+                    // Move enemy
+                    moveEnemy(enemy,4);
+                    // SCORE
+                    if (enemy.y > player.y +player.height &&!enemy.scored) {
+                        enemy.scored = true;
+                        increaseScore( setScore );
+                    }
+                    // RESET ENEMY
+                    if (enemy.y >GAME_HEIGHT) {
+                        const newEnemy =createEnemy(Math.floor(Math.random() * 5));
+                        const newImage = new Image();
+                        newImage.src = newEnemy.image;
+                        enemyCarsRef.current[index] = newEnemy;
+                        enemyImageRefs.current[index] = newImage;
+                    }
                 }
-            });
-
-            if (checkCollision(player, enemyCarsRef.current, player.height))
-            {
+            );
+            // COLLISION
+            if (checkCollision(player, enemyCarsRef.current )) {
                 setGameOver(true);
                 return;
             }
+            // DRAW PLAYER
             if (playerImageRef.current.complete) {
                 ctx.drawImage(
                     playerImageRef.current,
@@ -144,10 +146,8 @@ function CarRacing() {
                     player.height
                 );
             }
-            // Enemy Cars
-            enemyCarsRef.current.forEach( (enemy, index) => {
-                   // Move Enemy
-                    //moveEnemy( enemy, 4 );
+            // DRAW ENEMIES
+            enemyCarsRef.current.forEach((enemy, index) => {
                     const enemyImage = enemyImageRefs.current[index];
                     if (enemyImage &&enemyImage.complete) {
                         ctx.drawImage(
@@ -160,24 +160,26 @@ function CarRacing() {
                     }
                 }
             );
-            animationId=requestAnimationFrame( draw );
+            // NEXT FRAME
+            animationId = requestAnimationFrame( draw );
         };
         draw();
         return () => {
             cancelAnimationFrame(animationId);
         };
-
     }, [gameOver]);
 
     // Restart Game
 
     const restartGame = () => {
-        playerRef.current = createPlayer();
-        enemyCarsRef.current = [
-            createEnemy(0),
-            createEnemy(3),
-            createEnemy(4)
-        ];
+        playerRef.current =createPlayer();
+        const newEnemies = [createEnemy(0),createEnemy(3),createEnemy(4)];
+        enemyCarsRef.current = newEnemies;
+        enemyImageRefs.current = newEnemies.map(enemy => {
+            const image = new Image();
+            image.src = enemy.image;
+            return image;
+        });
         setScore(0);
         setGameOver(false);
     };
