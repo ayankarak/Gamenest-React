@@ -8,7 +8,8 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
 import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
-import {checkCollision} from "./gameLogic";
+import {checkCollision,removeOffScreenEnemies} from "./gameLogic";
+import {increaseScore,updateHighScore,resetScore} from "./score";
 
 function CarRacing() {
     // Canvas
@@ -82,10 +83,11 @@ function CarRacing() {
     useEffect(() => {
 
         const canvas = canvasRef.current;
-        if (!canvas) {
+        if (!canvas||gameOver) {
             return;
         }
         const ctx = canvas.getContext("2d");
+        let animationId;
         const draw = () => {
             // Clear Canvas
 
@@ -121,7 +123,13 @@ function CarRacing() {
             ctx.setLineDash([]);
             // Player Car
             const player =playerRef.current;
-            enemyCarsRef.current.forEach(enemy => {moveEnemy(enemy, 4); });
+            enemyCarsRef.current.forEach(enemy => {moveEnemy(enemy, 4);
+                if (enemy.y > GAME_HEIGHT &&!enemy.scored) {
+                    enemy.scored = true;
+                    increaseScore(setScore);
+                }
+            });
+
             if (checkCollision(player, enemyCarsRef.current, player.height))
             {
                 setGameOver(true);
@@ -139,7 +147,7 @@ function CarRacing() {
             // Enemy Cars
             enemyCarsRef.current.forEach( (enemy, index) => {
                    // Move Enemy
-                    moveEnemy( enemy, 4 );
+                    //moveEnemy( enemy, 4 );
                     const enemyImage = enemyImageRefs.current[index];
                     if (enemyImage &&enemyImage.complete) {
                         ctx.drawImage(
@@ -152,15 +160,24 @@ function CarRacing() {
                     }
                 }
             );
-            requestAnimationFrame( draw );
+            animationId=requestAnimationFrame( draw );
         };
         draw();
-    }, []);
+        return () => {
+            cancelAnimationFrame(animationId);
+        };
+
+    }, [gameOver]);
 
     // Restart Game
 
     const restartGame = () => {
         playerRef.current = createPlayer();
+        enemyCarsRef.current = [
+            createEnemy(0),
+            createEnemy(3),
+            createEnemy(4)
+        ];
         setScore(0);
         setGameOver(false);
     };

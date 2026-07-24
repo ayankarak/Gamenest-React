@@ -36,9 +36,9 @@ import {GAME_WIDTH,GAME_HEIGHT,TOTAL_LANES} from "./constant";
 
 // // Remove Cars That Left Screen
 
-// export const removeOffScreenEnemies = (enemies) => {
-//     return enemies.filter(enemy =>enemy.y < GAME_HEIGHT);
-// };
+export const removeOffScreenEnemies = (enemies) => {
+    return enemies.filter(enemy =>enemy.y < GAME_HEIGHT);
+};
 
 // Check Collision
 

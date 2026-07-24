@@ -41,6 +41,7 @@ export const createEnemy = ( lane ) => {
         y: -100,
         width: 80,
         height: 80,
-        image:ENEMY_CAR_IMAGES[randomIndex]
+        image:ENEMY_CAR_IMAGES[randomIndex],
+        scored:false
     };
 };
