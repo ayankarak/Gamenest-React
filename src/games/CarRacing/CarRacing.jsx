@@ -22,6 +22,7 @@ function CarRacing() {
     const enemyCarsRef = useRef([createEnemy(0),createEnemy(3), createEnemy(4)]);
     //const [highScore, setHighScore] = useState(0);
     // Game State
+    const [gameStarted, setGameStarted] = useState(false);
     const [ difficulty, setDifficulty ] = useState("easy");
     const [ score, setScore ] = useState(0);
     const [gameOver,setGameOver] = useState(false);
@@ -42,7 +43,7 @@ function CarRacing() {
             ) {
                 e.preventDefault();
             }
-            if (gameOver) {
+            if (gameOver||!gameStarted) {
                 return;
             }
             if (e.key === "ArrowLeft") {
@@ -68,7 +69,7 @@ function CarRacing() {
                 handleKeyDown
             );
         };
-    }, [gameOver]);
+    }, [gameOver, gameStarted]);
 //player car draw
     useEffect(() => {
         playerImageRef.current.src = playerRef.current.image;
@@ -87,7 +88,7 @@ function CarRacing() {
 
    useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || gameOver) {
+        if (!canvas || gameOver|| !gameStarted) {
             return;
         }
         const ctx = canvas.getContext("2d");
@@ -178,7 +179,7 @@ function CarRacing() {
         return () => {
             cancelAnimationFrame(animationId);
         };
-    }, [gameOver, difficulty]);
+    }, [gameOver, difficulty, gameStarted]);
 
     useEffect(() => {
         if (score > highScore) {
@@ -200,6 +201,7 @@ function CarRacing() {
         });
         setScore(0);
         setGameOver(false);
+        setGameStarted(true);
     };
 
 
@@ -227,41 +229,50 @@ function CarRacing() {
                     setDifficulty
                 }
             />
-            <GameContainer
-                width={GAME_WIDTH}
-            >
-                <canvas
-                    ref={canvasRef}
-                    width={GAME_WIDTH}
-                    height={GAME_HEIGHT}
-                    className="car-racing-canvas"
-                />
-            </GameContainer>
-            {gameOver && (
-                <div
-                    className="game-over-overlay"
-                >
-                    <div
-                        className="game-over-card"
-                    >
-                        <h2>
-                            💥 Game Over
-                        </h2>
-                        <p>
-                            Score: {score}
-                        </p>
+            <GameContainer width={GAME_WIDTH}>
+    <div className="canvas-wrapper">
 
-                        <button
-                            className="play-again-btn"
-                            onClick={
-                                restartGame
-                            }
-                        >
-                            🔄 Play Again
-                        </button>
-                    </div>
+        <canvas
+            ref={canvasRef}
+            width={GAME_WIDTH}
+            height={GAME_HEIGHT}
+            className="car-racing-canvas"
+        />
+
+        {!gameStarted && !gameOver && (
+            <div className="game-start-overlay">
+                <div className="game-start-card">
+                    <h2>🏎️ Car Racing</h2>
+
+                    <button
+                        className="play-now-btn"
+                        onClick={() => setGameStarted(true)}
+                    >
+                        ▶️ Play Now
+                    </button>
                 </div>
-            )}
+            </div>
+        )}
+
+        {gameOver && (
+            <div className="game-over-overlay">
+                <div className="game-over-card">
+                    <h2>💥 Game Over</h2>
+
+                    <p>Score: {score}</p>
+
+                    <button
+                        className="play-again-btn"
+                        onClick={restartGame}
+                    >
+                        🔄 Play Again
+                    </button>
+                </div>
+            </div>
+        )}
+
+    </div>
+</GameContainer>
         </div>
     );
 }

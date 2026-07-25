@@ -26,6 +26,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 /*  CANVAS */
@@ -43,6 +44,74 @@
     outline: none;
 }
 
+/* CANVAS WRAPPER */
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*  GAME START OVERLAY */
+
+.game-start-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(5, 10, 20, 0.86);
+    z-index: 10;
+}
+
+.game-start-card {
+    width: 90%;
+    max-width: 350px;
+    padding: 35px 25px;
+    text-align: center;
+    background: #111827;
+    border: 2px solid #00e5ff;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #00e5ff,
+        0 0 35px rgba(0, 229, 255, 0.6);
+    animation: gameStartPop 0.3s ease-out;
+}
+
+.game-start-card h2 {
+    margin-bottom: 25px;
+    color: #00e5ff;
+    font-size: 2rem;
+    text-shadow: 0 0 8px #00e5ff, 0 0 20px #00e5ff;
+}
+
+.play-now-btn {
+    padding: 14px 30px;
+
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00e5ff, #007bff);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00e5ff,
+        0 0 20px rgba(0, 229, 255, 0.5);
+    transition: transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.play-now-btn:hover {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 15px #00e5ff,
+        0 0 30px rgba(0, 229, 255, 0.8);
+}
+.play-now-btn:active {
+    transform: scale(0.97);
+}
 
 /*  SCOREBOARD */
 
@@ -141,6 +210,17 @@
 /*  GAME OVER ANIMATION */
 
 @keyframes gameOverPop {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes gameStartPop {
     from {
         opacity: 0;
         transform: scale(0.8);
