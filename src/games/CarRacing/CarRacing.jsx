@@ -9,7 +9,7 @@ import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
 import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
 import {checkCollision,removeOffScreenEnemies} from "./gameLogic";
-import {increaseScore,updateHighScore,resetScore} from "./score";
+import {increaseScore} from "./score";
 
 function CarRacing() {
     // Canvas
@@ -19,11 +19,15 @@ function CarRacing() {
     const playerImageRef = useRef(new Image());
     const enemyImageRefs = useRef([]);
     const enemyCarsRef = useRef([createEnemy(0),createEnemy(3), createEnemy(4)]);
+    //const [highScore, setHighScore] = useState(0);
     // Game State
     const [ difficulty, setDifficulty ] = useState("easy");
     const [ score, setScore ] = useState(0);
-    const [highScore,setHighScore] = useState(0);
     const [gameOver,setGameOver] = useState(false);
+    const [highScore, setHighScore] = useState(() => {
+    const savedHighScore =localStorage.getItem("carRacingHighScore");
+        return savedHighScore? Number(savedHighScore) : 0;
+    });
 
     // Keyboard Controls
 
@@ -168,6 +172,13 @@ function CarRacing() {
             cancelAnimationFrame(animationId);
         };
     }, [gameOver]);
+
+    useEffect(() => {
+        if (score > highScore) {
+            setHighScore(score);
+            localStorage.setItem( "carRacingHighScore",score );
+        }
+    }, [score, highScore]);
 
     // Restart Game
 
