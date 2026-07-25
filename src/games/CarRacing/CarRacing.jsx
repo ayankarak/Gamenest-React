@@ -5,7 +5,7 @@ import GameHeader from "../../component/PlayPage/GameHeader";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
-import { GAME_WIDTH, GAME_HEIGHT } from "./constant";
+import { GAME_WIDTH, GAME_HEIGHT, DIFFICULTY_SPEED } from "./constant";
 import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
 import {checkCollision,removeOffScreenEnemies} from "./gameLogic";
@@ -25,8 +25,8 @@ function CarRacing() {
     const [ score, setScore ] = useState(0);
     const [gameOver,setGameOver] = useState(false);
     const [highScore, setHighScore] = useState(() => {
-    const savedHighScore =localStorage.getItem("carRacingHighScore");
-        return savedHighScore? Number(savedHighScore) : 0;
+        const savedHighScore =localStorage.getItem("carRacingHighScore");
+            return savedHighScore? Number(savedHighScore) : 0;
     });
 
     // Keyboard Controls
@@ -91,6 +91,7 @@ function CarRacing() {
         }
         const ctx = canvas.getContext("2d");
         let animationId;
+        const speed = DIFFICULTY_SPEED[difficulty];
         const draw = () => {
             // CLEAR CANVAS
             ctx.clearRect( 0, 0,
@@ -119,7 +120,7 @@ function CarRacing() {
             enemyCarsRef.current.forEach(
                 (enemy, index) => {
                     // Move enemy
-                    moveEnemy(enemy,4);
+                    moveEnemy(enemy,speed);
                     // SCORE
                     if (enemy.y > player.y +player.height &&!enemy.scored) {
                         enemy.scored = true;
@@ -171,7 +172,7 @@ function CarRacing() {
         return () => {
             cancelAnimationFrame(animationId);
         };
-    }, [gameOver]);
+    }, [gameOver, difficulty]);
 
     useEffect(() => {
         if (score > highScore) {
