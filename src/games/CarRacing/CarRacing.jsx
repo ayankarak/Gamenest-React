@@ -14,6 +14,7 @@ import {increaseScore} from "./score";
 function CarRacing() {
     // Canvas
     const canvasRef = useRef(null);
+    const roadOffsetRef = useRef(0);
     // Player
     const playerRef = useRef(createPlayer());
     const playerImageRef = useRef(new Image());
@@ -106,15 +107,20 @@ function CarRacing() {
             );
             // LANE LINES
             ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 4;
             ctx.setLineDash([20, 20]);
+            // Dotted lines move downward
+            roadOffsetRef.current -= 4;
+            ctx.lineDashOffset = roadOffsetRef.current;
             for (let i = 1; i < 5; i++) {
-                const x =i * (GAME_WIDTH / 5);
+                const x = i * (GAME_WIDTH / 5);
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
-                ctx.lineTo(x,GAME_HEIGHT);
+                ctx.lineTo( x, GAME_HEIGHT);
                 ctx.stroke();
             }
             ctx.setLineDash([]);
+            ctx.lineDashOffset = 0;
             const player = playerRef.current;
             // UPDATE ENEMIES
             enemyCarsRef.current.forEach(
