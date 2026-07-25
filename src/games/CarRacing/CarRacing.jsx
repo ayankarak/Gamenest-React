@@ -230,49 +230,42 @@ function CarRacing() {
                 }
             />
             <GameContainer width={GAME_WIDTH}>
-    <div className="canvas-wrapper">
-
-        <canvas
-            ref={canvasRef}
-            width={GAME_WIDTH}
-            height={GAME_HEIGHT}
-            className="car-racing-canvas"
-        />
-
-        {!gameStarted && !gameOver && (
-            <div className="game-start-overlay">
-                <div className="game-start-card">
-                    <h2>🏎️ Car Racing</h2>
-
-                    <button
-                        className="play-now-btn"
-                        onClick={() => setGameStarted(true)}
-                    >
-                        ▶️ Play Now
-                    </button>
+                <div className="canvas-wrapper">
+                    <canvas
+                        ref={canvasRef}
+                        width={GAME_WIDTH}
+                        height={GAME_HEIGHT}
+                        className="car-racing-canvas"
+                    />
+                    {!gameStarted && !gameOver && (
+                        <div className="game-start-overlay">
+                            <div className="game-start-card">
+                                <h2>🏎️ Car Racing</h2>
+                                <button
+                                    className="play-now-btn"
+                                    onClick={() => setGameStarted(true)}
+                                >
+                                    ▶️ Play Now
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {gameOver && (
+                        <div className="game-over-overlay">
+                            <div className="game-over-card">
+                                <h2>💥 Game Over</h2>
+                                <p>Score: {score}</p>
+                                <button
+                                    className="play-again-btn"
+                                    onClick={restartGame}
+                                >
+                                    🔄 Play Again
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            </div>
-        )}
-
-        {gameOver && (
-            <div className="game-over-overlay">
-                <div className="game-over-card">
-                    <h2>💥 Game Over</h2>
-
-                    <p>Score: {score}</p>
-
-                    <button
-                        className="play-again-btn"
-                        onClick={restartGame}
-                    >
-                        🔄 Play Again
-                    </button>
-                </div>
-            </div>
-        )}
-
-    </div>
-</GameContainer>
+            </GameContainer>
         </div>
     );
 }
