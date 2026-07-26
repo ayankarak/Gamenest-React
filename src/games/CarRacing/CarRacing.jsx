@@ -20,6 +20,7 @@ function CarRacing() {
     const playerImageRef = useRef(new Image());
     const enemyImageRefs = useRef([]);
     const enemyCarsRef = useRef([createEnemy(0),createEnemy(3), createEnemy(4)]);
+    const speedRef = useRef(DIFFICULTY_SPEED.easy.base);
     //const [highScore, setHighScore] = useState(0);
     // Game State
     const [gameStarted, setGameStarted] = useState(false);
@@ -83,6 +84,13 @@ function CarRacing() {
                 }
             );
     }, []);
+// speed update
+    useEffect(() => {
+        const speedConfig = DIFFICULTY_SPEED[difficulty];
+        speedRef.current = Math.min(
+            speedConfig.base + Math.floor(score / 12),speedConfig.max
+        );
+    }, [score, difficulty]);
 
     // Canvas Draw
 
@@ -93,10 +101,6 @@ function CarRacing() {
         }
         const ctx = canvas.getContext("2d");
         let animationId;
-        const speedConfig = DIFFICULTY_SPEED[difficulty];
-        const speed = Math.min(speedConfig.base + Math.floor(score / 12),
-            speedConfig.max
-        );
         const draw = () => {
             // CLEAR CANVAS
             ctx.clearRect( 0, 0,
@@ -130,7 +134,7 @@ function CarRacing() {
             enemyCarsRef.current.forEach(
                 (enemy, index) => {
                     // Move enemy
-                    moveEnemy(enemy,speed);
+                    moveEnemy(enemy,speedRef.current);
                     // SCORE
                     if (enemy.y > player.y +player.height &&!enemy.scored) {
                         enemy.scored = true;
@@ -182,7 +186,7 @@ function CarRacing() {
         return () => {
             cancelAnimationFrame(animationId);
         };
-    }, [gameOver, difficulty, gameStarted, score]);
+    }, [gameOver, gameStarted]);
 
     useEffect(() => {
         if (score > highScore) {
