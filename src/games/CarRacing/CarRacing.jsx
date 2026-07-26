@@ -206,7 +206,6 @@ function CarRacing() {
 
 
     return (
-
         <div className="car-racing-container">
             <GameHeader
                 title="🏎️ Car Racing"
