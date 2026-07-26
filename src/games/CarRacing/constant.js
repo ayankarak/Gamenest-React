@@ -16,7 +16,7 @@ export const INITIAL_SPEED = 5;
 export const TOTAL_LANES = 5;
 
 export const DIFFICULTY_SPEED = {
-    easy: 4,
-    medium: 6,
-    hard: 8
+    easy: { base: 4,max: 10 },
+    medium: { base: 6,max: 12 },
+    hard: { base: 8, max: 16 }
 };
