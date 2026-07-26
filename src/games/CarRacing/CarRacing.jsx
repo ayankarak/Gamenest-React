@@ -93,7 +93,10 @@ function CarRacing() {
         }
         const ctx = canvas.getContext("2d");
         let animationId;
-        const speed = DIFFICULTY_SPEED[difficulty];
+        const speedConfig = DIFFICULTY_SPEED[difficulty];
+        const speed = Math.min(speedConfig.base + Math.floor(score / 12),
+            speedConfig.max
+        );
         const draw = () => {
             // CLEAR CANVAS
             ctx.clearRect( 0, 0,
@@ -179,7 +182,7 @@ function CarRacing() {
         return () => {
             cancelAnimationFrame(animationId);
         };
-    }, [gameOver, difficulty, gameStarted]);
+    }, [gameOver, difficulty, gameStarted, score]);
 
     useEffect(() => {
         if (score > highScore) {
