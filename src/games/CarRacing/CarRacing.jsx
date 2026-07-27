@@ -8,7 +8,7 @@ import GameContainer from "../../component/PlayPage/GameContainer";
 import { GAME_WIDTH, GAME_HEIGHT, DIFFICULTY_SPEED } from "./constant";
 import {moveLeft,moveRight ,moveForward,moveBackward,moveEnemy} from "./controls";
 import { createPlayer , createEnemy } from "./cars";
-import {checkCollision,removeOffScreenEnemies} from "./gameLogic";
+import {checkCollision} from "./gameLogic";
 import {increaseScore} from "./score";
 
 function CarRacing() {
