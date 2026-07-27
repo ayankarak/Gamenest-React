@@ -231,9 +231,7 @@ function CarRacing() {
             />
             <DifficultySelector
                 value={difficulty}
-                onChange={
-                    setDifficulty
-                }
+                onChange={ setDifficulty }
             />
             <GameContainer width={GAME_WIDTH}>
                 <div className="canvas-wrapper">
