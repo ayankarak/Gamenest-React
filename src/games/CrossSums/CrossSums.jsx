@@ -1,12 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./CrossSums.css";
 
 import GameHeader from "../../component/PlayPage/GameHeader";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
+import { generatePuzzle } from "./gameLogic";
+import { BOARD_SIZE } from "./constants";
 
 function CrossSums() {
+    const [difficulty, setDifficulty] = useState("easy");
+    //const [gameStarted, setGameStarted] = useState(false);
+    const [puzzle, setPuzzle] = useState(null);
+    const [gameOver, setGameOver] = useState(false);
+
+    const [score, setScore] = useState(0);
+
+    const [board, setBoard] = useState([]);
+
+    const createNewPuzzle = () => {
+        const size = BOARD_SIZE[difficulty];
+        const newPuzzle = generatePuzzle(size);
+        setPuzzle(newPuzzle);
+        // Initially empty board
+        setBoard(
+            Array.from(
+                { length: size },
+                () => Array(size).fill(null)
+            )
+        );
+
+        setGameOver(false);
+        setScore(0);
+    };
+
+    useEffect(() => {
+        createNewPuzzle();
+    }, [difficulty]);
+
+    const restartGame = () => {
+        createNewPuzzle();
+    };
 
     return (
 
@@ -59,43 +93,6 @@ function CrossSums() {
                         )}
 
                     </div>
-
-
-                    {/* START OVERLAY */}
-
-                    {!gameStarted &&
-                        !gameOver && (
-
-                            <div
-                                className="game-start-overlay"
-                            >
-
-                                <div
-                                    className="game-start-card"
-                                >
-
-                                    <h2>
-                                        ➕ Cross Sums
-                                    </h2>
-
-                                    <p>
-                                        Solve the puzzle
-                                    </p>
-
-                                    <button
-                                        className="play-now-btn"
-                                        onClick={startGame}
-                                    >
-                                        ▶️ Play Now
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        )
-                    }
-
 
                     {/* GAME OVER / COMPLETED OVERLAY */}
 

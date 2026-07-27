@@ -7,6 +7,7 @@ import Pong from "../games/Pong/Pong";
 import Tetris from "../games/Tetris/Tetris";
 import MemoryMatch from "../games/MemoryMatch/MemoryMatch";
 import CarRacing from "../games/CarRacing/CarRacing";
+import CrossSums from "../games/CrossSums/CrossSums";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -28,6 +29,8 @@ function GamePlay() {
       return <MemoryMatch/>
     case "car-racing":
       return <CarRacing/>
+    case "cross-sum":
+      return <CrossSums/>
     default:
       return (
         <h1 style={{ textAlign: "center", marginTop: "50px" }}>
