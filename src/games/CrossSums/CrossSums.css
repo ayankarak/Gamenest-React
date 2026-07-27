@@ -132,73 +132,25 @@
 ========================= */
 
 .empty-board {
-
     grid-column: 1 / -1;
-
     grid-row: 1 / -1;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     color: #94a3b8;
-
     font-size: 1rem;
 }
 
-
-/* =========================
-   GAME START OVERLAY
-========================= */
-
-.game-start-overlay {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    background:
-        rgba(
-            5,
-            10,
-            20,
-            0.86
-        );
-
-    border-radius: 14px;
-
-    z-index: 10;
-}
-
-
-/* =========================
-   GAME START CARD
-========================= */
+/*   GAME START CARD */
 
 .game-start-card {
-
     width: 90%;
-
     max-width: 360px;
-
     padding: 35px 25px;
-
     text-align: center;
-
     background: #111827;
-
     border: 2px solid #00e5ff;
-
     border-radius: 20px;
-
     box-shadow:
         0 0 15px #00e5ff,
         0 0 35px
@@ -208,7 +160,6 @@
             255,
             0.6
         );
-
     animation:
         gameStartPop
         0.3s
@@ -217,55 +168,34 @@
 
 
 .game-start-card h2 {
-
     margin-bottom: 10px;
-
     color: #00e5ff;
-
     font-size: 2rem;
-
     text-shadow:
         0 0 8px #00e5ff,
         0 0 20px #00e5ff;
 }
-
-
 .game-start-card p {
-
     margin-bottom: 20px;
-
     color: #cbd5e1;
-
 }
 
-
-/* =========================
-   PLAY NOW BUTTON
-========================= */
+/*  PLAY NOW BUTTON */
 
 .play-now-btn {
-
     padding: 14px 30px;
-
     border: none;
-
     border-radius: 10px;
-
     background:
         linear-gradient(
             135deg,
             #00e5ff,
             #007bff
         );
-
     color: #ffffff;
-
     font-size: 1.1rem;
-
     font-weight: bold;
-
     cursor: pointer;
-
     box-shadow:
         0 0 10px #00e5ff,
         0 0 20px
@@ -275,7 +205,6 @@
             255,
             0.5
         );
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -283,9 +212,7 @@
 
 
 .play-now-btn:hover {
-
     transform: scale(1.05);
-
     box-shadow:
         0 0 15px #00e5ff,
         0 0 30px
@@ -296,32 +223,17 @@
             0.8
         );
 }
-
-
 .play-now-btn:active {
-
     transform: scale(0.97);
-
 }
-
-
-/* =========================
-   GAME OVER OVERLAY
-========================= */
-
+/*  GAME OVER OVERLAY*/
 .game-over-overlay {
-
     position: absolute;
-
     inset: 0;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     padding: 20px;
-
     background:
         rgba(
             5,
@@ -329,33 +241,20 @@
             20,
             0.86
         );
-
     border-radius: 14px;
-
     z-index: 20;
 }
 
-
-/* =========================
-   GAME OVER CARD
-========================= */
+/*   GAME OVER CARD */
 
 .game-over-card {
-
     width: 90%;
-
     max-width: 400px;
-
     padding: 35px 25px;
-
     text-align: center;
-
     background: #111827;
-
     border: 2px solid #00e5ff;
-
     border-radius: 20px;
-
     box-shadow:
         0 0 15px #00e5ff,
         0 0 35px
@@ -365,7 +264,6 @@
             255,
             0.6
         );
-
     animation:
         gameOverPop
         0.3s
@@ -374,66 +272,40 @@
 
 
 .game-over-card h2 {
-
     margin-bottom: 20px;
-
     color: #00e5ff;
-
     font-size: 2rem;
-
     text-shadow:
         0 0 8px #00e5ff,
         0 0 20px #00e5ff;
 }
 
-
 .game-over-card p {
-
     margin: 10px 0;
-
     font-size: 1.2rem;
-
 }
 
-
-/* =========================
-   PLAY AGAIN BUTTON
-========================= */
+/*   PLAY AGAIN BUTTON */
 
 .play-again-btn {
-
     margin-top: 20px;
-
     padding: 14px 30px;
-
     border: none;
-
     border-radius: 10px;
-
     background:
         linear-gradient(
             135deg,
             #00e5ff,
             #007bff
         );
-
     color: #ffffff;
-
     font-size: 1.1rem;
-
     font-weight: bold;
-
     cursor: pointer;
-
     box-shadow:
         0 0 10px #00e5ff,
         0 0 20px
-        rgba(
-            0,
-            229,
-            255,
-            0.5
-        );
+        rgba( 0,229,255,0.5);
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
