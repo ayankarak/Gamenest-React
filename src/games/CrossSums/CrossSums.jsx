@@ -22,14 +22,10 @@ function CrossSums() {
         const size = BOARD_SIZE[difficulty];
         const newPuzzle = generatePuzzle(size);
         setPuzzle(newPuzzle);
-        // Initially empty board
-        setBoard(
-            Array.from(
-                { length: size },
-                () => Array(size).fill(null)
-            )
+        const emptyBoard = newPuzzle.solution.map(row =>
+            row.map(() => null)
         );
-
+        setBoard(emptyBoard);
         setGameOver(false);
         setScore(0);
     };
@@ -43,97 +39,119 @@ function CrossSums() {
     };
 
     return (
+    <div className="cross-sums-container">
 
-        <div className="cross-sums-container">
+        <GameHeader
+            title="➕ Cross Sums"
+        />
 
-            <GameHeader
-                title="➕ Cross Sums"
-            />
+        <DifficultySelector
+            value={difficulty}
+            onChange={setDifficulty}
+        />
 
-            <DifficultySelector
-                value={difficulty}
-                onChange={setDifficulty}
-            />
+        <GameContainer
+            width={500}
+        >
 
-            <GameContainer
-                width={500}
-            >
+            <div className="cross-sums-wrapper">
 
-                <div className="cross-sums-wrapper">
+                {/* GAME BOARD */}
 
-                    {/* GAME BOARD */}
+                <div className="cross-sums-board">
 
-                    <div className="cross-sums-board">
-
-                        {board.length === 0 ? (
-
-                            <div className="empty-board">
-                                <p>
-                                    Puzzle will appear here
-                                </p>
-                            </div>
-
-                        ) : (
-
-                            board.map((row, rowIndex) => (
-
-                                row.map((cell, colIndex) => (
-
-                                    <div
-                                        className="cross-sums-cell"
-                                        key={`${rowIndex}-${colIndex}`}
-                                    >
-                                        {cell}
-                                    </div>
-
-                                ))
-
-                            ))
-
-                        )}
-
-                    </div>
-
-                    {/* GAME OVER / COMPLETED OVERLAY */}
-
-                    {gameOver && (
+                    {board.map((row, rowIndex) => (
 
                         <div
-                            className="game-over-overlay"
+                            className="cross-sums-row"
+                            key={rowIndex}
                         >
 
-                            <div
-                                className="game-over-card"
-                            >
+                            {/* BOARD CELLS */}
 
-                                <h2>
-                                    🎉 Puzzle Completed!
-                                </h2>
+                            {row.map((cell, colIndex) => (
 
-                                <p>
-                                    Score: {score}
-                                </p>
-
-                                <button
-                                    className="play-again-btn"
-                                    onClick={restartGame}
+                                <div
+                                    className="cross-sums-cell"
+                                    key={`${rowIndex}-${colIndex}`}
                                 >
-                                    🔄 Play Again
-                                </button>
+                                    {cell}
+                                </div>
 
+                            ))}
+
+                            {/* ROW SUM */}
+
+                            <div className="sum-cell row-sum">
+                                {puzzle?.rowSums[rowIndex]}
                             </div>
 
                         </div>
 
-                    )}
+                    ))}
+
+
+                    {/* COLUMN SUMS */}
+
+                    <div className="cross-sums-row column-sums">
+
+                        {puzzle?.colSums.map(
+                            (sum, index) => (
+
+                                <div
+                                    className="sum-cell"
+                                    key={index}
+                                >
+                                    {sum}
+                                </div>
+
+                            )
+                        )}
+
+                    </div>
 
                 </div>
 
-            </GameContainer>
 
-        </div>
+                {/* GAME OVER / COMPLETED OVERLAY */}
 
-    );
+                {gameOver && (
+
+                    <div
+                        className="game-over-overlay"
+                    >
+
+                        <div
+                            className="game-over-card"
+                        >
+
+                            <h2>
+                                🎉 Puzzle Completed!
+                            </h2>
+
+                            <p>
+                                Score: {score}
+                            </p>
+
+                            <button
+                                className="play-again-btn"
+                                onClick={restartGame}
+                            >
+                                🔄 Play Again
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                )}
+
+            </div>
+
+        </GameContainer>
+
+    </div>
+);
 }
 
 export default CrossSums;
