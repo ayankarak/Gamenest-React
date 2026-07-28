@@ -1,4 +1,6 @@
-/*   CROSS SUMS GAME */
+/* =========================
+   CROSS SUMS GAME
+========================= */
 
 .cross-sums-container {
     min-height: 100vh;
@@ -6,6 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     background:
         radial-gradient(
             circle at top,
@@ -13,146 +16,395 @@
             transparent 40%
         ),
         #050b14;
+
     color: #ffffff;
 }
 
-/*  GAME AREA */
 
-.cross-sums-container
-.game-container {
+/* =========================
+   GAME AREA
+========================= */
+
+.cross-sums-container .game-container {
     position: relative;
     margin-top: 20px;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/*   BOARD WRAPPER*/
+
+/* =========================
+   BOARD WRAPPER
+========================= */
 
 .cross-sums-wrapper {
     position: relative;
+
     width: min(90vw, 500px);
     aspect-ratio: 1;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/*   BOARD */
+
+/* =========================
+   BOARD
+========================= */
 
 .cross-sums-board {
     width: 100%;
     height: 100%;
+
     display: grid;
-    grid-template-columns:repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+
     background: #111827;
+
     border: 3px solid #00e5ff;
     border-radius: 14px;
+
     overflow: hidden;
+
     box-shadow:
         0 0 10px #00e5ff,
-        0 0 25px rgba(0,229,255,0.5);
+        0 0 25px rgba(0, 229, 255, 0.5);
 }
 
-/*  CELL */
+
+/* =========================
+   ALL CELLS
+========================= */
 
 .cross-sums-cell {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid
-        rgba(255,255,255,0.25);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
     background: #111827;
     color: #ffffff;
+
     font-size: 1.3rem;
     font-weight: bold;
+
     transition:
         background 0.2s ease,
-        box-shadow 0.2s ease;
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
 }
 
-/*    EMPTY BOARD */
+
+/* =========================
+   EMPTY TOP-LEFT CELL
+========================= */
+
+.empty-cell {
+    background: #020617;
+}
+
+
+/* =========================
+   SUM CELLS
+========================= */
+
+.sum-cell {
+    background: #0b2530;
+    color: #00e5ff;
+
+    font-weight: 800;
+
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.6);
+}
+
+
+/* =========================
+   PUZZLE CELLS
+========================= */
+
+.puzzle-cell {
+    cursor: pointer;
+    user-select: none;
+}
+
+
+/* Hover */
+
+.puzzle-cell:hover {
+    background: rgba(0, 229, 255, 0.12);
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0, 229, 255, 0.35);
+}
+
+
+/* Click effect */
+
+.puzzle-cell:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================
+   REMOVED CELL
+========================= */
+
+.puzzle-cell.removed {
+    background: #020617;
+
+    color: transparent;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0, 229, 255, 0.25);
+}
+
+
+/* =========================
+   WRONG CELL
+========================= */
+
+.puzzle-cell.wrong {
+    background: rgba(255, 60, 60, 0.25);
+
+    color: #ff5555;
+
+    box-shadow:
+        inset 0 0 0 2px #ff5555;
+
+    animation: wrongCellShake 0.25s ease;
+}
+
+
+/* =========================
+   EMPTY BOARD
+========================= */
 
 .empty-board {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     color: #94a3b8;
+
     font-size: 1rem;
 }
 
-/*  GAME OVER OVERLAY*/
-.game-over-overlay {
-    position: absolute;
-    inset: 0;
+
+/* =========================
+   CONTROLS
+========================= */
+
+.cross-sums-controls {
+    margin-top: 18px;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    background:
-        rgba(5,10,20,0.86);
-    border-radius: 14px;
-    z-index: 20;
-}
 
-/*   GAME OVER CARD */
-
-.game-over-card {
-    width: 90%;
-    max-width: 400px;
-    padding: 35px 25px;
-    text-align: center;
-    background: #111827;
-    border: 2px solid #00e5ff;
-    border-radius: 20px;
-    box-shadow:
-        0 0 15px #00e5ff,
-        0 0 35px rgba(0,229,255,0.6);
-    animation:
-        gameOverPop
-        0.3s
-        ease-out;
+    gap: 15px;
 }
 
 
-.game-over-card h2 {
-    margin-bottom: 20px;
-    color: #00e5ff;
-    font-size: 2rem;
-    text-shadow:
-        0 0 8px #00e5ff,
-        0 0 20px #00e5ff;
-}
+/* CHECK BUTTON */
 
-.game-over-card p {
-    margin: 10px 0;
-    font-size: 1.2rem;
-}
+.check-btn {
+    padding: 12px 24px;
 
-/*   PLAY AGAIN BUTTON */
-
-.play-again-btn {
-    margin-top: 20px;
-    padding: 14px 30px;
     border: none;
     border-radius: 10px;
+
     background:
         linear-gradient(
             135deg,
             #00e5ff,
             #007bff
         );
+
     color: #ffffff;
-    font-size: 1.1rem;
+
+    font-size: 1rem;
     font-weight: bold;
+
     cursor: pointer;
+
     box-shadow:
         0 0 10px #00e5ff,
-        0 0 20px
-        rgba( 0,229,255,0.5);
+        0 0 20px rgba(0, 229, 255, 0.5);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.check-btn:hover {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 15px #00e5ff,
+        0 0 30px rgba(0, 229, 255, 0.8);
+}
+
+.check-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   UNDO BUTTON
+========================= */
+
+.undo-btn {
+    padding: 12px 24px;
+
+    border: 1px solid #00e5ff;
+    border-radius: 10px;
+
+    background: #111827;
+
+    color: #00e5ff;
+
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.undo-btn:hover:not(:disabled) {
+    background: #00e5ff;
+    color: #050b14;
+
+    transform: scale(1.05);
+}
+
+.undo-btn:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+
+/* Disabled Undo */
+
+.undo-btn:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   GAME OVER OVERLAY
+========================= */
+
+.game-over-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(5, 10, 20, 0.86);
+
+    border-radius: 14px;
+
+    z-index: 20;
+}
+
+
+/* =========================
+   GAME OVER CARD
+========================= */
+
+.game-over-card {
+    width: 90%;
+    max-width: 400px;
+
+    padding: 35px 25px;
+
+    text-align: center;
+
+    background: #111827;
+
+    border: 2px solid #00e5ff;
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 15px #00e5ff,
+        0 0 35px rgba(0, 229, 255, 0.6);
+
+    animation:
+        gameOverPop 0.3s ease-out;
+}
+
+
+/* Title */
+
+.game-over-card h2 {
+    margin-bottom: 20px;
+
+    color: #00e5ff;
+
+    font-size: 2rem;
+
+    text-shadow:
+        0 0 8px #00e5ff,
+        0 0 20px #00e5ff;
+}
+
+
+/* Score / text */
+
+.game-over-card p {
+    margin: 10px 0;
+
+    font-size: 1.2rem;
+}
+
+
+/* =========================
+   PLAY AGAIN BUTTON
+========================= */
+
+.play-again-btn {
+    margin-top: 20px;
+
+    padding: 14px 30px;
+
+    border: none;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00e5ff,
+            #007bff
+        );
+
+    color: #ffffff;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px #00e5ff,
+        0 0 20px rgba(0, 229, 255, 0.5);
+
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -160,44 +412,63 @@
 
 .play-again-btn:hover {
     transform: scale(1.05);
+
     box-shadow:
         0 0 15px #00e5ff,
-        0 0 30px
-        rgba(0, 229, 255, 0.8);
+        0 0 30px rgba(0, 229, 255, 0.8);
 }
 
 .play-again-btn:active {
     transform: scale(0.97);
 }
 
-/*  ANIMATIONS */
 
-@keyframes gameStartPop {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+/* =========================
+   ANIMATIONS
+========================= */
 
 @keyframes gameOverPop {
-
     from {
         opacity: 0;
         transform: scale(0.8);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
     }
 }
 
-/*  MOBILE */
+
+@keyframes wrongCellShake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    75% {
+        transform: translateX(-2px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 
 @media (max-width: 600px) {
+
     .cross-sums-container {
         padding: 10px;
     }
@@ -207,20 +478,30 @@
         max-width: 500px;
     }
 
-    .game-start-card,
+    .cross-sums-cell {
+        font-size: 1rem;
+    }
+
+    .cross-sums-controls {
+        gap: 10px;
+    }
+
+    .check-btn,
+    .undo-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+
     .game-over-card {
         padding: 30px 20px;
     }
 
-    .game-start-card h2,
     .game-over-card h2 {
         font-size: 1.7rem;
     }
 
-    .play-now-btn,
     .play-again-btn {
         padding: 12px 24px;
         font-size: 1rem;
     }
-
 }

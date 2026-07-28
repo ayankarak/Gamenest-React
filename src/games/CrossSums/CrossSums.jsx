@@ -61,11 +61,11 @@ function CrossSums() {
         let correct = true;
         const newWrongCells = puzzle.solution.map((row, rowIndex) =>
             row.map((_, colIndex) => {
-                const userRemoved =
+                const playerRemoved =
                     removedCells[rowIndex]?.[colIndex] || false;
                 const correctRemoved =
-                    puzzle.removedSolution[rowIndex]?.[colIndex] || false;
-                if (userRemoved !== correctRemoved) {
+                    puzzle.removedSolution[rowIndex][colIndex];
+                if (playerRemoved !== correctRemoved) {
                     correct = false;
                     return true;
                 }
