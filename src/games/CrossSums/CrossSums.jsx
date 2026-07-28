@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { Fragment,useState, useEffect } from "react";
 
 import "./CrossSums.css";
 
@@ -15,22 +15,88 @@ function CrossSums() {
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [board, setBoard] = useState([]);
+    const [removedCells, setRemovedCells] = useState([]);
+    const [wrongCells, setWrongCells] = useState([]);
+    const [lastCell, setLastCell] = useState(null);
+
+    const toggleCell = (row, col) => {
+        setRemovedCells(prev => {
+            const updated = prev.map(r => [...r]);
+            if (!updated[row]) {
+                updated[row] = [];
+            }
+            updated[row][col] = !updated[row][col];
+            return updated;
+        });
+        setLastCell({ row, col });
+    };
 
     const createNewPuzzle = () => {
         const size = BOARD_SIZE[difficulty];
         const newPuzzle = generatePuzzle(size);
         setPuzzle(newPuzzle);
-        const emptyBoard = newPuzzle.solution.map(row =>
-            row.map(() => null)
+        // Initially no cells are removed by player
+        const initialBoard = newPuzzle.solution.map(row =>
+            row.map(() => false)
         );
-        setBoard(emptyBoard);
+        setRemovedCells(initialBoard);
+        setLastCell(null);
         setGameOver(false);
         setScore(0);
     };
 
+    // const handleCellClick = (rowIndex, colIndex) => {
+    //     const newRemovedCells = removedCells.map(row => [...row]);
+    //     const newValue = !newRemovedCells[rowIndex][colIndex];
+    //     newRemovedCells[rowIndex][colIndex] = newValue;
+    //     setRemovedCells(newRemovedCells);
+    //     setLastCell({ row: rowIndex, col: colIndex });
+    // };
+
     useEffect(() => {
         createNewPuzzle();
     }, [difficulty]);
+
+    const checkAnswer = () => {
+        let correct = true;
+        const newWrongCells = puzzle.solution.map((row, rowIndex) =>
+            row.map((_, colIndex) => {
+                const userRemoved =
+                    removedCells[rowIndex]?.[colIndex] || false;
+                const correctRemoved =
+                    puzzle.removedSolution[rowIndex]?.[colIndex] || false;
+                if (userRemoved !== correctRemoved) {
+                    correct = false;
+                    return true;
+                }
+                return false;
+            })
+        );
+        setWrongCells(newWrongCells);
+        if (correct) {
+            setScore(100);
+            setGameOver(true);
+        }
+    };
+
+    const undoLastMove = () => {
+        if (!lastCell) {
+            return;
+        }
+        const { row, col } = lastCell;
+        const updated = removedCells.map(row => [...row]);
+        updated[row][col] = false;
+        setRemovedCells(updated);
+        // Remove wrong marking from that cell
+        setWrongCells(prev => {
+            const updatedWrong = prev.map(row => [...row]);
+            if (updatedWrong[row]) {
+                updatedWrong[row][col] = false;
+            }
+            return updatedWrong;
+        });
+        setLastCell(null);
+    };
 
     const restartGame = () => {
         createNewPuzzle();
@@ -39,64 +105,138 @@ function CrossSums() {
     return (
         <div className="cross-sums-container">
 
-            <GameHeader title="➕ Cross Sums" />
+            <GameHeader
+                title="➕ Cross Sums"
+            />
+
             <DifficultySelector
                 value={difficulty}
-                onChange={setDifficulty}
+                onChange={(value) => {
+                    setDifficulty(value);
+                    setGameOver(false);
+                }}
             />
-            <GameContainer width={500} >
+
+            <GameContainer width={500}>
+
                 <div className="cross-sums-wrapper">
+
                     {/* GAME BOARD */}
-                    <div className="cross-sums-board">
-                        {board.map((row, rowIndex) => (
-                            <div className="cross-sums-row" key={rowIndex}>
-                                {/* BOARD CELLS */}
-                                {row.map((cell, colIndex) => (
-                                    <div
-                                        className="cross-sums-cell"
-                                        key={`${rowIndex}-${colIndex}`}
-                                    >
-                                        {cell}
-                                    </div>
-                                ))}
-                                {/* ROW SUM */}
-                                <div className="sum-cell row-sum">
-                                    {puzzle?.rowSums[rowIndex]}
-                                </div>
+
+                    <div
+                        className="cross-sums-board"
+                        style={{
+                            gridTemplateColumns: `repeat(${puzzle?.solution.length + 1}, 60px)`
+                        }}
+                    >
+
+                        {/* Top-left empty cell */}
+                        <div className="cross-sums-cell empty-cell" />
+
+                        {/* Column Sums */}
+                        {puzzle?.colSums.map((sum, index) => (
+                            <div
+                                key={`col-sum-${index}`}
+                                className="cross-sums-cell sum-cell"
+                            >
+                                {sum}
                             </div>
                         ))}
-                        {/* COLUMN SUMS */}
-                        <div className="cross-sums-row column-sums">
-                            {puzzle?.colSums.map(
-                                (sum, index) => (
-                                    <div className="sum-cell" key={index}>
-                                        {sum}
-                                    </div>
-                                )
-                            )}
-                        </div>
+
+                        {/* Rows */}
+                        {puzzle?.solution.map((row, rowIndex) => (
+                            <Fragment key={`row-${rowIndex}`}>
+
+                                {/* Row Sum */}
+                                <div className="cross-sums-cell sum-cell">
+                                    {puzzle.rowSums[rowIndex]}
+                                </div>
+
+                                {/* Puzzle Cells */}
+                                {row.map((value, colIndex) => {
+
+                                    const removed =
+                                        removedCells[rowIndex]?.[colIndex];
+
+                                    const isWrong =
+                                        wrongCells[rowIndex]?.[colIndex];
+
+                                    return (
+                                        <div
+                                            key={`${rowIndex}-${colIndex}`}
+                                            className={`cross-sums-cell puzzle-cell
+                                                ${removed ? "removed" : ""}
+                                                ${isWrong ? "wrong" : ""}
+                                            `}
+                                            onClick={() =>
+                                                toggleCell(
+                                                    rowIndex,
+                                                    colIndex
+                                                )
+                                            }
+                                        >
+                                            {value}
+                                        </div>
+                                    );
+                                })}
+
+                            </Fragment>
+                        ))}
+
                     </div>
-                    {/* GAME OVER / COMPLETED OVERLAY */}
+
+                    {/* CONTROLS */}
+
+                    <div className="cross-sums-controls">
+
+                        <button
+                            className="check-btn"
+                            onClick={checkAnswer}
+                        >
+                            ✅ Check
+                        </button>
+
+                        <button
+                            className="undo-btn"
+                            onClick={undoLastMove}
+                            disabled={!lastCell}
+                        >
+                            ↩️ Undo
+                        </button>
+
+                    </div>
+
+                    {/* COMPLETED / RESULT OVERLAY */}
+
                     {gameOver && (
                         <div className="game-over-overlay">
+
                             <div className="game-over-card">
+
                                 <h2>
-                                    🎉 Puzzle Completed!
+                                    🎉 You Win!
                                 </h2>
+
                                 <p>
-                                    Score: {score}
+                                    Puzzle Completed!
                                 </p>
+
                                 <button
                                     className="play-again-btn"
                                     onClick={restartGame}
                                 >
                                     🔄 Play Again
                                 </button>
+
                             </div>
+
                         </div>
                     )}
+
                 </div>
+
             </GameContainer>
+
         </div>
     );
 }
