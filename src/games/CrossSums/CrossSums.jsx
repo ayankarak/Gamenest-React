@@ -117,7 +117,7 @@ function CrossSums() {
                 }}
             />
 
-            <GameContainer width={500}>
+            <GameContainer width={545}>
 
                 <div className="cross-sums-wrapper">
 
