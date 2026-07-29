@@ -20,15 +20,17 @@ function CrossSums() {
     const [lastCell, setLastCell] = useState(null);
 
     const toggleCell = (row, col) => {
+        const previousValue = removedCells[row]?.[col] || false;
         setRemovedCells(prev => {
             const updated = prev.map(r => [...r]);
-            if (!updated[row]) {
-                updated[row] = [];
-            }
-            updated[row][col] = !updated[row][col];
+            updated[row][col] = !previousValue;
             return updated;
         });
-        setLastCell({ row, col });
+        setLastCell({
+            row,
+            col,
+            previousValue
+        });
     };
 
     const createNewPuzzle = () => {
@@ -83,17 +85,19 @@ function CrossSums() {
         if (!lastCell) {
             return;
         }
-        const { row, col } = lastCell;
-        const updated = removedCells.map(row => [...row]);
-        updated[row][col] = false;
-        setRemovedCells(updated);
-        // Remove wrong marking from that cell
+        const { row,col,previousValue } = lastCell;
+        setRemovedCells(prev => {
+            const updated = prev.map(r => [...r]);
+            updated[row][col] = previousValue;
+            return updated;
+        });
+
         setWrongCells(prev => {
-            const updatedWrong = prev.map(row => [...row]);
-            if (updatedWrong[row]) {
-                updatedWrong[row][col] = false;
+            const updated = prev.map(r => [...r]);
+            if (updated[row]) {
+                updated[row][col] = false;
             }
-            return updatedWrong;
+            return updated;
         });
         setLastCell(null);
     };
