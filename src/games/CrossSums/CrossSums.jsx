@@ -7,7 +7,7 @@ import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import { generatePuzzle } from "./gameLogic";
-import { BOARD_SIZE, SCORE } from "./constants";
+import { BOARD_SIZE, SCORE, REMOVE_CHANCE } from "./constants";
 
 function CrossSums() {
     const [difficulty, setDifficulty] = useState("easy");
@@ -41,7 +41,10 @@ function CrossSums() {
 
     const createNewPuzzle = () => {
         const size = BOARD_SIZE[difficulty];
-        const newPuzzle = generatePuzzle(size);
+        const newPuzzle = generatePuzzle(
+            size,
+            REMOVE_CHANCE[difficulty]
+        );
         setPuzzle(newPuzzle);
         // Initially no cells are removed by player
         const initialBoard = newPuzzle.solution.map(row =>

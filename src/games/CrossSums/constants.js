@@ -36,3 +36,9 @@ export const SCORE = {
     medium: 200,
     hard: 300
 };
+
+export const REMOVE_CHANCE = {
+    easy: 0.25,
+    medium: 0.35,
+    hard: 0.45
+};

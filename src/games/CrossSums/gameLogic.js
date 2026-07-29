@@ -1,5 +1,5 @@
 // Generate Cross Sums Puzzle
-export const generatePuzzle = (size) => {
+export const generatePuzzle = (size, removeChance = 0.3) => {
     const solution = [];
     const removedSolution = [];
     const rowSums = [];
@@ -14,8 +14,7 @@ export const generatePuzzle = (size) => {
             const number = Math.floor(Math.random() * 4) + 1;
             solution[row][col] = number;
             // true = this cell should be removed
-            removedSolution[row][col] =
-                Math.random() < 0.3;
+            removedSolution[row][col] = Math.random() < removeChance;;
         }
     }
 
