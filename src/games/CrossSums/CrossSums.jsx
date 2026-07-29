@@ -5,8 +5,9 @@ import "./CrossSums.css";
 import GameHeader from "../../component/PlayPage/GameHeader";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
+import ScoreBoard from "../../component/PlayPage/ScoreBoard";
 import { generatePuzzle } from "./gameLogic";
-import { BOARD_SIZE } from "./constants";
+import { BOARD_SIZE, SCORE } from "./constants";
 
 function CrossSums() {
     const [difficulty, setDifficulty] = useState("easy");
@@ -32,6 +33,11 @@ function CrossSums() {
             previousValue
         });
     };
+
+    const [highScore, setHighScore] = useState(() => {
+        const savedHighScore = localStorage.getItem("crossSumsHighScore");
+        return savedHighScore ? Number(savedHighScore) : 0;
+    });
 
     const createNewPuzzle = () => {
         const size = BOARD_SIZE[difficulty];
@@ -59,6 +65,13 @@ function CrossSums() {
         createNewPuzzle();
     }, [difficulty]);
 
+    useEffect(() => {
+        if (score > highScore) {
+            setHighScore(score);
+            localStorage.setItem( "crossSumsHighScore", score );
+        }
+    }, [score, highScore]);
+
     const checkAnswer = () => {
         let correct = true;
         const newWrongCells = puzzle.solution.map((row, rowIndex) =>
@@ -76,7 +89,7 @@ function CrossSums() {
         );
         setWrongCells(newWrongCells);
         if (correct) {
-            setScore(100);
+            setScore(SCORE[difficulty]);
             setGameOver(true);
         }
     };
@@ -111,6 +124,19 @@ function CrossSums() {
 
             <GameHeader
                 title="➕ Cross Sums"
+            />
+
+            <ScoreBoard
+                items={[
+                    {
+                        label: "Score",
+                        value: score
+                    },
+                    {
+                        label: "High Score",
+                        value: highScore
+                    }
+                ]}
             />
 
             <DifficultySelector
