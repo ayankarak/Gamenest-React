@@ -56,13 +56,6 @@ function CrossSums() {
         setScore(0);
     };
 
-    // const handleCellClick = (rowIndex, colIndex) => {
-    //     const newRemovedCells = removedCells.map(row => [...row]);
-    //     const newValue = !newRemovedCells[rowIndex][colIndex];
-    //     newRemovedCells[rowIndex][colIndex] = newValue;
-    //     setRemovedCells(newRemovedCells);
-    //     setLastCell({ row: rowIndex, col: colIndex });
-    // };
 
     useEffect(() => {
         createNewPuzzle();
