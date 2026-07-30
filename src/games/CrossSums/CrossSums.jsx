@@ -100,7 +100,6 @@ function CrossSums() {
             updated[row][col] = previousValue;
             return updated;
         });
-
         setWrongCells(prev => {
             const updated = prev.map(r => [...r]);
             if (updated[row]) {
