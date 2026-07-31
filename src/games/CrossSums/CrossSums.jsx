@@ -20,6 +20,7 @@ function CrossSums() {
     const [removedCells, setRemovedCells] = useState([]);
     const [wrongCells, setWrongCells] = useState([]);
     const [lastCell, setLastCell] = useState(null);
+    const [gameResult, setGameResult] = useState(null);
 
     const toggleCell = (row, col) => {
         if (gameOver) {
@@ -59,6 +60,7 @@ function CrossSums() {
         setGameOver(false);
         setScore(0);
         setMistakes(0);
+        setGameResult(null);
     };
 
 
@@ -262,13 +264,18 @@ function CrossSums() {
 
                             <div className="game-over-card">
 
-                                <h2>
-                                    🎉 You Win!
-                                </h2>
-
-                                <p>
-                                    Puzzle Completed!
-                                </p>
+                                {gameResult === "win" ? (
+                                    <>
+                                        <h2>🎉 You Win!</h2>
+                                        <p>Puzzle Completed!</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h2>💥 Game Over!</h2>
+                                        <p>You made 3 mistakes.</p>
+                                        <p>Score: {score}</p>
+                                    </>
+                                )}
 
                                 <button
                                     className="play-again-btn"
