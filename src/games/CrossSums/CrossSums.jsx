@@ -22,6 +22,9 @@ function CrossSums() {
     const [lastCell, setLastCell] = useState(null);
 
     const toggleCell = (row, col) => {
+        if (gameOver) {
+            return;
+        }
         const previousValue = removedCells[row]?.[col] || false;
         setRemovedCells(prev => {
             const updated = prev.map(r => [...r]);
@@ -237,6 +240,7 @@ function CrossSums() {
                         <button
                             className="check-btn"
                             onClick={checkAnswer}
+                            disabled={gameOver}
                         >
                             ✅ Check
                         </button>
@@ -244,7 +248,7 @@ function CrossSums() {
                         <button
                             className="undo-btn"
                             onClick={undoLastMove}
-                            disabled={!lastCell}
+                            disabled={!lastCell || gameOver}
                         >
                             ↩️ Undo
                         </button>
