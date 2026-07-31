@@ -16,6 +16,7 @@ function CrossSums() {
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [board, setBoard] = useState([]);
+    const [mistakes, setMistakes] = useState(0);
     const [removedCells, setRemovedCells] = useState([]);
     const [wrongCells, setWrongCells] = useState([]);
     const [lastCell, setLastCell] = useState(null);
@@ -54,6 +55,7 @@ function CrossSums() {
         setLastCell(null);
         setGameOver(false);
         setScore(0);
+        setMistakes(0);
     };
 
 
@@ -69,25 +71,39 @@ function CrossSums() {
     }, [score, highScore]);
 
     const checkAnswer = () => {
+        if (!puzzle || gameOver) {
+            return;
+        }
         let correct = true;
-        const newWrongCells = puzzle.solution.map((row, rowIndex) =>
-            row.map((_, colIndex) => {
-                const playerRemoved =
-                    removedCells[rowIndex]?.[colIndex] || false;
-                const correctRemoved =
-                    puzzle.removedSolution[rowIndex][colIndex];
-                if (playerRemoved !== correctRemoved) {
-                    correct = false;
-                    return true;
-                }
-                return false;
-            })
+        let hasWrongCell = false;
+        const newWrongCells = puzzle.solution.map(
+            (row, rowIndex) =>
+                row.map((_, colIndex) => {
+                    const playerRemoved = removedCells[rowIndex]?.[colIndex] || false;
+                    const correctRemoved = puzzle.removedSolution[rowIndex][colIndex];
+                    if (playerRemoved !== correctRemoved) {
+                        correct = false;
+                        hasWrongCell = true;
+                        return true;
+                    }
+                    return false;
+                })
         );
         setWrongCells(newWrongCells);
-        if (correct) {
-            setScore(SCORE[difficulty]);
-            setGameOver(true);
+        // WRONG ATTEMPT
+        if (hasWrongCell) {
+            setMistakes(prev => {
+                const newMistakes = prev + 1;
+                if (newMistakes >= 3) {
+                    setGameOver(true);
+                }
+                return newMistakes;
+            });
+            return;
         }
+        // CORRECT ANSWER
+        setScore(SCORE[difficulty]);
+        setGameOver(true);
     };
 
     const undoLastMove = () => {
@@ -130,6 +146,10 @@ function CrossSums() {
                     {
                         label: "High Score",
                         value: highScore
+                    },
+                    {
+                        label: "Mistakes",
+                        value: `${mistakes}/3`
                     }
                 ]}
             />
