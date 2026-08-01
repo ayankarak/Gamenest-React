@@ -137,11 +137,9 @@ function CrossSums() {
 
     return (
         <div className="cross-sums-container">
-
             <GameHeader
                 title="➕ Cross Sums"
             />
-
             <ScoreBoard
                 items={[
                     {
@@ -158,7 +156,6 @@ function CrossSums() {
                     }
                 ]}
             />
-
             <DifficultySelector
                 value={difficulty}
                 onChange={(value) => {
@@ -166,23 +163,17 @@ function CrossSums() {
                     setGameOver(false);
                 }}
             />
-
             <GameContainer width={545}>
-
                 <div className="cross-sums-wrapper">
-
                     {/* GAME BOARD */}
-
                     <div
                         className="cross-sums-board"
                         style={{
                             gridTemplateColumns: `repeat(${puzzle?.solution.length + 1}, 60px)`
                         }}
                     >
-
                         {/* Top-left empty cell */}
                         <div className="cross-sums-cell empty-cell" />
-
                         {/* Column Sums */}
                         {puzzle?.colSums.map((sum, index) => (
                             <div
@@ -196,21 +187,14 @@ function CrossSums() {
                         {/* Rows */}
                         {puzzle?.solution.map((row, rowIndex) => (
                             <Fragment key={`row-${rowIndex}`}>
-
                                 {/* Row Sum */}
                                 <div className="cross-sums-cell sum-cell">
                                     {puzzle.rowSums[rowIndex]}
                                 </div>
-
                                 {/* Puzzle Cells */}
                                 {row.map((value, colIndex) => {
-
-                                    const removed =
-                                        removedCells[rowIndex]?.[colIndex];
-
-                                    const isWrong =
-                                        wrongCells[rowIndex]?.[colIndex];
-
+                                    const removed = removedCells[rowIndex]?.[colIndex];
+                                    const isWrong = wrongCells[rowIndex]?.[colIndex];
                                     return (
                                         <div
                                             key={`${rowIndex}-${colIndex}`}
@@ -229,16 +213,11 @@ function CrossSums() {
                                         </div>
                                     );
                                 })}
-
                             </Fragment>
                         ))}
-
                     </div>
-
                     {/* CONTROLS */}
-
                     <div className="cross-sums-controls">
-
                         <button
                             className="check-btn"
                             onClick={checkAnswer}
@@ -246,7 +225,6 @@ function CrossSums() {
                         >
                             ✅ Check
                         </button>
-
                         <button
                             className="undo-btn"
                             onClick={undoLastMove}
@@ -254,16 +232,11 @@ function CrossSums() {
                         >
                             ↩️ Undo
                         </button>
-
                     </div>
-
                     {/* COMPLETED / RESULT OVERLAY */}
-
                     {gameOver && (
                         <div className="game-over-overlay">
-
                             <div className="game-over-card">
-
                                 {gameResult === "win" ? (
                                     <>
                                         <h2>🎉 You Win!</h2>
@@ -276,23 +249,18 @@ function CrossSums() {
                                         <p>Score: {score}</p>
                                     </>
                                 )}
-
                                 <button
                                     className="play-again-btn"
                                     onClick={restartGame}
                                 >
                                     🔄 Play Again
                                 </button>
-
                             </div>
 
                         </div>
                     )}
-
                 </div>
-
             </GameContainer>
-
         </div>
     );
 }
