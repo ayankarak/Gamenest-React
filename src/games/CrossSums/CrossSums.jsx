@@ -23,19 +23,52 @@ function CrossSums() {
     const [gameResult, setGameResult] = useState(null);
 
     const toggleCell = (row, col) => {
-        if (gameOver) {
+        if (gameOver || !puzzle) {
             return;
         }
         const previousValue = removedCells[row]?.[col] || false;
+        const newValue = !previousValue;
+        // Update cell state
         setRemovedCells(prev => {
             const updated = prev.map(r => [...r]);
-            updated[row][col] = !previousValue;
+            updated[row][col] = newValue;
             return updated;
         });
-        setLastCell({
-            row,
-            col,
-            previousValue
+        setLastCell({ row, col, previousValue });
+        // Correct solution value
+        const correctValue = puzzle.removedSolution[row][col];
+        // WRONG MOVE
+        if (newValue !== correctValue) {
+            const alreadyWrong = wrongCells[row]?.[col] || false;
+            // Count mistake only once
+            if (!alreadyWrong) {
+                setWrongCells(prev => {
+                    const updated = prev.map(r => [...r]);
+                    if (!updated[row]) {
+                        updated[row] = [];
+                    }
+                    updated[row][col] = true;
+                    return updated;
+                });
+                setMistakes(prev => {
+                    const newMistakes = prev + 1;
+                    // 3 mistakes → Game Over
+                    if (newMistakes >= 3) {
+                        setGameResult("lose");
+                        setGameOver(true);
+                    }
+                    return newMistakes;
+                });
+            }
+            return;
+        }
+        // CORRECT MOVE
+        setWrongCells(prev => {
+            const updated = prev.map(r => [...r]);
+            if (updated[row]) {
+                updated[row][col] = false;
+            }
+            return updated;
         });
     };
 
