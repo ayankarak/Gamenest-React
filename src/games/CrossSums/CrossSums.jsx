@@ -15,7 +15,7 @@ function CrossSums() {
     const [puzzle, setPuzzle] = useState(null);
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
-    const [board, setBoard] = useState([]);
+    //const [board, setBoard] = useState([]);
     const [mistakes, setMistakes] = useState(0);
     const [removedCells, setRemovedCells] = useState([]);
     const [wrongCells, setWrongCells] = useState([]);
@@ -61,6 +61,7 @@ function CrossSums() {
         setScore(0);
         setMistakes(0);
         setGameResult(null);
+        setWrongCells([]);
     };
 
 
@@ -100,6 +101,7 @@ function CrossSums() {
             setMistakes(prev => {
                 const newMistakes = prev + 1;
                 if (newMistakes >= 3) {
+                    setGameResult("lose");
                     setGameOver(true);
                 }
                 return newMistakes;
@@ -108,6 +110,7 @@ function CrossSums() {
         }
         // CORRECT ANSWER
         setScore(SCORE[difficulty]);
+        setGameResult("win");
         setGameOver(true);
     };
 
@@ -256,7 +259,6 @@ function CrossSums() {
                                     🔄 Play Again
                                 </button>
                             </div>
-
                         </div>
                     )}
                 </div>
