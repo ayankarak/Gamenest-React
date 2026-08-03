@@ -6,7 +6,7 @@ import GameHeader from "../../component/PlayPage/GameHeader";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
-import { generatePuzzle } from "./gameLogic";
+import { generatePuzzle, pourWater } from "./gameLogic";
 import { COLORS_COUNT } from "./constants";
 
 function WaterSort() {
@@ -39,6 +39,23 @@ function WaterSort() {
     useEffect(() => {
         createNewPuzzle();
     }, [difficulty]);
+
+    const handleTubeClick = (index) => {
+        // First tube select
+        if (selectedTube === null) {
+            // Cannot select empty tube
+            if (tubes[index].length === 0) {
+                return;
+            }
+            setSelectedTube(index);
+            return;
+        }
+        // Second tube → pour
+        const newTubes = pourWater(tubes, selectedTube, index);
+        setTubes(newTubes);
+        // Reset selection
+        setSelectedTube(null);
+    };
 
     return (
         <div className="water-sort-container">
@@ -92,6 +109,7 @@ function WaterSort() {
                                             ? "selected"
                                             : ""
                                     }`}
+                                    onClick={() => handleTubeClick(index)}
                                 >
 
                                     {tube.map(
