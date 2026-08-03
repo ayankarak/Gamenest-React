@@ -10,21 +10,15 @@ import { generatePuzzle, pourWater } from "./gameLogic";
 import { COLORS_COUNT } from "./constants";
 
 function WaterSort() {
-
     const [difficulty, setDifficulty] = useState("easy");
-
     const [score, setScore] = useState(0);
-
     const [highScore, setHighScore] = useState(() => {
         const savedHighScore = localStorage.getItem("waterSortHighScore");
 
         return savedHighScore ? Number(savedHighScore) : 0;
     });
-
     const [gameOver, setGameOver] = useState(false);
-
     const [tubes, setTubes] = useState([]);
-
     const [selectedTube, setSelectedTube] = useState(null);
 
     const createNewPuzzle = () => {
