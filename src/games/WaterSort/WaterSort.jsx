@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./WaterSort.css";
 
@@ -6,6 +6,8 @@ import GameHeader from "../../component/PlayPage/GameHeader";
 import DifficultySelector from "../../component/PlayPage/DifficultySelector";
 import GameContainer from "../../component/PlayPage/GameContainer";
 import ScoreBoard from "../../component/PlayPage/ScoreBoard";
+import { generatePuzzle } from "./gameLogic";
+import { COLORS_COUNT } from "./constants";
 
 function WaterSort() {
 
@@ -14,12 +16,9 @@ function WaterSort() {
     const [score, setScore] = useState(0);
 
     const [highScore, setHighScore] = useState(() => {
-        const savedHighScore =
-            localStorage.getItem("waterSortHighScore");
+        const savedHighScore = localStorage.getItem("waterSortHighScore");
 
-        return savedHighScore
-            ? Number(savedHighScore)
-            : 0;
+        return savedHighScore ? Number(savedHighScore) : 0;
     });
 
     const [gameOver, setGameOver] = useState(false);
@@ -27,6 +26,19 @@ function WaterSort() {
     const [tubes, setTubes] = useState([]);
 
     const [selectedTube, setSelectedTube] = useState(null);
+
+    const createNewPuzzle = () => {
+        const colorsCount = COLORS_COUNT[difficulty];
+        const newTubes = generatePuzzle(colorsCount,2);
+        setTubes(newTubes);
+        setSelectedTube(null);
+        setGameOver(false);
+        setScore(0);
+    };
+
+    useEffect(() => {
+        createNewPuzzle();
+    }, [difficulty]);
 
     return (
         <div className="water-sort-container">
