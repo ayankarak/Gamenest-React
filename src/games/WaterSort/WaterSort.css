@@ -1,6 +1,4 @@
-/* ================================
-   WATER SORT GAME
-================================ */
+/*  WATER SORT GAME */
 
 .water-sort-container {
     min-height: 100vh;
@@ -20,97 +18,68 @@
     color: #ffffff;
 }
 
-/* ================================
-   GAME AREA
-================================ */
+/*  GAME AREA */
 
 .water-sort-container .game-container {
     position: relative;
     margin-top: 20px;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* ================================
-   WRAPPER
-================================ */
+/* WRAPPER */
 
 .water-sort-wrapper {
     position: relative;
-
     width: min(95vw, 600px);
     min-height: 500px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 30px;
 }
 
-/* ================================
-   BOARD
-================================ */
+/*   BOARD */
 
 .water-sort-board {
     width: 100%;
-
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-end;
-
     gap: 45px 35px;
 }
 
-/* ================================
-   EMPTY BOARD
-================================ */
+/*   EMPTY BOARD*/
 
 .empty-board {
     width: 100%;
     min-height: 300px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     color: #94a3b8;
     font-size: 1rem;
 }
 
-/* ================================
-   WATER TUBE
-================================ */
+/* WATER TUBE*/
 
 .water-tube {
     position: relative;
-
     width: 70px;
     height: 220px;
-
     display: flex;
     flex-direction: column-reverse;
-
     overflow: hidden;
-
     border: 3px solid rgba(255, 255, 255, 0.75);
     border-top: none;
-
-    border-radius:
-        0 0 35px 35px;
-
-    background:
-        rgba(255, 255, 255, 0.04);
-
+    border-radius: 0 0 35px 35px;
+    background: rgba(255, 255, 255, 0.04);
     box-shadow:
         inset 0 0 15px rgba(255, 255, 255, 0.08),
         0 0 10px rgba(0, 229, 255, 0.15);
-
     cursor: pointer;
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -120,129 +89,81 @@
 
 .water-tube::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: -3px;
-
     width: 70px;
     height: 15px;
-
-    border:
-        3px solid rgba(255, 255, 255, 0.75);
-
+    border: 3px solid rgba(255, 255, 255, 0.75);
     border-bottom: none;
-
-    border-radius:
-        35px 35px 0 0;
-
+    border-radius: 35px 35px 0 0;
     pointer-events: none;
 }
 
-/* ================================
-   TUBE HOVER
-================================ */
+/*   TUBE HOVER */
 
 .water-tube:hover {
     transform: translateY(-6px);
-
     box-shadow:
         0 0 12px rgba(0, 229, 255, 0.5),
         0 0 25px rgba(0, 229, 255, 0.25);
 }
 
-/* ================================
-   SELECTED TUBE
-================================ */
+/*  SELECTED TUBE */
 
 .water-tube.selected {
     transform: translateY(-10px);
-
     border-color: #00e5ff;
-
     box-shadow:
         0 0 12px #00e5ff,
         0 0 30px rgba(0, 229, 255, 0.65);
 }
 
-/* ================================
-   WATER LAYER
-================================ */
+/* WATER LAYER */
 
 .water-layer {
     width: 100%;
     height: 25%;
-
     flex-shrink: 0;
-
-    border-top:
-        1px solid rgba(255, 255, 255, 0.25);
-
-    box-shadow:
-        inset 0 3px 5px rgba(255, 255, 255, 0.12);
-
-    transition:
-        transform 0.2s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.12);
+    transition: transform 0.2s ease;
 }
 
-/* ================================
-   GAME OVER OVERLAY
-================================ */
+/* GAME OVER OVERLAY */
 
 .game-over-overlay {
     position: absolute;
     inset: 0;
-
     z-index: 20;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 20px;
-
-    background:
-        rgba(5, 10, 20, 0.88);
-
+    background:  rgba(5, 10, 20, 0.88);
     border-radius: 20px;
 }
 
-/* ================================
-   GAME OVER CARD
-================================ */
+/*  GAME OVER CARD */
 
 .game-over-card {
     width: 90%;
     max-width: 400px;
-
     padding: 35px 25px;
-
     text-align: center;
-
     background: #111827;
-
     border: 2px solid #00e5ff;
-
     border-radius: 20px;
-
     box-shadow:
         0 0 15px #00e5ff,
         0 0 35px rgba(0, 229, 255, 0.6);
-
-    animation:
-        gameOverPop
-        0.3s
-        ease-out;
+    animation: gameOverPop 0.3s ease-out;
 }
 
 .game-over-card h2 {
     margin-bottom: 20px;
-
     color: #00e5ff;
-
     font-size: 2rem;
-
     text-shadow:
         0 0 8px #00e5ff,
         0 0 20px #00e5ff;
@@ -250,22 +171,16 @@
 
 .game-over-card p {
     margin: 10px 0;
-
     font-size: 1.2rem;
 }
 
-/* ================================
-   PLAY AGAIN BUTTON
-================================ */
+/* PLAY AGAIN BUTTON */
 
 .play-again-btn {
     margin-top: 20px;
-
     padding: 14px 30px;
-
     border: none;
     border-radius: 10px;
-
     background:
         linear-gradient(
             135deg,
@@ -274,16 +189,12 @@
         );
 
     color: #ffffff;
-
     font-size: 1.1rem;
     font-weight: bold;
-
     cursor: pointer;
-
     box-shadow:
         0 0 10px #00e5ff,
         0 0 20px rgba(0, 229, 255, 0.5);
-
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -291,7 +202,6 @@
 
 .play-again-btn:hover {
     transform: scale(1.05);
-
     box-shadow:
         0 0 15px #00e5ff,
         0 0 30px rgba(0, 229, 255, 0.8);
@@ -301,60 +211,46 @@
     transform: scale(0.97);
 }
 
-/* ================================
-   ANIMATION
-================================ */
+/* ANIMATION */
 
 @keyframes gameOverPop {
-
     from {
         opacity: 0;
         transform: scale(0.8);
     }
-
     to {
         opacity: 1;
         transform: scale(1);
     }
 }
 
-/* ================================
-   MOBILE
-================================ */
+/*  MOBILE */
 
 @media (max-width: 600px) {
-
     .water-sort-container {
         padding: 10px;
     }
-
     .water-sort-wrapper {
         width: 95vw;
         min-height: 450px;
         padding: 20px 10px;
     }
-
     .water-sort-board {
         gap: 30px 20px;
     }
-
     .water-tube {
         width: 58px;
         height: 190px;
     }
-
     .water-tube::before {
         width: 58px;
     }
-
     .game-over-card {
         padding: 30px 20px;
     }
-
     .game-over-card h2 {
         font-size: 1.7rem;
     }
-
     .play-again-btn {
         padding: 12px 24px;
         font-size: 1rem;
