@@ -23,9 +23,7 @@ function CrossSums() {
     const [gameResult, setGameResult] = useState(null);
 
     const toggleCell = (row, col) => {
-        if (gameOver || !puzzle) {
-            return;
-        }
+        if (gameOver || !puzzle)  return;
         const previousValue = removedCells[row]?.[col] || false;
         const newValue = !previousValue;
         // Update cell state
