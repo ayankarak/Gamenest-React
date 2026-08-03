@@ -18,6 +18,7 @@ import Tetris from "./games/Tetris/Tetris";
 import MemoryMatch from "./games/MemoryMatch/MemoryMatch";
 import CarRacing from "./games/CarRacing/CarRacing";
 import CrossSums from "./games/CrossSums/CrossSums";
+import WaterSort from "./games/WaterSort/WaterSort";
 
 function App() {
   return (

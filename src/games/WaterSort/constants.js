@@ -20,7 +20,7 @@ export const SCORE = {
     medium: 200,
     hard: 300
 };
-const COLORS_COUNT = {
+export const COLORS_COUNT = {
     easy: 3,
     medium: 4,
     hard: 5

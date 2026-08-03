@@ -8,6 +8,7 @@ import Tetris from "../games/Tetris/Tetris";
 import MemoryMatch from "../games/MemoryMatch/MemoryMatch";
 import CarRacing from "../games/CarRacing/CarRacing";
 import CrossSums from "../games/CrossSums/CrossSums";
+import WaterSort from "../games/WaterSort/WaterSort";
 
 function GamePlay() {
   const { gameName } = useParams();
@@ -31,6 +32,8 @@ function GamePlay() {
       return <CarRacing/>
     case "cross-sum":
       return <CrossSums/>
+    case "water-sorting":
+      return <WaterSort/>
     default:
       return (
         <h1 style={{ textAlign: "center", marginTop: "50px" }}>
