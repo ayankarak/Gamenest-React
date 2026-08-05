@@ -33,19 +33,13 @@ export const generatePuzzle = (colorsCount, emptyTubes = 2) => {
 
 export const pourWater = (tubes, fromIndex, toIndex) => {
     // Same tube
-    if (fromIndex === toIndex) {
-        return tubes;
-    }
+    if (fromIndex === toIndex) return tubes;
     const fromTube = tubes[fromIndex];
     const toTube = tubes[toIndex];
     // Empty source
-    if (fromTube.length === 0) {
-        return tubes;
-    }
+    if (fromTube.length === 0) return tubes;
     // Full destination
-    if (toTube.length >= 4) {
-        return tubes;
-    }
+    if (toTube.length >= 4) return tubes;
     const movingColor = fromTube[fromTube.length - 1];
     // Destination top color
     const topColor = toTube[toTube.length - 1];
