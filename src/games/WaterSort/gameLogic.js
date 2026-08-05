@@ -56,12 +56,8 @@ export const pourWater = (tubes, fromIndex, toIndex) => {
     // How many same-color layers are on top
     let count = 0;
     for (let i = fromTube.length - 1; i >= 0; i-- ) {
-        if (fromTube[i] === movingColor) {
-            count++;
-        } 
-        else {
-            break;
-        }
+        if (fromTube[i] === movingColor) count++;
+        else  break;
     }
     // Cannot exceed capacity
     const space = 4 - toTube.length;
