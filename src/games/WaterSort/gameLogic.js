@@ -15,8 +15,7 @@ export const generatePuzzle = (colorsCount, emptyTubes = 2) => {
     // Shuffle colors
     for (let i = allColors.length - 1; i > 0; i--) {
         const randomIndex = Math.floor(Math.random() * (i + 1));
-        [allColors[i], allColors[randomIndex]] =
-            [allColors[randomIndex], allColors[i]];
+        [allColors[i], allColors[randomIndex]] = [allColors[randomIndex], allColors[i]];
     }
     // Create tubes
     const tubeCount = colorsCount + emptyTubes;
