@@ -83,10 +83,7 @@ export const createCards = (
     const shuffledImages = shuffle(CARD_IMAGES);
 
     const selectedImages =
-        shuffledImages.slice(
-            0,
-            pairCount
-        );
+        shuffledImages.slice( 0, pairCount );
     const cards = [
 
         ...selectedImages,
