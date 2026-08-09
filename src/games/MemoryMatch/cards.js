@@ -77,29 +77,16 @@ export const createCards = (
 
     }
 
-    const pairCount =
-        totalCards / 2;
-
+    const pairCount = totalCards / 2;
     const shuffledImages = shuffle(CARD_IMAGES);
-
-    const selectedImages =
-        shuffledImages.slice( 0, pairCount );
-    const cards = [
-
-        ...selectedImages,
-        ...selectedImages
-
-    ];
+    const selectedImages = shuffledImages.slice( 0, pairCount );
+    const cards = [ ...selectedImages, ...selectedImages ];
 
     return shuffle(cards).map(
         (image, index) => ({
-
             id: index,
-
             image,
-
             isFlipped: false,
-
             isMatched: false
 
         })
