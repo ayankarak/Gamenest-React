@@ -38,15 +38,10 @@ const CARD_IMAGES = [
 
 ];
 
-
 // Shuffle Function
 
 const shuffle = (array) => {
-
-    return [...array].sort(
-        () => Math.random() - 0.5
-    );
-
+    return [...array].sort( () => Math.random() - 0.5 );
 };
 
 
