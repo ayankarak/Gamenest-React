@@ -1,9 +1,5 @@
 // Add Player Score
-
-export const addPlayerScore = (
-    setPlayerScore
-) => {
-
+export const addPlayerScore = ( setPlayerScore ) => {
     setPlayerScore(prev => prev + 1);
 };
 
