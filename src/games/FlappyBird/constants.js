@@ -24,37 +24,23 @@ export const MAX_PIPE_SPEED = 12;
 export const DIFFICULTY_SETTINGS = {
 
     easy: {
-
         baseSpeed: 3,
-
         increase: 0.5,
-
         maxSpeed: 5,
-
         scoreStep: 10
-
     },
 
     medium: {
-
         baseSpeed: 3,
-
         increase: 1,
-
         maxSpeed: 8,
-
         scoreStep: 10
-
     },
 
     hard: {
-
         baseSpeed: 3,
-
         increase: 2,
-
         maxSpeed: 12,
-
         scoreStep: 10
 
     }
