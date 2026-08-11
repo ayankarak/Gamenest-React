@@ -300,86 +300,51 @@ function FlappyBird() {
 
             {/* Game Area */}
             <GameContainer width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
-
                 <div className="game-area">
-
                     <canvas
-
                         ref={canvasRef}
-
                         width={CANVAS_WIDTH}
-
                         height={CANVAS_HEIGHT}
-
                         onClick={startGame}
-
                         onTouchStart={startGame}
-
                     />
 
                     {/* Start Screen */}
-
                     {!gameStarted && !gameOver && (
-
                         <div className="start-overlay">
-
                             <h2>🐦 Flappy Bird</h2>
-
                             <p>Press <b>SPACE</b> or Click to Start</p>
-
                         </div>
-
                     )}
 
                     {/* Game Over */}
 
                     {gameOver && (
-
                         <div className="game-over-overlay">
-
                             <div className="game-over-card">
-
                                 <h2>💀 Game Over</h2>
-
                                 <p>Score : {score}</p>
-
                                 <p>High Score : {highScore}</p>
-
                                 <button
-
                                     className="restart-btn"
-
                                     onClick={restartGame}
-
                                 >
-
                                     🔄 Play Again
-
                                 </button>
-
                             </div>
-
                         </div>
-
                     )}
-
                 </div>
             </GameContainer>
 
             {/* Controls */}
 
             <div className="controls">
-
                 <p>
-
                     ⌨️ <b>SPACE</b> or <b>Mouse Click</b> to Fly
-
                 </p>
-
             </div>
-
         </div>
-
     );
 }
 
