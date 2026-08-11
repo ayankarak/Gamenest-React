@@ -1,59 +1,29 @@
 import { updateBird } from "./bird";
 import { PIPE_WIDTH } from "./constants";
-
-import {
-    updatePipes,
-    removeOldPipes,
-    addPipe
-} from "./pipe";
-
+import { updatePipes, removeOldPipes, addPipe } from "./pipe";
 import { checkCollision } from "./collision";
 
 export function gameLoop({
-
     bird,
     pipes,
     gameState,
     scoreRef,
     setScore,
     onGameOver
-
 }) {
-
     // ---------------- Bird ----------------
-
     updateBird(bird);
 
     // ---------------- Pipes ----------------
 
-    updatePipes(
-
-        pipes,
-
-        gameState.pipeSpeed
-
-    );
-
+    updatePipes( pipes, gameState.pipeSpeed );
     const filtered = removeOldPipes(pipes);
-
     pipes.length = 0;
-
     pipes.push(...filtered);
-
     // ---------------- Spawn ----------------
-
     const now = Date.now();
-
-    if (
-
-        now - gameState.lastPipeTime >
-
-        gameState.pipeInterval
-
-    ) {
-
+    if ( now - gameState.lastPipeTime > gameState.pipeInterval ) {
         addPipe(pipes);
-
         gameState.lastPipeTime = now;
 
     }
@@ -61,10 +31,7 @@ export function gameLoop({
     // ---------------- Score ----------------
 
     pipes.forEach(pipe => {
-        if (
-            !pipe.passed &&
-            pipe.x + PIPE_WIDTH < bird.x
-        ) {
+        if (!pipe.passed && pipe.x + PIPE_WIDTH < bird.x ) {
             pipe.passed = true;
             setScore(prev => {
                 const newScore = prev + 10;
@@ -74,22 +41,13 @@ export function gameLoop({
                 if (newScore % 50 === 0) {
                     switch (gameState.difficulty) {
                         case "easy":
-                            gameState.pipeSpeed = Math.min(
-                                gameState.pipeSpeed + 0.5,
-                                5
-                            );
+                            gameState.pipeSpeed = Math.min( gameState.pipeSpeed + 0.5, 5 );
                             break;
                         case "medium":
-                            gameState.pipeSpeed = Math.min(
-                                gameState.pipeSpeed + 1,
-                                8
-                            );
+                            gameState.pipeSpeed = Math.min( gameState.pipeSpeed + 1, 8 );
                             break;
                         case "hard":
-                            gameState.pipeSpeed = Math.min(
-                                gameState.pipeSpeed + 2,
-                                12
-                            );
+                            gameState.pipeSpeed = Math.min( gameState.pipeSpeed + 2, 12 );
                             break;
                     }
                 }
@@ -99,12 +57,7 @@ export function gameLoop({
     });
 
     // ---------------- Collision ----------------
-    if (
-        checkCollision(
-            bird,
-            pipes
-        )
-    ) {
+    if (checkCollision( bird, pipes ) ) {
         onGameOver();
     }
 
