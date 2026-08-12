@@ -3,10 +3,7 @@ import {
     COLS
 } from "./constant";
 
-export const isCollision = (
-    board,
-    piece
-) => {
+export const isCollision = ( board, piece ) => {
     for (let y = 0; y < piece.shape.length; y++) {
         for (let x = 0; x < piece.shape[y].length; x++) {
             if (piece.shape[y][x] === 0)
