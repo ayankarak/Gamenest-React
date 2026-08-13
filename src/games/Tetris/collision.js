@@ -11,18 +11,11 @@ export const isCollision = ( board, piece ) => {
             const newX = piece.x + x;
             const newY = piece.y + y;
             // Left Right Bottom
-            if (
-                newX < 0 ||
-                newX >= COLS ||
-                newY >= ROWS
-            ) {
+            if (newX < 0 || newX >= COLS || newY >= ROWS) {
                 return true;
             }
             // Existing Block
-            if (
-                newY >= 0 &&
-                board[newY][newX] !== 0
-            ) {
+            if (newY >= 0 && board[newY][newX] !== 0 ) {
                 return true;
             }
         }
