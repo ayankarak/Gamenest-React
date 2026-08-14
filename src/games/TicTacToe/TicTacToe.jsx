@@ -26,59 +26,39 @@ function TicTacToe() {
 
     const handleClick = (index) => {
 
-        if (
-            board[index] !== "" ||
-            winner ||
-            isThinking
-        ) {
+        if (board[index] !== "" || winner || isThinking) {
             return;
         }
 
-        if (
-            mode === "computer" &&
-            currentPlayer !== "X"
-        ) {
+        if (mode === "computer" && currentPlayer !== "X") {
             return;
         }
 
         const newBoard = [...board];
-
         newBoard[index] = currentPlayer;
-
         setBoard(newBoard);
-
         const result = getWinner(newBoard);
-
         if (result.winner) {
-
             setWinner(result.winner);
             setWinningCells(result.winningCells);
-
             return;
         }
 
         if (mode === "player") {
-
             setCurrentPlayer(
                 currentPlayer === "X" ? "O" : "X"
             );
 
-        } else {
-
+        } 
+        else {
             setCurrentPlayer("O");
-
         }
 
     };
 
     useEffect(() => {
 
-        if (
-            mode !== "computer" ||
-            currentPlayer !== "O" ||
-            winner ||
-            isThinking
-        ) {
+        if (mode !== "computer" || currentPlayer !== "O" || winner || isThinking) {
             return;
         }
 
@@ -97,59 +77,40 @@ function TicTacToe() {
     return (
 
         <div className="ttt-container">
-
             <GameHeader title="⭕ Tic Tac Toe" />
-
             {!mode ? (
-
                 <div className="mode-selection">
-
                     <h2>Select Game Mode</h2>
-
                     <button
                         onClick={() => setMode("player")}
                     >
                         👥 Player vs Player
                     </button>
-
                     <button
                         onClick={() => setMode("computer")}
                     >
                         🤖 Player vs Computer
                     </button>
-
                 </div>
-
             ) : (
                 
-
                 <>
-
                     <div className="top-bar">
-
                         <div className="mode">
-
                             {mode === "player"
                                 ? "👥 Player vs Player"
                                 : "🤖 Player vs Computer"}
 
                         </div>
-
                         <div className="turn">
-
                             {
                                 isThinking
                                     ?
-
                                     "🤖 Computer Thinking..."
-
                                     :
-
                                     `Turn : ${currentPlayer}`
                             }
-
                         </div>
-
                     </div>
                     {mode === "computer" && (
                         <DifficultySelector
@@ -167,15 +128,11 @@ function TicTacToe() {
                                     `🏆 Player ${winner} Wins!`
                                 }
                             </div>
-
                         )}
                         <GameContainer width={650}>
                             <div className="game-layout">
-
                                 <div className="board">
-
                                     {board.map((cell, index) => (
-
                                         <div
                                             key={index}
                                             className={`cell ${winningCells.includes(index)
@@ -186,7 +143,6 @@ function TicTacToe() {
                                         >
                                             {cell}
                                         </div>
-
                                     ))}
 
                                 </div>
