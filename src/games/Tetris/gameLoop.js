@@ -22,27 +22,16 @@ export const gameLoop = ({
 
 }) => {
     const now = Date.now();
-    if (
-        now - lastDropTime.current <
-        dropInterval
-    ) {
+    if (now - lastDropTime.current <dropInterval) {
         return;
     }
     // Move Piece Down
     piece.y++;
     // Collision
-    if (
-        isCollision(
-            board,
-            piece
-        )
-    ) {
+    if (isCollision(board, piece)) {
         piece.y--;
         // Merge Piece
-        mergePiece(
-            board,
-            piece
-        );
+        mergePiece(board,piece);
         // Clear Lines
         const lines = clearLines(board);
         // Update Score
@@ -60,9 +49,7 @@ export const gameLoop = ({
         setNextPiece(createPiece());
         // GAME OVER
 
-        if (
-            isCollision(board,piece)
-        ) {
+        if (isCollision(board,piece)) {
             setGameOver(true);
             return;
         }
