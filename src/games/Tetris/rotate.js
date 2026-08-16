@@ -1,10 +1,7 @@
 import {
     isCollision
 } from "./collision";
-export const rotatePiece = (
-    board,
-    piece
-) => {
+export const rotatePiece = ( board,piece ) => {
     const original = piece.shape;
     const rotated =
         original[0].map((_, i) =>

@@ -14,13 +14,9 @@ import {
     BLOCK_SIZE,
     COLORS
 } from "./constant";
-
 import {moveLeft,moveRight,softDrop} from "./controls";
 import {rotatePiece} from "./rotate";
-
-
 import {createBoard, drawBoard} from "./board";
-
 import {createPiece} from "./pieces";
 
 function Tetris(){
@@ -34,15 +30,9 @@ function Tetris(){
     const canvasRef = useRef(null);
     const nextCanvasRef = useRef(null);
 
-    const [difficulty, setDifficulty] =
-        useState("easy");
-
-    const boardRef = useRef(
-        createBoard()
-    );
-    const pieceRef = useRef(
-        createPiece()
-    );
+    const [difficulty, setDifficulty] = useState("easy");
+    const boardRef = useRef( createBoard() );
+    const pieceRef = useRef( createPiece() );
     
     const getDropInterval = () => {
         switch (difficulty) {
@@ -84,10 +74,8 @@ function Tetris(){
         const piece = nextPiece;
         const block = 25;
         // Center the piec
-        const startX =
-            (120 - piece.shape[0].length * block) / 2;
-        const startY =
-            (120 - piece.shape.length * block) / 2;
+        const startX = (120 - piece.shape[0].length * block) / 2;
+        const startY = (120 - piece.shape.length * block) / 2;
         piece.shape.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value !== 0) {
@@ -137,8 +125,7 @@ function Tetris(){
                         pieceRef.current
                     );
                     break;
-                default:
-                    break;
+                default: break;
             }
         };
         window.addEventListener(
