@@ -37,17 +37,10 @@ export const PIECES = [
 
 // Random Piece
 export const createPiece = () => {
-    const shape =
-        PIECES[
-            Math.floor(
-                Math.random() * PIECES.length
-            )
-        ];
+    const shape = PIECES[ Math.floor( Math.random() * PIECES.length ) ];
     return {
         shape,
-        x: Math.floor(
-            (10 - shape[0].length) / 2
-        ),
+        x: Math.floor( (10 - shape[0].length) / 2 ),
         y: 0
     };
 };
