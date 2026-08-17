@@ -105,7 +105,6 @@ function WaterSort() {
                                     }`}
                                     onClick={() => handleTubeClick(index)}
                                 >
-
                                     {tube.map(
                                         (color, colorIndex) => (
                                             <div
