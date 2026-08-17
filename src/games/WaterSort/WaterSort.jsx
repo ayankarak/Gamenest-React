@@ -110,10 +110,7 @@ function WaterSort() {
                                             <div
                                                 key={colorIndex}
                                                 className="water-layer"
-                                                style={{
-                                                    backgroundColor:
-                                                        color
-                                                }}
+                                                style={{ backgroundColor:color }}
                                             />
                                         )
                                     )}
