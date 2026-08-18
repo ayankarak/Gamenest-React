@@ -1,6 +1,4 @@
-/* ===========================
-   Game Header
-=========================== */
+/* Game Header */
 
 .playpage-header{
 
@@ -24,9 +22,7 @@
 
 }
 
-/* ===========================
-   ScoreBoard
-=========================== */
+/* ScoreBoard= */
 
 .playpage-scoreboard {
 
@@ -83,9 +79,7 @@
 
 }
 
-/* ===========================
-   Difficulty Selector
-=========================== */
+/*  Difficulty Selector */
 
 .playpage-difficulty{
 
@@ -135,9 +129,7 @@
 
 }
 
-/* ===========================
-        Game Container
-=========================== */
+/*  Game Container */
 
 .playpage-game-wrapper{
 
